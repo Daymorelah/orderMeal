@@ -1,0 +1,116 @@
+
+/* DEsigned for 320px min width */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+:root {
+  --light: #f0ece2;
+  --dark: #596e79;
+  --primary: #c7b198;
+  --primary-light: #dfd3c3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/landingPage.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--dark);
+  color: var(--primary);
+  font-family:  'Roboto Condensed', sans-serif;
+}
+
+#text-container {
+  padding: 0.5rem;
+  text-align: center;
+  min-height: 100vh;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 2.8rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+#text, #button {
+  margin: 1rem 0;
+}
+
+#button {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 1rem auto;
+}
+
+#get-started, #learn-more {
+  border: none;
+  outline: none;
+  font-family: 'Roboto Condensed', sans-serif;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  padding: 1rem;
+  background: var(--primary);
+  color: var(--dark);
+  text-transform: capitalize;
+}
+
+@media screen and (min-width: 380px) {
+  #text-container {
+    width: 90%;
+    margin: auto;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  #text-container {
+    width: 80%;
+    margin: auto;
+  }
+  #button {
+    width: 80%;
+  }
+}
+@media screen and (min-width: 680px) {
+  #text-container {
+    width: 60%;
+    margin: auto;
+  }
+  #button {
+    width: 80%;
+  }
+}
+@media screen and (min-width: 980px) {
+  #text-container {
+    width: 50%;
+    margin: auto;
+  }
+  #button {
+    width: 80%;
+  }
+}
+@media screen and (min-width: 1088px) {
+  #text-container {
+    width: 40%;
+    margin: auto;
+  }
+  #button {
+    width: 80%;
+  }
+}
