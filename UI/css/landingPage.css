@@ -59,6 +59,10 @@ h3 {
   margin: 1rem auto;
 }
 
+button {
+  cursor: pointer;
+}
+
 #get-started, #learn-more {
   border: none;
   outline: none;
