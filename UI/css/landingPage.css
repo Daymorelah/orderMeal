@@ -26,7 +26,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-color: var(--dark);
-  color: var(--primary);
+  color: var(--primary-light);
   font-family:  'Roboto Condensed', sans-serif;
 }
 
@@ -68,7 +68,7 @@ button {
   outline: none;
   font-family: 'Roboto Condensed', sans-serif;
   border-radius: 8px;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   padding: 1rem;
   background: var(--primary);
   color: var(--dark);

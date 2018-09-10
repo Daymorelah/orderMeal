@@ -21,22 +21,22 @@ html,body{
 }
 
 body {
-  background: var(--light);
+  background: var(--primary-light);
   color: var(--dark);
   font-family: 'Roboto Condensed', sans-serif; 
 }
 
 nav{
-  background: var(--primary);
+  background: var(--dark);
 }
 #form-container {
   padding: 1em 0.5em;;
 }
 #logo a {
   text-decoration: none;
-  color: var(--dark);
+  color: var(--primary-light);
   display: inline-block;
-  border: 2px solid var(--dark);
+  border: 2px solid var(--primary-light);
   padding: 0.5em;
   margin: 0.5em;
   font-size: 1em;
@@ -85,7 +85,8 @@ button {
 }
 #footer {
   text-align: center;
-  background: var(--primary);
+  background: var(--dark);
+  color: var(--primary-light);
   font-size: 1.3em;
   padding: 0.5em;
 }
