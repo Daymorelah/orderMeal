@@ -28,17 +28,19 @@ body {
 
 nav{
   background: var(--dark);
+  padding-left: 2em; 
 }
 #form-container {
   padding: 1em 0.5em;;
 }
 #logo a {
   text-decoration: none;
-  color: var(--primary-light);
+  color: var(--primary);
   display: inline-block;
   border: 2px solid var(--primary-light);
   padding: 0.5em;
   margin: 0.5em;
+  margin-left: 2em;
   font-size: 1em;
   font-weight: 800;
 }

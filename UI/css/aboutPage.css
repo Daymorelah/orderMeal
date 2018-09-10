@@ -211,6 +211,7 @@ button {
   }
   #subscribe-text-container {
     width: 40%;
+    margin: 0 1.5em
   }
   #summary {
     display: flex;
@@ -230,13 +231,21 @@ button {
   #praise {
     border-bottom: unset;
     border-right: 2px solid var(--primary-light);
-    padding-right: 1.5em;
-    padding-bottom: 0;
+    padding: 0 0.5em;
     margin-bottom: 0;
   }
   #ratings {
     padding: 0;
     margin-bottom: 0;
+  }
+  #sub-container {
+    display: flex;
+  }
+}
+@media screen and (min-width: 780px) {
+  #logo,#reason-to-choose,#accolade,#how-it-works,#summary,#sub-container {
+    width: 80%;
+    margin: auto;
   }
 }
 @media screen and (min-width: 870px) {
