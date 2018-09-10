@@ -1,0 +1,246 @@
+
+/* DEsigned for 320px min width */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+:root {
+  --light: #f0ece2;
+  --dark: #596e79;
+  --primary: #c7b198;
+  --primary-light: #dfd3c3;
+}
+* {
+  box-sizing: border-box;
+}
+html,body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  background: var(--primary);
+  color: var(--dark);
+  font-family: 'Roboto Condensed', sans-serif; 
+}
+h1,p,h2 {
+  margin: 0;
+}
+nav{
+  background: var(--dark);
+  padding-left: 1em;
+}
+#logo a {
+  text-decoration: none;
+  color: var(--primary);
+  display: inline-block;
+  border: 2px solid var(--primary-light);
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 1em;
+  font-weight: 800;
+}
+#welcome-text {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/about-us.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 15vh;
+  color: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  text-transform: capitalize;
+}
+#reason-to-choose,
+#how-it-works {
+  background: var(--primary);
+  text-align: center;
+  padding: 1em;
+  width: 100%;
+}
+#reason-to-choose h2 {
+  margin: 1em 0;
+}
+.icon {
+  margin: 0.4em 0;
+  display: block;
+}
+.reason, .steps {
+  text-align: center;
+  font-size: 1.4em;
+  width: 100%;
+  padding: 0.5em 1em;
+  background: var(--primary-light);
+  margin-bottom: 0.5em;
+}
+#accolade {
+  background: var(--primary);
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+}
+#praise {
+  font-size: 1.8em;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  border-bottom: 2px solid var(--primary-light);
+}
+#ratings {
+  margin-bottom: 2em;
+  padding: 0 1.2em;
+  font-size: 1.5em;
+}
+#ratings p {
+  margin: 1.5em;
+}
+#subscribe {
+  background: var(--dark);
+  color: var(--primary);
+  text-align: center;
+  padding: 1em 0.5em;
+}
+#subscribe h1 {
+  margin-bottom: 0.5em;
+}
+input, button {
+  outline: none;
+  border: none;
+  padding: 0.5em;
+  width: 100%;
+  margin-bottom: 0.5em;
+  font-size: 1.5em;
+}
+button {
+  background: var(--primary);
+  color: var(--dark);
+}
+#footer {
+  text-align: center;
+  background: var(--dark);
+  color: var(--primary-light);
+  font-size: 1.3em;
+  padding: 0.5em;
+}
+#footer p {
+  margin: 0;
+}
+#summary {
+  padding: 1em;
+}
+.locate-us {
+  display: flex;
+  justify-content: flex-start;
+}
+.locate-us .icon {
+  margin: 0.5em;
+  margin-right: 1.3em;
+}
+.locate-us p {
+  align-self: center;
+  justify-content: left;
+}
+#address h2,
+#services h2,
+#services p {
+  margin: 0.5em;
+  font-size: 1.8em;
+}
+#services p {
+  font-size: 1.3em;
+}
+#services {
+  text-transform: capitalize;
+}
+
+@media screen and (min-width: 418px) {
+  #reason-to-choose,
+  #how-it-works {
+    width: 95%;
+    margin: auto;
+  }
+}
+@media screen and (min-width: 490px) {
+  .reason p, .steps p {
+    font-size: 1.2em;
+    padding: 1.3em;
+    padding-top: 0.3em;
+  }
+}
+@media screen and (min-width: 638px) {
+  #reason-container,
+  #how-it-works-container {
+    display: flex;
+    justify-content: flex-start;
+  }
+  #reason-to-choose,
+  #how-it-works {
+    margin: unset;
+    width: 100%;
+    margin:auto;
+  }
+  .reason, .steps {
+    padding: 0.3em;
+    margin: 0.3em;
+  }
+  .reason p, .steps p {
+    font-size: 1em;
+    padding: 1.3em;
+    padding-top: 0.3em;
+  }
+  #subscribe {
+    display: flex;
+    justify-content: flex-start;
+  }
+  #subscribe-form-container {
+    width: 60%;
+    display: flex;
+    align-items: center;
+  }
+  #subscribe-form-container input {
+    flex-grow: 1;
+    height: 2em;
+    width: 60%;
+    border-radius: 6px;
+  }
+  #subscribe-form-container button {
+    height: 2em;
+    width: 35%;
+    border-radius: 6px;
+  }
+  #subscribe-text-container {
+    width: 40%;
+  }
+  #summary {
+    display: flex;
+    justify-content: center;
+  }
+  #address, #services {
+    width: 50%;
+  }
+  #accolade {
+    display: flex;
+    justify-content: flex-start;
+  }
+  #praise, #ratings {
+    align-self: center;
+    width: 50%;
+  }
+  #praise {
+    border-bottom: unset;
+    border-right: 2px solid var(--primary-light);
+    padding-right: 1.5em;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+  #ratings {
+    padding: 0;
+    margin-bottom: 0;
+  }
+}
+@media screen and (min-width: 870px) {
+  #welcome-text {
+    height:25vh;
+  }
+}
