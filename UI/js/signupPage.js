@@ -1,7 +1,7 @@
-const signupButton = document.querySelector('form');
+const signupForm = document.querySelector('form');
 const loginButton = document.querySelector('#login-button');
 
-signupButton.addEventListener('submit', (event) => {
+signupForm.addEventListener('submit', (event) => {
   event.preventDefault();
   window.location = `${location.origin}/UI/html/homePage.html`;
 });
