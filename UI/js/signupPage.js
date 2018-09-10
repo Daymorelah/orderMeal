@@ -1,7 +1,8 @@
-const signupButton = document.querySelector('signup-button');
-const loginButton = document.querySelector('login-button');
+const signupButton = document.querySelector('form');
+const loginButton = document.querySelector('#login-button');
 
-signupButton.addEventListener('click', () => {
+signupButton.addEventListener('submit', (event) => {
+  event.preventDefault();
   window.location = `${location.origin}/UI/html/homePage.html`;
 });
 
