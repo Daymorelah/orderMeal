@@ -1,0 +1,151 @@
+
+/* DEsigned for 320px min width */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+:root {
+  --light: #f0ece2;
+  --dark: #596e79;
+  --primary: #c7b198;
+  --primary-light: #dfd3c3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--light);
+  color: var(--dark);
+  font-family: 'Roboto Condensed', sans-serif; 
+}
+
+nav{
+  background: var(--primary);
+}
+#form-container {
+  padding: 1em 0.5em;;
+}
+#logo a {
+  text-decoration: none;
+  color: var(--dark);
+  display: inline-block;
+  border: 2px solid var(--dark);
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 1em;
+  font-weight: 800;
+}
+#header-text {
+  text-align: center;
+  margin-bottom: 1.8em;
+}
+#login-form h2 {
+  text-transform: capitalize;
+  text-align: center;
+  margin: 0.5em;
+  font-size: 1.8em;
+  margin-bottom: 0.2em;
+}
+input, label {
+  width: 100%;
+  height: 1.8em;
+  border: none;
+  outline: none;
+  padding: 0.3em;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  font-family: 'Roboto Condensed', sans-serif; 
+}
+label {
+  text-align: left;
+  font-weight: 800;
+}
+button {
+  outline: none;
+  border: none;
+  background: var(--primary);
+  color: var(--dark);
+  border-radius: 0.5em;
+  display: inline-block;
+  width: 100%;
+  font-family: 'Roboto Condensed', sans-serif;
+  height: 2.5em;
+  padding: 0.5em;
+  margin: 0.3em 0;
+  font-size: 1.5em;
+  font-weight: 900;
+  cursor: pointer;
+}
+#footer {
+  text-align: center;
+  background: var(--primary);
+  font-size: 1.3em;
+  padding: 0.5em;
+}
+#footer p {
+  margin: 0;
+}
+
+@media screen and (min-height: 603px) {
+  #footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}
+@media screen and (min-width: 360px) {
+  #form-container {
+    width: 95%;
+    margin: auto;
+  }
+}
+@media screen and (min-width: 420px) {
+  #form-container {
+    width: 90%;
+    margin: auto;
+  }
+}
+@media screen and (min-width: 480px) {
+  #login-form {
+    width: 90%;
+    margin: auto;
+  }
+}
+@media screen and (min-width: 590px) {
+  #form-container,
+  #login-form {
+    width: 80%;
+    margin: auto;
+  }
+}
+@media screen and (min-width: 720px) {
+  #header-text,
+  #login-form {
+    padding: 0 1.5em;
+  }
+}
+@media screen and (min-width: 830px) {
+  #header-text {
+    width: 80%;
+    margin: auto;
+  }
+  form {
+    width: 80%;
+    margin: auto;
+    padding: 1em;
+  }
+}
+@media screen and (min-width: 1030px) {
+  #header-text,
+  #login-form {
+    width: 70%;
+    margin: auto;
+  }
+}
