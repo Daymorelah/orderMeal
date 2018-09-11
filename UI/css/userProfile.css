@@ -111,6 +111,7 @@ nav{
   display: inline;
   /* font-size: 0.8em; */
 }
+/* Meal offer details */
 .meals {
   background: var(--primary-light);
   height: 380px;
@@ -134,4 +135,22 @@ nav{
   margin: 0;
   padding: 0;
   color: var(--dark);
+}
+/* pagination */
+#paginate {
+  background: var(--primary);
+  text-align: center;
+  font-size: 1.4em;
+}
+.page {
+  color: var(--primary-light);
+  background: var(--dark);
+  display: inline-block;
+  padding: 0.7em;
+  margin: 0.4em 0.2em;
+  border-radius: 60%;
+}
+.page a {
+  text-decoration: none;
+  color: var(--primary-light);
 }
