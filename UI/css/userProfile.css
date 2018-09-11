@@ -25,6 +25,10 @@ body {
 h1,p,h2 {
   margin: 0;
 }
+img {
+  max-width: 100%;
+}
+/* Dsign navigation */
 nav{
   background: var(--dark);
   padding: 0.5em;
@@ -65,4 +69,69 @@ nav{
 }
 #small-width-nav.open {
   transform: translate(0, 0);
+}
+/* Design user details */
+#user-contianer {
+  height: calc(100vh - 80px);
+}
+#user-identify,
+#user-actions {
+  min-height: 50%;
+}
+#user-identify {
+  padding: 1em;
+  text-align: center;
+  padding-top: 1.5em;
+  font-size: 1.5em;
+}
+#user-identify img {
+  width: 50%;
+  height: 60%;
+  display: block;
+  margin: auto;
+  margin-bottom: 1em;
+  border-radius: 60%;
+}
+#user-actions {
+  background: var(--primary-light);
+  padding: 1.2em;
+}
+#list-user-actions {
+  list-style: none;
+  font-size: 1.5em;
+  margin: 0.5em;
+  padding: 0;
+}
+#list-user-actions li {
+  height: 2.2em;
+  text-transform: capitalize;
+}
+#meal-number {
+  color: var(--dark);
+  display: inline;
+  /* font-size: 0.8em; */
+}
+.meals {
+  background: var(--primary-light);
+  height: 380px;
+  padding-top: 0.5em;
+}
+.meals img {
+  height: 50%;
+  width: 100%;
+}
+.meal-details {
+  padding: 0 1em
+}
+.meal-details p {
+  color: var(--dark);
+  font-size: 1.8em;
+  margin-top: 0.3em;
+}
+.meal-property {
+  font-weight: 900;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  color: var(--dark);
 }
