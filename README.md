@@ -7,7 +7,7 @@ The front-end was implemented using:
 * [CSS](https://www.w3schools.com/css/css_intro.asp) This describes how HTML elements are to be displayed on screen.
 * [Vanilla JavasScript](https://www.w3schools.com/js/default.asp) A programming language of HTML and the Web.
 ## PS:
-Only the front-end is currently being worked on. Implementation of the back-end would commence immediately the fornt-end is done.
+Only the front-end is currently being worked on. Implementation of the back-end would commence immediately the fornt-end is done. The static UI templates can be viewd on [GitHub Pages](https://daymorelah.github.io/orderMeal/UI/html/landingPage.html)
 ### Author
 * Ademola Hussain
 ### Licence

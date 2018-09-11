@@ -27,7 +27,7 @@ h1,p,h2 {
 }
 nav{
   background: var(--dark);
-  padding-left: 1em;
+  padding-left: 0.5em;
 }
 #logo a {
   text-decoration: none;
@@ -44,7 +44,7 @@ nav{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 15vh;
+  height: 25vh;
   color: var(--primary);
   display: flex;
   justify-content: center;
@@ -155,6 +155,9 @@ button {
 }
 
 @media screen and (min-width: 418px) {
+  nav {
+    padding-left: 0.8em;
+  }
   #reason-to-choose,
   #how-it-works {
     width: 95%;
@@ -246,10 +249,5 @@ button {
   #logo,#reason-to-choose,#accolade,#how-it-works,#summary,#sub-container {
     width: 80%;
     margin: auto;
-  }
-}
-@media screen and (min-width: 870px) {
-  #welcome-text {
-    height:25vh;
   }
 }
