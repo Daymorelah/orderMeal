@@ -69,7 +69,7 @@ button {
   font-family: 'Roboto Condensed', sans-serif;
   border-radius: 8px;
   font-size: 1.5rem;
-  padding: 1rem;
+  padding: 0.5rem;
   background: var(--primary);
   color: var(--dark);
   text-transform: capitalize;
