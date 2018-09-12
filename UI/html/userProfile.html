@@ -40,7 +40,7 @@
   </header>
   <main>
     <section id="user-details">
-      <div id="user-contianer">
+      <div id="user-container">
         <div id="user-identify">
           <img src="../images/user.jpeg" alt="user_pic">
           <h2>John Doe</h2>
@@ -56,6 +56,25 @@
         </div>
       </div>
     </section>
+    <section id="filter-container">
+      <div id="filter-text">
+        <h2>meals ordered</h2>
+      </div>
+      <div id="filter">
+        <input type="text" id="search-by" placeholder="Enter search here">
+        <input type="date" id="filter-by-date" placeholder="Enter date here">
+        <div id="filter-by">
+          <select id="filter-by-detail">
+            <option value="Meal">Meal</option>
+            <option value="Meal">Prize</option>
+            <option value="Meal">Destination</option>
+          </select>
+          <span id="search">
+            <i class="fas fa-search fa-2x"></i>
+          </span>
+        </div>
+      </div>
+    </section>
     <section id="meals-ordered-container">
       <div id="meals-ordered">
         <div class="meals">
@@ -67,9 +86,45 @@
             <p><span class="meal-property">Prize: </span>&#8358; 300</p>
           </div>
         </div>
+        <div class="meals">
+          <img src="../images/pizza.jpeg" alt="meal">
+          <div class="meal-details">
+            <p><span class="meal-property">Meal: </span>Pizza</p>
+            <p><span class="meal-property">Quantity: </span>1 Piece </p>
+            <p><span class="meal-property">Drink: </span>Sprite 50cl</p>
+            <p><span class="meal-property">Prize: </span>&#8358; 700</p>
+          </div>
+        </div>
+        <div class="meals">
+          <img src="../images/chicken.jpeg" alt="meal">
+          <div class="meal-details">
+            <p><span class="meal-property">Meal: </span>Barbeque</p>
+            <p><span class="meal-property">Quantity: </span>4 Pieces </p>
+            <p><span class="meal-property">Drink: </span>Five Alive 1 ltr</p>
+            <p><span class="meal-property">Prize: </span>&#8358; 1,300</p>
+          </div>
+        </div>
+        <div class="meals">
+          <img src="../images/chicken-wings.jpeg" alt="meal">
+          <div class="meal-details">
+            <p><span class="meal-property">Meal: </span>Chicke Wings</p>
+            <p><span class="meal-property">Quantity: </span>6 Pieces </p>
+            <p><span class="meal-property">Drink: </span>Hollandia 1 ltr</p>
+            <p><span class="meal-property">Prize: </span>&#8358; 900</p>
+          </div>
+        </div>
+        <div class="meals">
+          <img src="../images/cake.jpeg" alt="meal">
+          <div class="meal-details">
+            <p><span class="meal-property">Meal: </span>cake</p>
+            <p><span class="meal-property">Quantity: </span>1 Piece </p>
+            <p><span class="meal-property">Drink: </span>None</p>
+            <p><span class="meal-property">Prize: </span>&#8358; 2,500</p>
+          </div>
+        </div>
       </div>
     </section>
-    <section id="paginate-section">
+    <section id="paginate-container">
       <div id="paginate">
         <span class="page">1</span>
         <span class="page">2</span>
@@ -78,7 +133,7 @@
           <i class="fas fa-ellipsis-h"></i>
         </span>
         <span class="page">
-          <a href="#meals-ordered-container">
+          <a href="#filter-text">
             <i class="fas fa-chevron-up"></i>
           </a>
         </span>
