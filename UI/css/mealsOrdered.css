@@ -99,6 +99,8 @@ nav{
 .card-heading {
   border-bottom: 1px solid var(--dark);
   padding: 0.5em 1em;
+  display: flex;
+  justify-content: space-between;
 }
 .meal-property {
   font-weight: 900;
@@ -106,6 +108,28 @@ nav{
 }
 .card-body {
   padding: 0.5em 1em;
+  border-bottom: 1px solid var(--dark);
+}
+/* meal card footer */ 
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: 0.8em auto;
+}
+button {
+  border: none;
+  outline: none;
+  padding: 6px;
+  color: var(--primary-light);
+  border-radius: 8px;
+  text-transform: capitalize;
+}
+.accept {
+  background: #538f53;
+}
+.decline {
+  background: #914a4a;
 }
 /* paginate */
 #paginate {
