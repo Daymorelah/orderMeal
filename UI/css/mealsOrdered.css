@@ -1,0 +1,53 @@
+
+/* DEsigned for 320px min width */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+:root {
+  --light: #f0ece2;
+  --dark: #596e79;
+  --primary: #c7b198;
+  --primary-light: #dfd3c3;
+}
+* {
+  box-sizing: border-box;
+}
+html,body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  background: var(--primary);
+  color: var(--dark);
+  font-family: 'Roboto Condensed', sans-serif; 
+}
+h1,p,h2 {
+  margin: 0;
+}
+/* Navigation */
+nav{
+  background: var(--dark);
+  padding: 0.5em;
+  display: flex;
+  justify-content: space-between;
+}
+
+#logo a {
+  text-decoration: none;
+  color: var(--primary);
+  display: block;
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 1em;
+  font-weight: 800;
+  text-transform: capitalize;
+  border: 2px solid var(--primary-light);
+  align-self: center;
+}
+
+@media screen and (min-width: 910px) { 
+  nav {
+    padding: 0 2em;
+  }
+}
