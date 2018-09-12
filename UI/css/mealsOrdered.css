@@ -22,7 +22,7 @@ body {
   color: var(--dark);
   font-family: 'Roboto Condensed', sans-serif; 
 }
-h1,p,h2 {
+h1,p,h2,h3 {
   margin: 0;
 }
 .container {
@@ -61,7 +61,6 @@ nav{
   border-radius: 8px;
   outline: none;
   border: none;
-  text-transform: capitalize;
 }
 #search-meal-icon {
   display: inline-block;
@@ -77,7 +76,36 @@ nav{
   border-radius: 6px;
   font-size: 1.2em;
 }
-/* meral ordered card */
+/* meal ordered card */
+#ordered-meal-text {
+  margin: 1em 0;
+  padding: 1em 0;
+  font-size: 1.2em;
+  text-transform: capitalize;
+}
+#meal-card-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.meal-cards {
+  background: var(--primary-light);
+  border-radius: 8px;
+  width: 30%;
+  margin-right: 3%;
+  margin-top: 1em
+}
+.card-heading {
+  border-bottom: 1px solid var(--dark);
+  padding: 0.5em 1em;
+}
+.meal-property {
+  font-weight: 900;
+  font-size: 1em;
+}
+.card-body {
+  padding: 0.5em 1em;
+}
 /* footer */
 #footer {
   text-align: center;
