@@ -19,7 +19,7 @@
       </div>
       <div id="large-width-nav">
         <a href="./homePage.html">Home</a>
-        <a href="./userProfile.html">Profile</a>
+        <a id="active" href="./userProfile.html">Profile</a>
         <a href="./orderFoodPage.html">Order</a>
         <a href="./aboutPage.html">About</a>
         <a href="./loginPage.html">Logout</a>
@@ -43,8 +43,10 @@
       <div id="user-container">
         <div id="user-identify">
           <img src="../images/user.jpeg" alt="user_pic">
-          <h2>John Doe</h2>
-          <p>Lorem ipsum dolor sit amet.</p>
+          <div id="user-identify-text">
+            <h2>Jane Doe</h2>
+            <p>Lorem ipsum dolor sit amet.</p>
+          </div>
         </div>
         <div id="user-actions">
           <ul id="list-user-actions">
@@ -61,8 +63,10 @@
         <h2>meals ordered</h2>
       </div>
       <div id="filter">
-        <input type="text" id="search-by" placeholder="Enter search here">
-        <input type="date" id="filter-by-date" placeholder="Enter date here">
+        <div id="filter-input">
+          <input type="text" id="search-by" placeholder="Enter search here">
+          <input type="date" id="filter-by-date" placeholder="Enter date here">
+        </div>
         <div id="filter-by">
           <select id="filter-by-detail">
             <option value="Meal">Meal</option>
@@ -120,6 +124,15 @@
             <p><span class="meal-property">Quantity: </span>1 Piece </p>
             <p><span class="meal-property">Drink: </span>None</p>
             <p><span class="meal-property">Prize: </span>&#8358; 2,500</p>
+          </div>
+        </div>
+        <div class="meals">
+          <img src="../images/burger.jpeg" alt="meal">
+          <div class="meal-details">
+            <p><span class="meal-property">Meal: </span>Burger</p>
+            <p><span class="meal-property">Quantity: </span>3 Pieces </p>
+            <p><span class="meal-property">Drink: </span>Coca-Cola 50cl</p>
+            <p><span class="meal-property">Prize: </span>&#8358; 300</p>
           </div>
         </div>
       </div>
