@@ -209,7 +209,17 @@ nav{
   text-decoration: none;
   color: var(--primary-light);
 }
-
+/* footer */
+#footer {
+  text-align: center;
+  background: var(--dark);
+  color: var(--primary-light);
+  font-size: 1.3em;
+  padding: 0.5em;
+}
+#footer p {
+  margin: 0;
+}
 /* Design for screen widths larger than 350px */
 @media screen and (min-width: 350px) {
   .meals, #filter input, #filter-by {
