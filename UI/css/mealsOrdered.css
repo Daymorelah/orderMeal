@@ -1,0 +1,169 @@
+
+/* DEsigned for 320px min width */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+/* Globals */
+:root {
+  --light: #f0ece2;
+  --dark: #596e79;
+  --primary: #c7b198;
+  --primary-light: #dfd3c3;
+}
+* {
+  box-sizing: border-box;
+}
+html,body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  background: var(--primary);
+  color: var(--dark);
+  font-family: 'Roboto Condensed', sans-serif; 
+}
+h1,p,h2,h3 {
+  margin: 0;
+}
+.container {
+  width: 75%;
+  margin: auto;
+}
+/* Navigation */
+nav{
+  background: var(--dark);
+  padding: 0.5em;
+  display: flex;
+  justify-content: space-between;
+}
+#logo a {
+  text-decoration: none;
+  color: var(--primary);
+  display: block;
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 1em;
+  font-weight: 800;
+  text-transform: capitalize;
+  border: 2px solid var(--primary-light);
+  align-self: center;
+}
+/* meal search */
+#search-meal-container {
+  margin: 3.5em 0;
+}
+#search-meal-container input {
+  width: 60%;
+  height: 3em;
+  font: 'Roboto Condensed', sans-serif;
+  color: var(--dark);
+  padding: 8px;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+}
+#search-meal-icon {
+  display: inline-block;
+  width: 8%;
+  font-size: 1.8em;
+  text-align: center;
+}
+#filter {
+  height: 2.5em;
+  border: none;
+  outline: none;
+  padding: 4px;
+  border-radius: 6px;
+  font-size: 1.2em;
+}
+/* meal ordered card */
+#ordered-meal-text {
+  margin: 1em 0;
+  padding: 1em 0;
+  font-size: 1.2em;
+  text-transform: capitalize;
+}
+#meal-card-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 1.5em;
+}
+.meal-cards {
+  background: var(--primary-light);
+  border-radius: 8px;
+  width: 30%;
+  margin-right: 3%;
+  margin-top: 1em
+}
+.card-heading {
+  border-bottom: 1px solid var(--dark);
+  padding: 0.5em 1em;
+  display: flex;
+  justify-content: space-between;
+}
+.meal-property {
+  font-weight: 900;
+  font-size: 1em;
+}
+.card-body {
+  padding: 0.5em 1em;
+  border-bottom: 1px solid var(--dark);
+}
+/* meal card footer */ 
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: 0.8em auto;
+}
+button {
+  border: none;
+  outline: none;
+  padding: 6px;
+  color: var(--primary-light);
+  border-radius: 8px;
+  text-transform: capitalize;
+}
+.accept {
+  background: #538f53;
+}
+.decline {
+  background: #914a4a;
+}
+/* paginate */
+#paginate {
+  text-align: center;
+  margin: 2em 0;
+  display: flex;
+  justify-content: center;
+}
+.page {
+  display: inline-block;
+  font-size: 1em;
+  padding: 0.3em;
+  width: 1.8em;
+  margin-right: 2%;
+  background: var(--dark);
+  color: var(--primary-light);
+  border-radius: 50%;
+}
+.page a {
+  color: var(--primary-light);
+}
+/* footer */
+#footer {
+  text-align: center;
+  background: var(--dark);
+  color: var(--primary-light);
+  font-size: 1.3em;
+  padding: 0.5em;
+}
+#footer p {
+  margin: 0;
+}
+@media screen and (min-width: 910px) { 
+  nav {
+    padding: 0 2em;
+  }
+}
