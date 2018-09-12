@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Order-Meal | Ordered Meals</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-  crossorigin="anonymous">
+    crossorigin="anonymous">
   <link rel="stylesheet" href="../css/mealsOrdered.css">
 </head>
 
@@ -19,8 +19,44 @@
       </div>
     </nav>
   </header>
-
-
+  <section id="search-container">
+    <div class="container">
+      <div id="search-meal-container">
+        <input type="text" id="seach-meal" placeholder="Search meal ordered">
+        <span id="search-meal-icon"><i class="fas fa-search"></i></span>
+        <select id="filter">
+          <option value="today">30 mins</option>
+          <option value="today">Last Hour</option>
+          <option value="today">Last 6 Hours</option>
+          <option value="today">Today</option>
+          <option value="yesterday">Yesterday</option>
+        </select>
+      </div>
+    </div>
+  </section>
+  <section id="ordered-meals-container">
+    <div class="container">
+      <div id="ordered-meal-text">
+        <h3>ordered meals | 6 </h3>
+      </div>
+      <div class="meal-card">
+        <div class="card-heading">
+          <h2><span class="meal-property">Customer: </span>Jane Doe</h2>
+        </div>
+        <div class="card-body">
+          <p><span class="meal-property">Meal: </span>Burger</p>
+          <p><span class="meal-property">Quantity: </span>3 Pieces </p>
+          <p><span class="meal-property">Drink: </span>Coca-Cola 50cl</p>
+          <p><span class="meal-property">Prize: </span>&#8358; 300</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div id="footer">
+      <p>Designed by Hussain A.I &copy; 2018</p>
+    </div>
+  </footer>
   <script src="../js/mealsOrdered.js"></script>
 </body>
 
