@@ -43,7 +43,7 @@ To run tests for the server side
 * Submit a pull request against the development branch
 
 ## PS:
-The UI (_static_) templates for this App is hosted on [GitHub Pages](https://pages.github.com/) and the UI templates can be viewd on [GitHub Pages](https://daymorelah.github.io/orderMeal/UI/html/landingPage.html)
+The UI (_static_) templates for this App is hosted on [GitHub Pages](https://pages.github.com/) and the UI templates can be viewd [Here](https://daymorelah.github.io/orderMeal/UI/html/landingPage.html)
 
 ### Author
 * Ademola Hussain
