@@ -1,5 +1,6 @@
 
 import orderModel from '../Model';
+import getOrder from '../Utilities/helpers';
 
 class OrderController {
   static getAllOrders(req, res) {
@@ -39,7 +40,7 @@ class OrderController {
   static getAnOrder(req, res) {
     const { orderId } = req.params;
     new Promise((resolve, reject) => {
-      const orderRequested = orderModel.find(order => order.id === parseInt(orderId, 10));
+      const orderRequested = getOrder(orderId);
       if (orderRequested === undefined) reject();
       else {
         resolve(orderRequested);
@@ -59,7 +60,7 @@ class OrderController {
     const { orderId } = req.params;
     const completed = req.body;
     new Promise((resolve, reject) => {
-      const orderRequested = orderModel.find(order => order.id === parseInt(orderId, 10));
+      const orderRequested = getOrder(orderId);
       if (orderRequested === undefined) reject();
       else {
         resolve(orderRequested);
