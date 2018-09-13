@@ -69,4 +69,26 @@ describe('Integration test for the order model', () => {
         });
     });
   });
+  describe('Tests to get a particular order', () => {
+    it('should return details of the order requested', (done) => {
+      chai.request(app).get('/api/v1/orders/2')
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(200);
+          expect(res.body.data.code).to.deep.equal(200);
+          expect(res.body.status).to.deep.equal('success');
+          expect(res.body.data).to.have.property('order');
+          done();
+        });
+    });
+    it('should return not found if the order requested for does not exist', (done) => {
+      chai.request(app).get('/api/v1/orders/12')
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(404);
+          expect(res.body.data.code).to.deep.equal(404);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+  });
 });
