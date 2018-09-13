@@ -21,9 +21,9 @@
         <a href="./userProfile.html">Profile</a>
         <a id="active" href="./orderFoodPage.html">Order</a>
         <a href="./aboutPage.html">About</a>
-        <a href="./loginPage.html">Logout</a>
       </div>
       <div id="nav-menu">
+        <a id="logout" href="./loginPage.html">Logout</a>
         <span id="hamburger">
           <i class="fas fa-bars fa-2x"></i>
         </span>
@@ -36,14 +36,6 @@
       <a href="./loginPage.html">Logout</a>
     </div>
   </header>
-  <section id="heading-text-container">
-    <div id="heading-container">
-      <div id="heading">
-        <h1>Lorem ipsum dolor sit amet consectetur.</h1>
-        <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet, temporibus?</h3>
-      </div>
-    </div>
-  </section>
   <section id="order-foord-from-container">
     <div id="order-form-container">
       <div id="form-header-text">
@@ -53,6 +45,8 @@
         <form action="#">
           <label for="username">Name: </label>
           <input type="text" id="username" placeholder="Enter your name">
+          <label for="quantity">Quantity: </label>
+          <input type="text" id="quantity" placeholder="Enter how many">
           <label for="meal">Meal: </label>
           <select id="meal">
             <option value="">Choose a meal</option>
