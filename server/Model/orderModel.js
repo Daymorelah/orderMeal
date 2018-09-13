@@ -8,6 +8,7 @@ const orderModel = [
     drink: 'Hollandia 1ltr',
     prize: 400,
     address: 'Ifaok-ijaye, Gbagada, Lagos Nigeria',
+    completed: false,
   },
   {
     id: 2,
@@ -17,6 +18,7 @@ const orderModel = [
     drink: 'Five Alive 1ltr',
     prize: 700,
     address: 'Sabo-yaba, Lagos Nigeria',
+    completed: false,
   }, {
     id: 3,
     name: 'Aisha',
@@ -25,6 +27,7 @@ const orderModel = [
     drink: 'Coca-Cola 50cl',
     prize: 600,
     address: 'Falomo Ikoyi, Lagos Nigeria',
+    completed: false,
   }, {
     id: 4,
     name: 'Obinna',
@@ -33,6 +36,7 @@ const orderModel = [
     drink: 'Sprite 50cl',
     prize: 1200,
     address: 'Ifaok-ijaye, Gbagada, Lagos Nigeria',
+    completed: false,
   },
 ];
 

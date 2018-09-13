@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Integration test for the order model', () => {
-  describe('Test for handling invalid YRLs', () => {
+  describe('Test for handling invalid URLs', () => {
     it('should return a page not found for invalid URLs', (done) => {
       chai.request(app).get('/api/v1/order')
         .end((err, res) => {
@@ -42,6 +42,7 @@ describe('Integration test for the order model', () => {
         drink: 'Hollandia 1ltr',
         prize: 300,
         address: 'Ajegunle, Lagos Nigeria',
+        completed: false,
       };
       chai.request(app).post('/api/v1/orders')
         .send(userDetails)

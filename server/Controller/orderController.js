@@ -55,7 +55,30 @@ class OrderController {
     }));
   }
 
-  static updateOrderStatus() {}
+  static updateOrderStatus(req, res) {
+    const { orderId } = req.params;
+    const completed = req.body;
+    new Promise((resolve, reject) => {
+      const orderRequested = orderModel.find(order => order.id === parseInt(orderId, 10));
+      if (orderRequested === undefined) reject();
+      else {
+        resolve(orderRequested);
+      }
+    }).then((order) => {
+      const updatedOrder = order;
+      if (completed) {
+        updatedOrder.completed = true;
+        orderModel.splice(updatedOrder.id, 1, updatedOrder);
+      }
+      res.jsend.success({
+        code: 200,
+        order: updatedOrder,
+      });
+    }).catch(() => res.status(404).jsend.fail({
+      code: 404,
+      message: 'Order requested not found',
+    }));
+  }
 }
 
 export default OrderController;
