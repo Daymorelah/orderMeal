@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "set NODE_ENV=test&& mocha --exit --require babel-register --require babel-polyfill server/tests/index.js",
-    "start":"nodemon server/app.js --exec babel-node"
+    "start":"nodemon server/app.js --exec babel-node",
+    "test-coverage": "set NODE_ENV=test&& babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --exit server/tests/index.js",
+    "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
