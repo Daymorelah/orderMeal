@@ -54,6 +54,8 @@ class OrderController {
       message: 'Order requested not found',
     }));
   }
+
+  static updateOrderStatus() {}
 }
 
 export default OrderController;
