@@ -4,7 +4,10 @@
   "description": "A food-ordering service app for a restaurant",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "set NODE_ENV=test&& mocha --exit --require babel-register --require babel-polyfill server/Tests/index.js",
+    "start":"nodemon server/app.js --exec babel-node",
+    "test-coverage": "set NODE_ENV=test&& babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --exit server/Tests/index.js",
+    "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
