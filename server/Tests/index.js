@@ -33,4 +33,40 @@ describe('Integration test for the order model', () => {
         });
     });
   });
+  describe('Test to create an order', () => {
+    it('should create an order', (done) => {
+      const userDetails = {
+        name: 'jane Doe',
+        meal: 'Eba',
+        quantity: 2,
+        drink: 'Hollandia 1ltr',
+        prize: 300,
+        address: 'Ajegunle, Lagos Nigeria',
+      };
+      chai.request(app).post('/api/v1/orders')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(200);
+          expect(res.body.data.code).to.deep.equal(200);
+          expect(res.body.status).to.deep.equal('success');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should send error message when ivalid object is passed', (done) => {
+      const userDetails = {
+        drink: 'Hollandia 1ltr',
+        prize: 300,
+        address: 'Ajegunle, Lagos Nigeria',
+      };
+      chai.request(app).post('/api/v1/orders')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(500);
+          expect(res.body.status).to.deep.equal('error');
+          expect(res.body).to.have.property('message');
+          done();
+        });
+    });
+  });
 });
