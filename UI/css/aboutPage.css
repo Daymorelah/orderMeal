@@ -25,19 +25,53 @@ body {
 h1,p,h2 {
   margin: 0;
 }
+/* Dsign navigation */
 nav{
   background: var(--dark);
-  padding-left: 0.5em;
+  display: flex;
+  justify-content: space-between;
 }
-#logo a {
+#logo a, #large-width-nav a, #small-width-nav a, #hamburger, #meal-number {
   text-decoration: none;
   color: var(--primary);
-  display: inline-block;
-  border: 2px solid var(--primary-light);
+  display: block;
   padding: 0.5em;
   margin: 0.5em;
   font-size: 1em;
   font-weight: 800;
+  text-transform: capitalize;
+}
+#logo a {
+  border: 2px solid var(--primary-light);
+  align-self: center;
+}
+#large-width-nav #active {
+  background: var(--primary-light);
+  color: var(--dark)
+}
+#large-width-nav {
+  display: none;
+}
+#large-width-nav a:hover {
+  background: var(--primary);
+  color: var(--dark);
+}
+#small-width-nav {
+  position: absolute;
+  transform: translate(-280px, 0);
+  transition: transform 0.3s ease;
+  width: 200px;
+  background: var(--primary-light);
+}
+#small-width-nav a {
+  color: var(--dark);
+  font-size: 1.3em;
+  border-bottom: 2px solid var(--dark);
+  display: block;
+  margin: 0;
+}
+#small-width-nav.open {
+  transform: translate(0, 0);
 }
 #welcome-text {
   background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/about-us.jpeg');
@@ -171,6 +205,19 @@ button {
     padding-top: 0.3em;
   }
 }
+@media screen and (min-width: 630px) {
+  #hamburger, #small-width-nav {
+    display: none;
+  }
+  #large-width-nav {
+    display: block;
+  }
+  #large-width-nav a {
+    display: inline-block;
+    margin: 0 0.5em;
+    padding: 1.2em;
+  }
+}
 @media screen and (min-width: 638px) {
   #reason-container,
   #how-it-works-container {
@@ -246,7 +293,7 @@ button {
   }
 }
 @media screen and (min-width: 780px) {
-  #logo,#reason-to-choose,#accolade,#how-it-works,#summary,#sub-container {
+  #reason-to-choose,#accolade,#how-it-works,#summary,#sub-container {
     width: 80%;
     margin: auto;
   }
