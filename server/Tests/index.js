@@ -25,10 +25,9 @@ describe('Integration test for the order model', () => {
     it('should return all orders', (done) => {
       chai.request(app).get('/api/v1/orders')
         .end((err, res) => {
-          expect(res.status).to.deep.equal(200);
           expect(res.body.data.code).to.deep.equal(200);
-          expect(res.body.status).to.deep.equal('success');
           expect(res.body.data).to.have.property('mealsOrdered');
+          expect(res.body.status).to.deep.equal('success');
           done();
         });
     });
@@ -74,10 +73,10 @@ describe('Integration test for the order model', () => {
     it('should return details of the order requested', (done) => {
       chai.request(app).get('/api/v1/orders/2')
         .end((err, res) => {
-          expect(res.status).to.deep.equal(200);
-          expect(res.body.data.code).to.deep.equal(200);
-          expect(res.body.status).to.deep.equal('success');
           expect(res.body.data).to.have.property('order');
+          expect(res.status).to.deep.equal(200);
+          expect(res.body.status).to.deep.equal('success');
+          expect(res.body.data.code).to.deep.equal(200);
           done();
         });
     });
@@ -85,8 +84,8 @@ describe('Integration test for the order model', () => {
       chai.request(app).get('/api/v1/orders/12')
         .end((err, res) => {
           expect(res.status).to.deep.equal(404);
-          expect(res.body.data.code).to.deep.equal(404);
           expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data.code).to.deep.equal(404);
           expect(res.body.data).to.have.property('message');
           done();
         });
@@ -114,10 +113,10 @@ describe('Integration test for the order model', () => {
       chai.request(app).put('/api/v1/orders/14')
         .send(userDetails)
         .end((err, res) => {
-          expect(res.status).to.deep.equal(404);
-          expect(res.body.data.code).to.deep.equal(404);
           expect(res.body.status).to.deep.equal('fail');
           expect(res.body.data).to.have.property('message');
+          expect(res.status).to.deep.equal(404);
+          expect(res.body.data.code).to.deep.equal(404);
           done();
         });
     });
