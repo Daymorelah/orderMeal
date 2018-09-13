@@ -35,6 +35,22 @@ class OrderController {
       code: 500,
     }));
   }
+
+  static getAnOrder(req, res) {
+    const { orderId } = req.params;
+    new Promise((resolve, reject) => {
+      const orderRequested = orderModel.find(order => order.id === parseInt(orderId, 0));
+      if (orderRequested === undefined) reject();
+      else {
+        resolve(orderRequested);
+      }
+    }).then((order) => {
+      res.jsend.success({
+        code: 200,
+        order,
+      });
+    });
+  }
 }
 
 export default OrderController;
