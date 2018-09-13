@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Integration test for the order model', () => {
-  describe('Test for handling invalid YRLs', () => {
+  describe('Test for handling invalid URLs', () => {
     it('should return a page not found for invalid URLs', (done) => {
       chai.request(app).get('/api/v1/order')
         .end((err, res) => {
@@ -42,6 +42,7 @@ describe('Integration test for the order model', () => {
         drink: 'Hollandia 1ltr',
         prize: 300,
         address: 'Ajegunle, Lagos Nigeria',
+        completed: false,
       };
       chai.request(app).post('/api/v1/orders')
         .send(userDetails)
@@ -82,6 +83,36 @@ describe('Integration test for the order model', () => {
     });
     it('should return not found if the order requested for does not exist', (done) => {
       chai.request(app).get('/api/v1/orders/12')
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(404);
+          expect(res.body.data.code).to.deep.equal(404);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+  });
+  describe('Tests to update status of an order', () => {
+    it('should update the status of a order', (done) => {
+      const userDetails = {
+        completed: true,
+      };
+      chai.request(app).put('/api/v1/orders/3')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(200);
+          expect(res.body.data.code).to.deep.equal(200);
+          expect(res.body.status).to.deep.equal('success');
+          expect(res.body.data).to.have.property('order');
+          done();
+        });
+    });
+    it('should return not found when order requested is invalid', (done) => {
+      const userDetails = {
+        completed: true,
+      };
+      chai.request(app).put('/api/v1/orders/14')
+        .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(404);
           expect(res.body.data.code).to.deep.equal(404);
