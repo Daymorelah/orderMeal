@@ -39,7 +39,7 @@ class OrderController {
   static getAnOrder(req, res) {
     const { orderId } = req.params;
     new Promise((resolve, reject) => {
-      const orderRequested = orderModel.find(order => order.id === parseInt(orderId, 0));
+      const orderRequested = orderModel.find(order => order.id === parseInt(orderId, 10));
       if (orderRequested === undefined) reject();
       else {
         resolve(orderRequested);
@@ -49,7 +49,10 @@ class OrderController {
         code: 200,
         order,
       });
-    });
+    }).catch(() => res.status(404).jsend.fail({
+      code: 404,
+      message: 'Order requested not found',
+    }));
   }
 }
 
