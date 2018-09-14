@@ -54,7 +54,7 @@ h3 {
 
 #button {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 90%;
   margin: 1rem auto;
 }
@@ -69,6 +69,7 @@ h3 {
   background: var(--primary);
   color: var(--dark);
   text-transform: capitalize;
+  font-weight: 900;
 }
 
 @media screen and (min-width: 380px) {
@@ -111,6 +112,7 @@ h3 {
     margin: auto;
   }
   #button {
-    width: 80%;
+    width: 70%;
+    margin: 0 auto;
   }
 }
