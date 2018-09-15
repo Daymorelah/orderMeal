@@ -197,7 +197,7 @@ nav{
 }
 .meal-details p {
   color: var(--dark);
-  font-size: 1.8em;
+  font-size: 1.3em;
   margin-top: 0.3em;
 }
 .meal-property {
@@ -210,18 +210,21 @@ nav{
 /* pagination */
 #paginate {
   text-align: center;
-  font-size: 1.4em;
+  margin: 2em 0;
+  display: flex;
+  justify-content: center;
 }
 .page {
-  color: var(--primary-light);
-  background: var(--dark);
   display: inline-block;
-  padding: 0.7em;
-  margin: 0.4em 0.2em;
-  border-radius: 60%;
+  font-size: 1em;
+  padding: 0.3em;
+  width: 2em;
+  margin-right: 2%;
+  background: var(--dark);
+  color: var(--primary-light);
+  border-radius: 50%;
 }
 .page a {
-  text-decoration: none;
   color: var(--primary-light);
 }
 /* footer */
@@ -357,9 +360,11 @@ nav{
   }
   .meals {
     margin-top: 1.5em;
+    height: 300px;
+    width: 40%;
   }
   .meals img {
-    height: 45%;
+    height: 40%;
   }
   #hamburger, #small-width-nav {
     display: none;
@@ -435,7 +440,8 @@ nav{
     font-size: 1em;
   }
   .meals {
-    width: 33%;
+    width: 31%;
+    height: 300px;
   }
   #meals-ordered {
     width: 95%;
@@ -455,6 +461,7 @@ nav{
   }
   .meals {
     width: 31%;
+    height: 300px;
   }
   #filter {
     width: 93%;
