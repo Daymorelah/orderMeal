@@ -18,7 +18,7 @@ html,body{
   height: 100%;
 }
 body {
-  background: var(--primary);
+  background: var(--light);
   color: var(--dark);
   font-family: 'Roboto Condensed', sans-serif; 
 }
@@ -29,33 +29,35 @@ h1,p,h2,h3 {
   width: 75%;
   margin: auto;
 }
+#page-container {
+  margin-bottom: 6em;
+}
 /* Navigation */
 nav{
-  background: var(--dark);
+  background: var(--primary);
   padding: 0.5em;
   display: flex;
   justify-content: space-between;
 }
 #logo a {
   text-decoration: none;
-  color: var(--primary);
+  color: var(--dark);
   display: block;
   padding: 0.5em;
   margin: 0.5em;
   font-size: 1em;
   font-weight: 800;
   text-transform: capitalize;
-  border: 2px solid var(--primary-light);
+  border: 2px solid var(--dark);
   align-self: center;
 }
 /* meal search */
 #search-meal-container {
-  margin: 3.5em 0;
+  margin-top: 3.5em;
 }
 #search-meal-container input {
   width: 60%;
-  height: 3em;
-  font: 'Roboto Condensed', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   color: var(--dark);
   padding: 8px;
   border-radius: 8px;
@@ -65,11 +67,10 @@ nav{
 #search-meal-icon {
   display: inline-block;
   width: 8%;
-  font-size: 1.8em;
+  font-size: 1.2em;
   text-align: center;
 }
 #filter {
-  height: 2.5em;
   border: none;
   outline: none;
   padding: 4px;
@@ -78,7 +79,7 @@ nav{
 }
 /* meal ordered card */
 #ordered-meal-text {
-  margin: 1em 0;
+  margin-top: 1em;
   padding: 1em 0;
   font-size: 1.2em;
   text-transform: capitalize;
@@ -90,7 +91,7 @@ nav{
   margin-bottom: 1.5em;
 }
 .meal-cards {
-  background: var(--primary-light);
+  background: var(--primary);
   border-radius: 8px;
   width: 30%;
   margin-right: 3%;
@@ -101,6 +102,9 @@ nav{
   padding: 0.5em 1em;
   display: flex;
   justify-content: space-between;
+}
+.card-heading-icon {
+  align-self: center;
 }
 .meal-property {
   font-weight: 900;
@@ -113,8 +117,8 @@ nav{
 /* meal card footer */ 
 .card-footer {
   display: flex;
-  justify-content: space-between;
-  width: 60%;
+  justify-content: space-evenly;
+  width: 50%;
   margin: 0.8em auto;
 }
 button {
@@ -154,10 +158,14 @@ button {
 /* footer */
 #footer {
   text-align: center;
-  background: var(--dark);
-  color: var(--primary-light);
+  background: var(--primary);
+  color: var(--dark);
   font-size: 1.3em;
   padding: 0.5em;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  position: fixed;
 }
 #footer p {
   margin: 0;
@@ -165,5 +173,88 @@ button {
 @media screen and (min-width: 910px) { 
   nav {
     padding: 0 2em;
+  }
+}
+@media screen and (max-width: 1050px) {
+  .card-footer {
+    width: 70%;
+  }
+  h2{
+    font-size: 1.2em;
+  }
+}
+@media screen and (max-width: 960px) {
+  h2 {
+    font-size: 1em;
+  }
+}
+@media screen and (max-width: 860px) {
+  .container {
+    width: 85%;
+    margin: auto;
+  }
+  #meal-card-container {
+    justify-content: space-evenly;
+  }
+  .card-footer {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 780px) {
+  .container {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 670px) {
+  .container {
+    width: 80%;
+  }
+  .meal-cards {
+    width: 45%;
+  }
+}
+@media screen and (max-width: 580px) {
+  #search-meal-card-container input {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 536px) {
+  .container {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .container {
+    width: 70%;
+  }
+  .meal-cards {
+    width: 80%;
+  }
+  .meal-property {
+    font-size: 1.3em;
+  }
+  .card-footer {
+    width: 65%;
+  }
+  #search-meal-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  #filter {
+    width: 80%;
+    margin-top: 0.5em;
+  }
+  #search-meal-container input {
+    width: 60%;
+  }
+  #search-meal-icon {
+    width: 10%;
+    align-self: center;
+  }
+}
+@media screen and (max-width: 385px) {
+  .container {
+    width: 90%;
   }
 }
