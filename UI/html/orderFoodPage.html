@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
+  <title>Order-Meal | Order-Food page</title>
+  <link rel="stylesheet" href="../css/orderFoodPage.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div id="logo">
+        <a href="./loginPage.html">O-Meal</a>
+      </div>
+      <div id="large-width-nav">
+        <a href="./userProfile.html">Profile</a>
+        <a id="active" href="./orderFoodPage.html">Order</a>
+        <a href="./aboutPage.html">About</a>
+        <a href="./loginPage.html">Logout</a>
+      </div>
+      <div id="nav-menu">
+        <span id="hamburger">
+          <i class="fas fa-bars fa-2x"></i>
+        </span>
+      </div>
+    </nav>
+    <div id="small-width-nav">
+      <a href="./userProfile.html">Profile</a>
+      <a href="./orderFoodPage.html">Order</a>
+      <a href="./aboutPage.html">About</a>
+      <a href="./loginPage.html">Logout</a>
+    </div>
+  </header>
+  <section id="heading-text-container">
+    <div id="heading-container">
+      <div id="heading">
+        <h1>Lorem ipsum dolor sit amet consectetur.</h1>
+        <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet, temporibus?</h3>
+      </div>
+    </div>
+  </section>
+  <section id="order-foord-from-container">
+    <div id="order-form-container">
+      <div id="form-header-text">
+        <h3>please create your order</h3>
+      </div>
+      <div id="order-form">
+        <form action="#">
+          <label for="username">Name: </label>
+          <input type="text" id="username" placeholder="Enter your name">
+          <label for="meal">Meal: </label>
+          <select id="meal">
+            <option value="">Choose a meal</option>
+            <option value="french-fries">French-fries</option>
+            <option value="ofada-ride">Ofada rice</option>
+            <option value="spaghetti">Spaghetti</option>
+            <option value="fried-rice">Fried-rice</option>
+          </select>
+          <label for="refreshment">Refreshment: </label>
+          <select id="refreshment">
+            <option value="">Choose a refreshment</option>
+            <option value="Coke">Coca-Cola 50cl</option>
+            <option value="sprite">Sprite 50cl</option>
+            <option value="hollandia">Hollandia 1ltr</option>
+            <option value="five-alive">Five Alive 1ltr</option>
+          </select>
+          <label for="prize">Prize: </label>
+          <input type="text" id="prize" value="&#8358; 400" readonly>
+          <label for="address">Address: </label>
+          <textarea id="address" cols="25" rows="5">Where would you wan your order delivered?
+          </textarea>
+          <button type="submit" id="create-button">create order</button>
+          <button type="button" id="cancel-button">cancel order</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div id="footer">
+      <p>Designed by Hussain A.I &copy; 2018</p>
+    </div>
+  </footer>
+  <script src="../js/orderFoodPage.js"></script>
+</body>
+
+</html>
+<!-- make admin page responsive -->

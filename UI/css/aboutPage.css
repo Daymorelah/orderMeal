@@ -25,6 +25,7 @@ body {
 h1,p,h2 {
   margin: 0;
 }
+/* Dsign navigation */
 nav{
   background: var(--primary);
   padding-left: 1em;
@@ -45,7 +46,7 @@ nav{
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
-  height: 15vh;
+  height: 25vh;
   color: var(--primary);
   display: flex;
   justify-content:flex-start;
@@ -164,6 +165,9 @@ button {
 }
 
 @media screen and (min-width: 418px) {
+  nav {
+    padding-left: 0.8em;
+  }
   #reason-to-choose,
   #how-it-works {
     width: 95%;
@@ -191,6 +195,19 @@ button {
   #sub-container {
     width: 80%;
     margin: auto;
+  }
+}
+@media screen and (min-width: 630px) {
+  #hamburger, #small-width-nav {
+    display: none;
+  }
+  #large-width-nav {
+    display: block;
+  }
+  #large-width-nav a {
+    display: inline-block;
+    margin: 0 0.5em;
+    padding: 1.2em;
   }
 }
 @media screen and (min-width: 638px) {

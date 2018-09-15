@@ -28,7 +28,6 @@ body {
 
 nav{
   background: var(--dark);
-  padding-left: 2em; 
 }
 #form-container {
   padding: 1em 0.5em;;
@@ -40,7 +39,6 @@ nav{
   border: 2px solid var(--primary-light);
   padding: 0.5em;
   margin: 0.5em;
-  margin-left: 2em;
   font-size: 1em;
   font-weight: 800;
 }
@@ -97,18 +95,27 @@ button {
 }
 
 @media screen and (min-width: 360px) {
+  nav {
+    padding-left: 0.8em;
+  }
   #form-container {
     width: 95%;
     margin: auto;
   }
 }
 @media screen and (min-width: 420px) {
+  nav {
+    padding-left: 1.1em;
+  }
   #form-container {
     width: 90%;
     margin: auto;
   }
 }
 @media screen and (min-width: 480px) {
+   nav {
+    padding-left: 2.5em;
+  }
   #signup-form {
     width: 90%;
     margin: auto;
@@ -128,6 +135,9 @@ button {
   }
 }
 @media screen and (min-width: 830px) {
+  nav {
+    padding-left: 3em;
+  }
   #header-text {
     width: 80%;
     margin: auto;

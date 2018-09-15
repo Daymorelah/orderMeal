@@ -3,9 +3,9 @@ const loginButton = document.querySelector('#login-button');
 
 signupForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  window.location = `${location.origin}/UI/html/homePage.html`;
+  window.location = './userProfile.html';
 });
 
 loginButton.addEventListener('click', () => {
-  window.location = `${location.origin}/UI/html/loginPage.html`;
+  window.location = './loginPage.html';
 });
