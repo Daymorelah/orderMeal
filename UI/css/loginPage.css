@@ -29,16 +29,8 @@ body {
 nav{
   background: var(--dark);
 }
-#page-contaniner {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: auto;
-  width: 90%;
-  margin-bottom: 4em;
-}
 #form-container {
-  margin: 5vh 0;
+  padding: 1em 0.5em;;
 }
 #logo a {
   text-decoration: none;
@@ -53,45 +45,40 @@ nav{
 #header-text {
   text-align: center;
   margin-bottom: 1.8em;
-  text-transform: capitalize;
 }
-#signup-form {
-  background: var(--primary-light);
-  border-radius: 8px;
-  padding: 1.5em 0;
-  width: 95%;
-  margin: auto;
-}
-#signup-form h2 {
+#login-form h2 {
   text-transform: capitalize;
   text-align: center;
-  margin: 0.5em 0;
+  margin: 0.5em;
   font-size: 1.8em;
   margin-bottom: 0.2em;
 }
-input {
-  width: 90%;
+input, label {
+  width: 100%;
+  height: 1.8em;
   border: none;
   outline: none;
-  padding: 0.3em 0.8em;
+  padding: 0.3em;
   font-size: 1.5em;
-  margin: 0.5em;
-  font-family: 'Roboto Condensed', sans-serif;
-  background: none;
-  border-bottom: 1px solid var(--dark);
+  margin-bottom: 0.5em;
+  font-family: 'Roboto Condensed', sans-serif; 
+}
+label {
+  text-align: left;
+  font-weight: 800;
 }
 button {
   outline: none;
   border: none;
   background: var(--primary);
   color: var(--dark);
-  border-radius: 0.3em;
-  display: block;
-  width: 80%;
+  border-radius: 0.5em;
+  display: inline-block;
+  width: 100%;
   font-family: 'Roboto Condensed', sans-serif;
-  height: 1.8em;
-  padding: 0.4em;
-  margin: 0.5em auto;
+  height: 2.5em;
+  padding: 0.5em;
+  margin: 0.3em 0;
   font-size: 1.5em;
   font-weight: 900;
   cursor: pointer;
@@ -102,22 +89,25 @@ button {
   color: var(--primary-light);
   font-size: 1.3em;
   padding: 0.5em;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
 }
 #footer p {
   margin: 0;
 }
 
+@media screen and (min-height: 603px) {
+  #footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}
 @media screen and (min-width: 360px) {
   nav {
     padding-left: 0.8em;
   }
   #form-container {
-    width: 90%;
-    margin: 5vh auto;
+    width: 95%;
+    margin: auto;
   }
 }
 @media screen and (min-width: 420px) {
@@ -125,66 +115,50 @@ button {
     padding-left: 1.1em;
   }
   #form-container {
-    width: 80%;
-    margin: 10vh auto;
+    width: 90%;
+    margin: auto;
   }
 }
 @media screen and (min-width: 480px) {
-   nav {
+  nav {
     padding-left: 2.5em;
   }
-  #signup-form {
-    width: 85%;
-    margin: auto;
-  }
-  form{
-    width:95%;
+  #login-form {
+    width: 90%;
     margin: auto;
   }
 }
 @media screen and (min-width: 590px) {
-  #form-container {
-    width: 70%;
-    margin: 10vh auto;
-  }
-  form{
-    width: 85%;
+  #form-container,
+  #login-form {
+    width: 80%;
     margin: auto;
   }
 }
-@media screen and (min-width: 710px) {
-  #form-container {
-    width: 70%;
-    margin: 10vh auto;
+@media screen and (min-width: 720px) {
+  #header-text,
+  #login-form {
+    padding: 0 1.5em;
+  }
+}
+@media screen and (min-width: 830px) {
+  nav {
+    padding-left: 3em;
   }
   #header-text {
     width: 80%;
-    margin: auto;
-    margin-bottom: 1.8em;
-  }
-@media screen and (min-width: 780px) {
-  #header-text {
-    width: 80%;
-    margin: auto;
-  }
-  #signup-form {
-    width: 70%;
     margin: auto;
   }
   form {
     width: 80%;
     margin: auto;
+    padding: 1em;
   }
 }
 @media screen and (min-width: 1030px) {
-  #form-container {
-    width: 60%;
-    margin: 10vh auto;
-  }
-}
-@media screen and (min-width: 1210px) {
-  #form-container {
-    width: 50%;
-    margin: 10vh auto;
+  #header-text,
+  #login-form {
+    width: 70%;
+    margin: auto;
   }
 }
