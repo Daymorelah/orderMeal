@@ -29,8 +29,16 @@ body {
 nav{
   background: var(--primary);
 }
+#page-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto;
+  width: 90%;
+  margin-bottom: 4em;
+}
 #form-container {
-  padding: 1em 0.5em;;
+  margin: 5vh 0;
 }
 #logo a {
   text-decoration: none;
@@ -45,40 +53,48 @@ nav{
 #header-text {
   text-align: center;
   margin-bottom: 1.8em;
+  text-transform: capitalize;
+}
+#header-text h1 {
+  font-size: 1.8em;
+}
+#login-form {
+  padding: 1.5em 0;
+  background: var(--primary-light);
+  border-radius: 8px;
 }
 #login-form h2 {
   text-transform: capitalize;
   text-align: center;
-  margin: 0.5em;
+  margin: 0.5em 0;
   font-size: 1.8em;
-  margin-bottom: 0.2em;
 }
-input, label {
-  width: 100%;
-  height: 1.8em;
+input {
+  width: 90%;
   border: none;
   outline: none;
-  padding: 0.3em;
+  padding: 0.3em 0.8em;;
   font-size: 1.5em;
-  margin-bottom: 0.5em;
+  margin: 0.5em;
   font-family: 'Roboto Condensed', sans-serif; 
 }
-label {
-  text-align: left;
-  font-weight: 800;
+#username, #password {
+  background: none;
+  border-bottom: 1px solid var(--dark);
 }
 button {
   outline: none;
   border: none;
   background: var(--primary);
   color: var(--dark);
-  border-radius: 0.5em;
-  display: inline-block;
-  width: 100%;
+  border-radius: 0.3em;
+  display: block;
+  width: 80%;
   font-family: 'Roboto Condensed', sans-serif;
-  height: 2.5em;
-  padding: 0.5em;
-  margin: 0.3em 0;
+  height: 1.8em;
+  padding: 0.4em;
+  margin: 0.5em auto;
+  text-align: center;
   font-size: 1.5em;
   font-weight: 900;
   cursor: pointer;
@@ -88,28 +104,25 @@ button {
   background: var(--primary);
   font-size: 1.3em;
   padding: 0.5em;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 #footer p {
   margin: 0;
 }
 
-@media screen and (min-height: 603px) {
-  #footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-  }
-}
 @media screen and (min-width: 360px) {
   #form-container {
-    width: 95%;
-    margin: auto;
+    width: 90%;
+    margin: 5vh auto;
   }
 }
 @media screen and (min-width: 420px) {
   #form-container {
-    width: 90%;
-    margin: auto;
+    width: 80%;
+    margin: 10vh auto;
   }
 }
 @media screen and (min-width: 480px) {
@@ -118,34 +131,49 @@ button {
     margin: auto;
   }
 }
-@media screen and (min-width: 590px) {
-  #form-container,
-  #login-form {
-    width: 80%;
-    margin: auto;
+@media screen and (min-width: 500px) {
+  #form-container {
+    width: 70%;
+    margin: 10vh auto;
   }
 }
-@media screen and (min-width: 720px) {
-  #header-text,
-  #login-form {
-    padding: 0 1.5em;
-  }
-}
-@media screen and (min-width: 830px) {
-  #header-text {
-    width: 80%;
-    margin: auto;
+@media screen and (min-width: 600px) {
+  #form-container {
+    width: 60%;
+    margin: 10vh auto;
   }
   form {
-    width: 80%;
+    width: 95%;
     margin: auto;
     padding: 1em;
   }
 }
-@media screen and (min-width: 1030px) {
-  #header-text,
-  #login-form {
-    width: 70%;
+@media screen and (min-width: 710px) {
+  #form-container {
+    width: 55%;
+    margin: 10vh auto;
+  }
+  #header-text {
+    width: 80%;
     margin: auto;
+  }
+  
+}
+@media screen and (min-width: 840px) {
+  #form-container {
+    width: 50%;
+    margin: 10vh auto;
+  }
+}
+@media screen and (min-width: 1060px) {
+  #form-container {
+    width: 40%;
+    margin: 10vh auto;
+  }
+}
+@media screen and (min-width: 1260px) {
+  #form-container {
+    width: 35%;
+    margin: 10vh auto;
   }
 }
