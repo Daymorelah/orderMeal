@@ -37,11 +37,10 @@ describe('Integration test for the order model', () => {
       const userDetails = {
         name: 'jane Doe',
         meal: 'Eba',
-        quantity: 2,
+        quantity: '2',
         drink: 'Hollandia 1ltr',
-        prize: 300,
+        prize: '300',
         address: 'Ajegunle, Lagos Nigeria',
-        completed: false,
       };
       chai.request(app).post('/api/v1/orders')
         .send(userDetails)
@@ -53,18 +52,56 @@ describe('Integration test for the order model', () => {
           done();
         });
     });
-    it('should send error message when ivalid object is passed', (done) => {
+    it('should return invalid request when a string field has a non-string value', (done) => {
       const userDetails = {
+        name: 'jane Doe',
+        meal: '55',
+        quantity: '2',
         drink: 'Hollandia 1ltr',
-        prize: 300,
+        prize: '300',
         address: 'Ajegunle, Lagos Nigeria',
       };
       chai.request(app).post('/api/v1/orders')
         .send(userDetails)
         .end((err, res) => {
-          expect(res.status).to.deep.equal(500);
-          expect(res.body.status).to.deep.equal('error');
-          expect(res.body).to.have.property('message');
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should return invalid request when an integer field has a non-integer value', (done) => {
+      const userDetails = {
+        name: 'jane Doe',
+        meal: 'Eba',
+        quantity: '2',
+        drink: 'Hollandia 1ltr',
+        prize: 'too costly',
+        address: 'Ajegunle, Lagos Nigeria',
+      };
+      chai.request(app).post('/api/v1/orders')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should send error message when ivalid object is passed', (done) => {
+      const userDetails = {
+        drink: 'Hollandia 1ltr',
+        prize: '300',
+        address: 'Ajegunle, Lagos Nigeria',
+      };
+      chai.request(app).post('/api/v1/orders')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
           done();
         });
     });
@@ -77,6 +114,26 @@ describe('Integration test for the order model', () => {
           expect(res.status).to.deep.equal(200);
           expect(res.body.status).to.deep.equal('success');
           expect(res.body.data.code).to.deep.equal(200);
+          done();
+        });
+    });
+    it('should return invalid request when order requested is not given', (done) => {
+      chai.request(app).get('/api/v1/orders/ /')
+        .end((err, res) => {
+          expect(res.body.data).to.have.property('message');
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data.code).to.deep.equal(400);
+          done();
+        });
+    });
+    it('should return invalid request when orderId is not an integer', (done) => {
+      chai.request(app).get('/api/v1/orders/we/')
+        .end((err, res) => {
+          expect(res.body.data).to.have.property('message');
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data.code).to.deep.equal(400);
           done();
         });
     });
@@ -94,7 +151,7 @@ describe('Integration test for the order model', () => {
   describe('Tests to update status of an order', () => {
     it('should update the status of a order', (done) => {
       const userDetails = {
-        completed: true,
+        isCompleted: 'true',
       };
       chai.request(app).put('/api/v1/orders/3')
         .send(userDetails)
@@ -106,9 +163,48 @@ describe('Integration test for the order model', () => {
           done();
         });
     });
+    it('should return invalid request when request body is not a boolean', (done) => {
+      const userDetails = {
+        isCompleted: '1',
+      };
+      chai.request(app).put('/api/v1/orders/wrong')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should return invalid request when orderId is not an integer', (done) => {
+      const userDetails = {
+        isCompleted: 'true',
+      };
+      chai.request(app).put('/api/v1/orders/wrong')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should return invalid request when request body is an empty object', (done) => {
+      chai.request(app).put('/api/v1/orders/3')
+        .send({})
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
     it('should return not found when order requested is invalid', (done) => {
       const userDetails = {
-        completed: true,
+        isCompleted: 'true',
       };
       chai.request(app).put('/api/v1/orders/14')
         .send(userDetails)

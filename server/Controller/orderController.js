@@ -3,6 +3,12 @@ import orderModel from '../Model';
 import getOrder from '../Utilities/helpers';
 
 class OrderController {
+  /**
+   * 
+   * @param {object} req - request object 
+   * @param {object} res - response object
+   * @returns {object} res - response from the server
+   */
   static getAllOrders(req, res) {
     res.jsend.success({
       code: 200,
@@ -10,6 +16,12 @@ class OrderController {
     });
   }
 
+  /**
+   * 
+   * @param {object} req - request object 
+   * @param {object} res - response object
+   * @returns {object} res - response from the server
+   */
   static createOrder(req, res) {
     const currentNumberOfOrders = orderModel.length;
     const orderToCreate = req.body;
@@ -21,6 +33,7 @@ class OrderController {
       drink: orderToCreate.drink,
       prize: orderToCreate.prize,
       address: orderToCreate.address,
+      isCompleted: false,
     };
     new Promise((resolve, reject) => {
       if (orderToCreate.name === undefined) reject();
@@ -30,13 +43,20 @@ class OrderController {
       res.jsend.success({
         code: 200,
         message: 'Order created succesfully',
+        orderCreated,
       });
-    }).catch(() => res.status(500).jsend.error({
+    }).catch(() => res.status(400).jsend.error({
       message: 'Order could not be created',
-      code: 500,
+      code: 400,
     }));
   }
 
+  /**
+   * 
+   * @param {object} req - request object 
+   * @param {object} res - response object
+   * @returns {object} res - response from the server
+   */
   static getAnOrder(req, res) {
     const { orderId } = req.params;
     new Promise((resolve, reject) => {
@@ -56,9 +76,15 @@ class OrderController {
     }));
   }
 
+  /**
+   * 
+   * @param {object} req - request object 
+   * @param {object} res - response object
+   * @returns {object} res - response from the server
+   */
   static updateOrderStatus(req, res) {
     const { orderId } = req.params;
-    const completed = req.body;
+    const { isCompleted } = req.body;
     new Promise((resolve, reject) => {
       const orderRequested = getOrder(orderId);
       if (orderRequested === undefined) reject();
@@ -67,8 +93,8 @@ class OrderController {
       }
     }).then((order) => {
       const updatedOrder = order;
-      if (completed) {
-        updatedOrder.completed = true;
+      if (isCompleted) {
+        updatedOrder.isCompleted = isCompleted;
         orderModel.splice(updatedOrder.id, 1, updatedOrder);
       }
       res.jsend.success({
