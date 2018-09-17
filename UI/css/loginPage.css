@@ -21,13 +21,13 @@ html,body{
 }
 
 body {
-  background: var(--primary-light);
+  background: var(--light);
   color: var(--dark);
   font-family: 'Roboto Condensed', sans-serif; 
 }
 
 nav{
-  background: var(--dark);
+  background: var(--primary);
 }
 #page-container {
   display: flex;
@@ -42,9 +42,9 @@ nav{
 }
 #logo a {
   text-decoration: none;
-  color: var(--primary);
+  color: var(--dark);
   display: inline-block;
-  border: 2px solid var(--primary-light);
+  border: 2px solid var(--dark);
   padding: 0.5em;
   margin: 0.5em;
   font-size: 1em;
@@ -101,8 +101,7 @@ button {
 }
 #footer {
   text-align: center;
-  background: var(--dark);
-  color: var(--primary-light);
+  background: var(--primary);
   font-size: 1.3em;
   padding: 0.5em;
   position: fixed;
@@ -115,27 +114,18 @@ button {
 }
 
 @media screen and (min-width: 360px) {
-  nav {
-    padding-left: 0.8em;
-  }
   #form-container {
     width: 90%;
     margin: 5vh auto;
   }
 }
 @media screen and (min-width: 420px) {
-  nav {
-    padding-left: 1.1em;
-  }
   #form-container {
     width: 80%;
     margin: 10vh auto;
   }
 }
 @media screen and (min-width: 480px) {
-  nav {
-    padding-left: 2.5em;
-  }
   #login-form {
     width: 90%;
     margin: auto;
