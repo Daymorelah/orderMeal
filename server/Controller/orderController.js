@@ -58,7 +58,7 @@ class OrderController {
 
   static updateOrderStatus(req, res) {
     const { orderId } = req.params;
-    const completed = req.body;
+    const { isCompleted } = req.body;
     new Promise((resolve, reject) => {
       const orderRequested = getOrder(orderId);
       if (orderRequested === undefined) reject();
@@ -67,8 +67,8 @@ class OrderController {
       }
     }).then((order) => {
       const updatedOrder = order;
-      if (completed) {
-        updatedOrder.completed = true;
+      if (isCompleted) {
+        updatedOrder.isCompleted = isCompleted;
         orderModel.splice(updatedOrder.id, 1, updatedOrder);
       }
       res.jsend.success({

@@ -27,10 +27,39 @@ class Validate {
     } else {
       res.status(400).jsend.fail({
         code: 400,
-        message: 'Invalid user-input or request'
+        message: 'Invalid request. User-input required'
       });
     }
     
+  }
+
+  static validateUpdateOrderStatus(req, res, next) {
+    trimValues(req.params);
+    trimValues(req.body);
+    const { orderId } = req.params;
+    const { isCompleted } = req.body;
+    if (isCompleted && orderId) {
+      if (validate.isNumeric(orderId,{no_symbols: true}) && validate.isInt(orderId)) {
+        if (validate.isBoolean(isCompleted) && !validate.isNumeric(isCompleted)) {
+          next();
+        } else {
+          res.status(400).jsend.fail({
+            code: 400,
+            message: 'Invalid request. "isCompleted" should be a boolean.'
+          });
+        }
+      } else {
+        res.status(400).jsend.fail({
+          code: 400,
+          message: 'The order requested should be an integer and contain only numbers',
+        });
+      }
+    } else {
+      res.status(400).jsend.fail({
+        code: 400,
+        message: 'Invalid request. User-inputs required'
+      });
+    }
   }
 }
 
