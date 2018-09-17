@@ -3,6 +3,12 @@ import orderModel from '../Model';
 import getOrder from '../Utilities/helpers';
 
 class OrderController {
+  /**
+   * 
+   * @param {object} req - request object 
+   * @param {object} res - response object
+   * @returns {object} res - response from the server
+   */
   static getAllOrders(req, res) {
     res.jsend.success({
       code: 200,
@@ -10,6 +16,12 @@ class OrderController {
     });
   }
 
+  /**
+   * 
+   * @param {object} req - request object 
+   * @param {object} res - response object
+   * @returns {object} res - response from the server
+   */
   static createOrder(req, res) {
     const currentNumberOfOrders = orderModel.length;
     const orderToCreate = req.body;
@@ -39,6 +51,12 @@ class OrderController {
     }));
   }
 
+  /**
+   * 
+   * @param {object} req - request object 
+   * @param {object} res - response object
+   * @returns {object} res - response from the server
+   */
   static getAnOrder(req, res) {
     const { orderId } = req.params;
     new Promise((resolve, reject) => {
@@ -58,6 +76,12 @@ class OrderController {
     }));
   }
 
+  /**
+   * 
+   * @param {object} req - request object 
+   * @param {object} res - response object
+   * @returns {object} res - response from the server
+   */
   static updateOrderStatus(req, res) {
     const { orderId } = req.params;
     const { isCompleted } = req.body;
