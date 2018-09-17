@@ -295,7 +295,11 @@ button {
     margin-left: 3em;
     font-size: 1.8em;
   }
-  #logo,#reason-to-choose,#accolade,#how-it-works,#summary,#sub-container {
+  #logo {
+    width: 90%;
+    margin: auto;
+  }
+  #reason-to-choose,#accolade,#how-it-works,#summary,#sub-container {
     width: 80%;
     margin: auto;
   }
