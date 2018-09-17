@@ -1,11 +1,11 @@
-const signupForm = document.querySelector('form');
+const signupButton = document.querySelector('form');
 const loginButton = document.querySelector('#login-button');
 
-signupForm.addEventListener('submit', (event) => {
+signupButton.addEventListener('submit', (event) => {
   event.preventDefault();
-  window.location = './userProfile.html';
+  window.location = `${location.origin}/UI/html/homePage.html`;
 });
 
 loginButton.addEventListener('click', () => {
-  window.location = './loginPage.html';
+  window.location = `${location.origin}/UI/html/loginPage.html`;
 });
