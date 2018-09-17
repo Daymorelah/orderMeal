@@ -21,6 +21,7 @@ class OrderController {
       drink: orderToCreate.drink,
       prize: orderToCreate.prize,
       address: orderToCreate.address,
+      isCompleted: false,
     };
     new Promise((resolve, reject) => {
       if (orderToCreate.name === undefined) reject();
@@ -30,10 +31,11 @@ class OrderController {
       res.jsend.success({
         code: 200,
         message: 'Order created succesfully',
+        orderCreated,
       });
-    }).catch(() => res.status(500).jsend.error({
+    }).catch(() => res.status(400).jsend.error({
       message: 'Order could not be created',
-      code: 500,
+      code: 400,
     }));
   }
 

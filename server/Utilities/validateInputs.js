@@ -61,6 +61,35 @@ class Validate {
       });
     }
   }
+
+  static validateCreateOrder(req, res, next) {
+    trimValues(req.body);
+    const { name, meal, quantity, drink, prize, address } = req.body;
+    if (name && meal && quantity && drink && prize && address) {
+      if (validate.isAscii(name) && validate.isAscii(meal) &&
+          validate.isAscii(drink) && validate.isAscii(address)) {
+            if (validate.isNumeric(quantity,{no_symbols: true}) && validate.isInt(quantity) &&
+                validate.isNumeric(prize,{no_symbols: true}) && validate.isInt(prize)) {
+                  next();
+                } else {
+                  res.status(400).jsend.fail({
+                    code: 400, 
+                    message: 'Invalid request. Numeric fields should contain integers only.'
+                  });
+                }
+          } else {
+            res.status(400).jsend.fail({
+              code: 400, 
+              message: 'Invalid request. String fields should contain strings only.'
+            });
+          }
+    } else {
+      res.status(400).jsend.fail({
+        code: 400, 
+        message: 'Invalid request. All fields are required.'
+      });
+    }
+  }
 }
 
 export default Validate
