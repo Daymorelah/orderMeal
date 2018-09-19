@@ -8,12 +8,12 @@ if (process.env.DATABAE_URL) {
   pool = new Pool({ connectionString: process.env.DATABAE_URL });
 }
 
-/** Check if node environment is set to development */
+/** Check if node environment is set to development. (used for development) */
 if (process.env.NODE_ENV === 'development') {
   pool = new Pool(config.development);
 }
 
-/** Check if node environment is set to test */
+/** Check if node environment is set to test. (used for testing) */
 if (process.env.NODE_ENV === 'test') {
   pool = new Pool(config.test);
 }
