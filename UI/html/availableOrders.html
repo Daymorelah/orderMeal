@@ -19,7 +19,7 @@
       </div>
       <div id="large-width-nav">
         <a href="./mealsOrdered.html">Orders</a>
-        <a id="active"  href="./availableOrders.html">Available Orders</a>
+        <a id="active" href="./availableOrders.html">Available Orders</a>
       </div>
       <div id="nav-menu">
         <a id="logout" href="./loginPage.html">Logout</a>
@@ -29,15 +29,137 @@
       </div>
     </nav>
     <div id="small-width-nav">
-        <a href="./mealsOrdered.html">Orders</a>
-        <a href="./availableOrders.html">Available Orders</a>
-      </div>
+      <a href="./mealsOrdered.html">Orders</a>
+      <a href="./availableOrders.html">Available Orders</a>
+    </div>
   </header>
-  <footer>
-      <div id="footer">
-        <p>Designed by Hussain A.I &copy; 2018</p>
+  <main id="page-container">
+    <section id="search-container">
+      <div class="container">
+        <div id="search-meal-container">
+          <input type="text" id="seach-meal" placeholder="Search available meals">
+          <span id="search-meal-icon"><i class="fas fa-search"></i></span>
+          <select id="filter">
+            <option value="filter">fiter searh</option>
+            <option value="today">Meal</option>
+            <option value="today">Appetizer</option>
+            <option value="today">Refreshment</option>
+            <option value="today">Snacks</option>
+            <option value="yesterday">Desert</option>
+          </select>
+        </div>
       </div>
-    </footer>
+    </section>
+    <section id="ordered-meals-container">
+      <div class="container">
+        <div id="ordered-meal-text">
+          <h3>meals available | 6 </h3>
+          <h3 id="add-order">Add order</h3>
+        </div>
+        <div id="meal-card-container">
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">type: </span>Appetizer</h2>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">Appetizer: </span>fruit salad</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 300</p>
+            </div>
+            <div class="card-footer">
+              <button class="edit">edit</button>
+              <button class="decline">delete</button>
+            </div>
+          </div>
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">type: </span>Meal</h2>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">Meal: </span> jollof rice</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 500</p>
+            </div>
+            <div class="card-footer">
+              <button class="edit">edit</button>
+              <button class="decline">delete</button>
+            </div>
+          </div>
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">type: </span>desert</h2>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">desert: </span>Vanilla Ice-cream</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 500</p>
+            </div>
+            <div class="card-footer">
+              <button class="edit">edit</button>
+              <button class="decline">delete</button>
+            </div>
+          </div>
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">type: </span>Meal</h2>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">Meal: </span>spaghetti</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 600</p>
+            </div>
+            <div class="card-footer">
+              <button class="edit">edit</button>
+              <button class="decline">delete</button>
+            </div>
+          </div>
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">type: </span>desert</h2>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">desert: </span>sponge cake</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 400</p>
+            </div>
+            <div class="card-footer">
+              <button class="edit">edit</button>
+              <button class="decline">delete</button>
+            </div>
+          </div>
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">type: </span>meal</h2>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">meal: </span>ofada ride</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 500</p>
+            </div>
+            <div class="card-footer">
+              <button class="edit">edit</button>
+              <button class="decline">delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="paginate-container">
+      <div id="paginate">
+        <span class="page">1</span>
+        <span class="page">2</span>
+        <span class="page">3</span>
+        <span class="page">
+          <i class="fas fa-ellipsis-h"></i>
+        </span>
+        <span class="page">
+          <a href="#ordered-meal-text">
+            <i class="fas fa-chevron-up"></i>
+          </a>
+        </span>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div id="footer">
+      <p>Designed by Hussain A.I &copy; 2018</p>
+    </div>
+  </footer>
+  <script src="../js/availableOrders.js"></script>
 </body>
 
 </html>

@@ -22,11 +22,18 @@ body {
   color: var(--dark);
   font-family: 'Roboto Condensed', sans-serif;
 }
-h1,p,h3 {
+h1,p,h3,h2{
   margin: 0;
 }
 img {
   max-width: 100%;
+}
+.container {
+  width: 75%;
+  margin: auto;
+}
+#page-container {
+  margin-bottom: 6em;
 }
 /* Dsign navigation */
 nav{
@@ -82,6 +89,125 @@ nav{
 #small-width-nav.open {
   transform: translate(0, 0);
 }
+/* meal search */
+#search-meal-container {
+  margin-top: 3.5em;
+}
+#search-meal-container input {
+  width: 60%;
+  font-family: 'Roboto Condensed', sans-serif;
+  color: var(--dark);
+  padding: 8px;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+}
+#search-meal-icon {
+  display: inline-block;
+  width: 8%;
+  font-size: 1.2em;
+  text-align: center;
+}
+#filter {
+  border: none;
+  outline: none;
+  padding: 4px;
+  border-radius: 6px;
+  font-size: 1.2em;
+  font-family: 'Roboto Condensed', sans-serif;
+  color: var(--dark);
+}
+/* meal ordered card */
+#ordered-meal-text {
+  width: 95%;
+  margin-top: 1em;
+  padding: 1em 0;
+  font-size: 1.2em;
+  text-transform: capitalize;
+  display: flex;
+  justify-content: space-between;
+}
+#ordered-meal-text h3 {
+  padding: 0.5em;
+}
+#add-order {
+  color: #ffffff;
+  background: #8acc8a;
+  border-radius: 8px;
+}
+#meal-card-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 1.5em;
+}
+.meal-cards {
+  background: var(--primary);
+  border-radius: 8px;
+  width: 30%;
+  margin-right: 3%;
+  margin-top: 1em;
+  text-transform: capitalize;
+}
+.card-heading {
+  border-bottom: 1px solid var(--dark);
+  padding: 0.5em 1em;
+  display: flex;
+  justify-content: space-between;
+}
+.card-heading-icon {
+  align-self: center;
+}
+.meal-property {
+  font-weight: 900;
+  font-size: 1em;
+}
+.card-body {
+  padding: 0.5em 1em;
+  border-bottom: 1px solid var(--dark);
+}
+/* meal card footer */ 
+.card-footer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+  margin: 0.8em auto;
+}
+button {
+  border: none;
+  outline: none;
+  padding: 6px;
+  color: var(--primary-light);
+  border-radius: 8px;
+  text-transform: capitalize;
+}
+.edit {
+  background: #cfab5b;
+  width: 4em;
+}
+.decline {
+  background: #914a4a;
+}
+/* paginate */
+#paginate {
+  text-align: center;
+  margin: 2em 0;
+  display: flex;
+  justify-content: center;
+}
+.page {
+  display: inline-block;
+  font-size: 1em;
+  padding: 0.3em;
+  width: 1.8em;
+  margin-right: 2%;
+  background: var(--dark);
+  color: var(--primary-light);
+  border-radius: 50%;
+}
+.page a {
+  color: var(--primary-light);
+}
 /* footer */
 #footer {
   text-align: center;
@@ -109,5 +235,8 @@ nav{
     display: inline-block;
     margin: 0 0.5em;
     padding: 1.3em;
+  }
+  #logo {
+    margin: 0 2em;
   }
 }
