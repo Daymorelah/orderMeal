@@ -131,9 +131,10 @@ nav{
   padding: 0.5em;
 }
 #add-order {
-  color: #ffffff;
+  color: var(--primary-light);
   background: #8acc8a;
   border-radius: 8px;
+  cursor: pointer;
 }
 #meal-card-container {
   display: flex;
@@ -180,9 +181,10 @@ button {
   color: var(--primary-light);
   border-radius: 8px;
   text-transform: capitalize;
+  cursor: pointer;
 }
 .edit {
-  background: #cfab5b;
+  background: #538f53;
   width: 4em;
 }
 .decline {
@@ -207,6 +209,63 @@ button {
 }
 .page a {
   color: var(--primary-light);
+}
+/* modal */
+#addOrder-modal-container {
+  background: rgba(0,0,0,0.5);
+  color: var(--dark);
+  position: fixed;
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  -webkit-transition: display 5s ease;
+  transition: display 5s ease;
+}
+#modal-container {
+  padding: 1em;
+  width: 335px;
+  height: 508px;
+  font-size: 1.3em;
+  overflow-y: auto;
+  margin: auto;
+  margin-top: 2em;
+}
+#modal-content {
+  background: var(--primary-light);
+  padding: 1em;
+  border-radius: 8px;
+}
+#modal-content input {
+  width: 90%;
+  outline: none;
+  border: none;
+  padding: 8px;
+  margin: 0.2em auto;;
+  border-radius: 6px;
+  display: block;
+  text-transform: capitalize;
+}
+#modal-content button {
+  width: 80%;
+  margin: 0.6em auto;
+  display: block;
+}
+#cancel-meal{
+  background: #914a4a;
+  color: var(--primary-light);
+}
+#create-meal{
+  background: #538f53;
+  color: var(--primary-light);
+}
+#close-container {
+  text-align: right;
+  font-size: 1.8em;
+  color: #914a4a;
+  cursor: pointer;
 }
 /* footer */
 #footer {
