@@ -4,7 +4,16 @@ import dotenv from 'dotenv';
 dotenv.config();
 const secret = process.env.SECRET;
 
+/**
+ * Class repesenting authenticating a request form a user
+ */
 class Authenticate {
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   */
   static checkToken(req, res, next) {
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (!token) {

@@ -15,6 +15,12 @@ const trimValues = (objectWithValuesToTrim) => {
 
 /** class reperesenting an handler's validation */
 class Validate {
+  /** 
+  * @param {object} req - Request object 
+  * @param {object} res - Response object
+  * @param {callback} next - The callback that passes the request to the next handler
+  * @returns {object} res - Responce object when query is invalid
+  */
   static validateGetAnOrder(req, res, next) {
     req.params = trimValues(req.params);
     const { orderId } = req.params;
@@ -34,7 +40,13 @@ class Validate {
       });
     }
   }
-
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Responce object when query is invalid
+   */
   static validateUpdateOrderStatus(req, res, next) {
     req.body = trimValues(req.body);
     req.params = trimValues(req.params);
@@ -63,7 +75,13 @@ class Validate {
       });
     }
   }
-
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Responce object when query is invalid
+   */
   static validateCreateOrder(req, res, next) {
     req.body = trimValues(req.body);
     const { name, meal, quantity, drink, prize, address } = req.body;
@@ -92,7 +110,13 @@ class Validate {
       });
     }
   }
-
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Responce object when query is invalid
+   */
   static validateSignup(req, res, next) {
     trimValues(req.body);
     const { username, password, email } = req.body;
