@@ -11,6 +11,8 @@ branches:
   except:
   - gh-pages
   - master
+before_script:
+  - psql -c 'CREATE DATABASE travis;' -U postgres
 script:
   - npm test
 after_success: 
