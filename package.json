@@ -7,8 +7,8 @@
     "start": "nodemon server/app.js --exec babel-node",
     "build": "babel server/ -d dist",
     "host-on-heroku": "npm run build && node dist/app.js",
-    "test": "set NODE_ENV=test&& mocha --exit --require babel-register --require babel-polyfill server/Tests/index.js",
-    "test-coverage": "set NODE_ENV=test&& babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --exit server/Tests/index.js",
+    "test": "set NODE_ENV=test&& npm run models-for-testing && mocha --exit --require babel-register --require babel-polyfill server/Tests/index.js",
+    "test-coverage": "set NODE_ENV=test&& npm run models-for-testing && babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --exit server/Tests/index.js",
     "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | coveralls",
     "models": "babel-node server/Model",
     "models-for-testing": "set NODE_ENV=test&& babel-node server/Model"
