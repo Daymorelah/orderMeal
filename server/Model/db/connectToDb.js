@@ -4,8 +4,8 @@ import config from '../../Config';
 let pool;
 
 /** Check if DATABASE_URL environment varable is set. (used for production) */
-if (process.env.DATABAE_URL) {
-  pool = new Pool({ connectionString: process.env.DATABAE_URL });
+if (process.env.DATABASE_URL) {
+  pool = new Pool({ connectionString: process.env.DATABASE_URL });
 }
 
 /** Check if node environment is set to development. (used for development) */
