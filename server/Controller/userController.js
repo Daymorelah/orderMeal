@@ -28,7 +28,7 @@ class UserController {
           if (error) {
             res.status(409).jsend.fail({
               code: 409,
-              message: 'User details allready exist. Signup was not successful',
+              message: 'User details already exist. Signup was not successful',
             });
           } else {
             const result = response.rows[0];
@@ -38,7 +38,7 @@ class UserController {
               email: result.email,
             }, secret, { expiresIn: '1 day' });
             res.status(201).jsend.success({
-              message: `User ${result.username} created succesfully`,
+              message: `User ${result.username} created successfully`,
               id: result.id,
               username: result.username,
               email: result.email,

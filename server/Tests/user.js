@@ -21,7 +21,7 @@ describe('Integration test for the users controller', () => {
           expect(res.status).to.deep.equal(201);
           expect(res.body.data).to.have.property('token');
           expect(res.body.status).to.deep.equal('success');
-          expect(res.body.data.message).to.deep.equal('User Thomas created succesfully');
+          expect(res.body.data.message).to.deep.equal('User Thomas created successfully');
           done();
         });
     });
