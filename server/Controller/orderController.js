@@ -1,5 +1,5 @@
 
-import orderModel from '../Model';
+import data from '../Model/dummyModel';
 import getOrder from '../Utilities/helpers';
 
 class OrderController {
@@ -12,7 +12,7 @@ class OrderController {
   static getAllOrders(req, res) {
     res.jsend.success({
       code: 200,
-      mealsOrdered: orderModel,
+      mealsOrdered: data,
     });
   }
 
@@ -23,7 +23,7 @@ class OrderController {
    * @returns {object} res - response from the server
    */
   static createOrder(req, res) {
-    const currentNumberOfOrders = orderModel.length;
+    const currentNumberOfOrders = data.length;
     const orderToCreate = req.body;
     const orderCreated = {
       id: currentNumberOfOrders + 1,
@@ -37,8 +37,8 @@ class OrderController {
     };
     new Promise((resolve, reject) => {
       if (orderToCreate.name === undefined) reject();
-      orderModel.push(orderCreated);
-      if (orderModel.length > currentNumberOfOrders) resolve();
+      data.push(orderCreated);
+      if (data.length > currentNumberOfOrders) resolve();
     }).then(() => {
       res.jsend.success({
         code: 200,
@@ -95,7 +95,7 @@ class OrderController {
       const updatedOrder = order;
       if (isCompleted) {
         updatedOrder.isCompleted = isCompleted;
-        orderModel.splice(updatedOrder.id, 1, updatedOrder);
+        data.splice(updatedOrder.id, 1, updatedOrder);
       }
       res.jsend.success({
         code: 200,
