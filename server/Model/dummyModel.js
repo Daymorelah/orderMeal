@@ -1,4 +1,8 @@
 
+/**
+ * @constant
+ * @type {Array} - An array of obejcts containig each order.
+ */
 const orderModel = [
   {
     id: 1,
