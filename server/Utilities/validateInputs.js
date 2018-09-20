@@ -92,6 +92,40 @@ class Validate {
       });
     }
   }
+
+  static validateSignup(req, res, next) {
+    trimValues(req.body);
+    const { username, password, email } = req.body;
+    if (username && password && email) {
+      if (!(validate.isEmpty(username) && validate.isEmpty(password) && validate.isEmpty(email))) {
+        if (validate.isEmail(email)) {
+          if (validate.isAlphanumeric(username) && validate.isAlphanumeric(password)) {
+            next();
+          } else {
+            res.status(400).jsend.fail({
+              code: 400,
+              message: 'Username and password should contain only letters and numbers',
+            });
+          }
+        } else {
+          res.status(400).jsend.fail({
+            codde: 400,
+            message: 'Please enter a valid email address',
+          });
+        }
+      } else {
+        res.status(400).jsend.fail({
+          code: 400,
+          message: 'All fields should not be empty',
+        });
+      }
+    } else {
+      res.status(400).jsend.fail({
+        code: 400,
+        message: 'All fields are required.',
+      });
+    }
+  }
 }
 
 export default Validate;

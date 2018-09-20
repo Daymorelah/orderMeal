@@ -9,6 +9,7 @@ const routes = (app) => {
   app.put('/api/v1/orders/:orderId',
     Validate.validateUpdateOrderStatus,
     OrderController.updateOrderStatus);
+  app.post('/api/v1/auth/signup', Validate.validateSignup);
 };
 
 export default routes;
