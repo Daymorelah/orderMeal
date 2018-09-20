@@ -150,6 +150,14 @@ class Validate {
       });
     }
   }
+
+  static checkExpressErrors(err, req, res, next) {
+    res.status(500).jsend.error({
+      code: 500,
+      message: 'Somethinng failed',
+    });
+    next();
+  }
 }
 
 export default Validate;

@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import jsend from 'jsend';
 import routes from './Routes';
+import expresError from './Utilities/validateInputs';
 
 const PORT = process.env.PORT || 2022;
 const app = express();
@@ -25,6 +26,8 @@ app.all('*', (req, res) => {
     message: 'Page not found',
   });
 });
+
+app.use(expresError.checkExpressErrors);
 
 app.listen(PORT, (error) => {
   if (error) {
