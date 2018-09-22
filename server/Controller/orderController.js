@@ -1,6 +1,8 @@
 
 import data from '../Model/dummyModel';
 import getOrder from '../Utilities/helpers';
+import pool from '../Model/db/connectToDb';
+import queries from '../Model/queries';
 
 class OrderController {
   /**
@@ -105,6 +107,39 @@ class OrderController {
       code: 404,
       message: 'Order requested not found',
     }));
+  }
+
+  static getOrderHistory(req, res) {
+    const paramsUserId = req.params.userId;
+    const tokenUserId = req.decoded.userId;
+    if (parseInt(paramsUserId, 10) === tokenUserId) {
+      pool.query(`${queries.orderHistory}'${tokenUserId}'`, (err, response) => {
+        if (err) {
+          res.status(500).jsend.error({
+            code: 500,
+            message: 'Internal server Error',
+          });
+        } else if (response) {
+          if (response.rowCount === 0) {
+            res.jsend.success({
+              code: 200,
+              message: 'You have not created any order yet.',
+              orders: null,
+            });
+          } else {
+            res.jsend.success({
+              code: 200,
+              orders: response.rows,
+            });
+          }
+        }
+      });
+    } else {
+      res.status(400).jsend.fail({
+        code: 400,
+        message: 'You can only view your orders.',
+      });
+    }
   }
 }
 

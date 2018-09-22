@@ -1,7 +1,7 @@
 
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import CryptData from '../Utilities/cryptData';
+import { CryptData } from '../Utilities';
 import pool from '../Model/db/connectToDb';
 import queries from '../Model/queries';
 

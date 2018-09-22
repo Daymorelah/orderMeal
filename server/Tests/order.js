@@ -217,4 +217,31 @@ describe('Integration test for the order model', () => {
         });
     });
   });
+  describe('Test to get history of orders', () => {
+    it('should return null when user has no orders yet.', () => {
+      chai.request(app).get('/api/v1/users/1/orders')
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(200);
+          expect(res.body.status).to.deep.equal('success');
+          expect(res.body.data).to.have.property('message');
+          expect(res.body.data.order).to.be(null);
+        });
+    });
+    it('should return failed request when user ID is invalid.', () => {
+      chai.request(app).get('/api/v1/users/-1/orders')
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+        });
+    });
+    it('should prevent a user from viewing another user\'s orders', () => {
+      chai.request(app).get('/api/v1/users/2/orders')
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+        });
+    });
+  });
 });
