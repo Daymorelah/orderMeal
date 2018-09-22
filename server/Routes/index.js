@@ -7,6 +7,7 @@ import Validate from '../Utilities/validateInputs';
  * @param {object} app - An instance of the express module 
  */
 const routes = (app) => {
+  app.get('/api/v1', UserController.welcomeUSer);
   app.get('/api/v1/orders', OrderController.getAllOrders);
   app.post('/api/v1/orders', Validate.validateCreateOrder, OrderController.createOrder);
   app.get('/api/v1/orders/:orderId', Validate.validateGetAnOrder, OrderController.getAnOrder);
@@ -14,6 +15,7 @@ const routes = (app) => {
     Validate.validateUpdateOrderStatus,
     OrderController.updateOrderStatus);
   app.post('/api/v1/auth/signup', Validate.validateSignup, UserController.userSignUp);
+  app.post('/api/v1/auth/login', Validate.validateLogin, UserController.userLogin);
 };
 
 export default routes;
