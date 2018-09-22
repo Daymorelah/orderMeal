@@ -6,7 +6,7 @@ dotenv.config();
  * Represents database configuration for the
  * development and test environment
  * @constant
- * @type {object}
+ * @type {object} - Configuration Object
  */
 const dbConfigurations = {
   development: {

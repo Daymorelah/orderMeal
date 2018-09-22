@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import jsend from 'jsend';
 import routes from './Routes';
+import expressError from './Utilities/validateInputs';
 
 const PORT = process.env.PORT || 2022;
 const app = express();
@@ -26,11 +27,13 @@ app.all('*', (req, res) => {
   });
 });
 
+app.use(expressError.checkExpressErrors);
+
 app.listen(PORT, (error) => {
   if (error) {
     console.log(`An error occurred try to start the sever. Error is ${error}`);
   } else {
-    console.log(`Server is up and runnig on port ${PORT} ...`);
+    console.log(`Server is up and running on port ${PORT} ...`);
   }
 });
 

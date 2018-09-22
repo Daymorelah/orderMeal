@@ -6,15 +6,21 @@ import validate from 'validator';
  * @param {object} objectWithValuesToTrim 
  */
 const trimValues = (objectWithValuesToTrim) => {
-  const trimedValues = objectWithValuesToTrim;
-  Object.keys(trimedValues).forEach((key) => {
-    trimedValues[key] = trimedValues[key].trim();
+  const trimmedValues = objectWithValuesToTrim;
+  Object.keys(trimmedValues).forEach((key) => {
+    trimmedValues[key] = trimmedValues[key].trim();
   });
-  return trimedValues;
+  return trimmedValues;
 };
 
-/** class reperesenting an handler's validation */
+/** class representing an handler's validation */
 class Validate {
+  /** 
+  * @param {object} req - Request object 
+  * @param {object} res - Response object
+  * @param {callback} next - The callback that passes the request to the next handler
+  * @returns {object} res - Response object when query is invalid
+  */
   static validateGetAnOrder(req, res, next) {
     req.params = trimValues(req.params);
     const { orderId } = req.params;
@@ -34,7 +40,13 @@ class Validate {
       });
     }
   }
-
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Response object when query is invalid
+   */
   static validateUpdateOrderStatus(req, res, next) {
     req.body = trimValues(req.body);
     req.params = trimValues(req.params);
@@ -63,7 +75,13 @@ class Validate {
       });
     }
   }
-
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Response object when query is invalid
+   */
   static validateCreateOrder(req, res, next) {
     req.body = trimValues(req.body);
     const { name, meal, quantity, drink, prize, address } = req.body;
@@ -91,6 +109,54 @@ class Validate {
         message: 'Invalid request. All fields are required.',
       });
     }
+  }
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Response object when query is invalid
+   */
+  static validateSignup(req, res, next) {
+    trimValues(req.body);
+    const { username, password, email } = req.body;
+    if (username && password && email) {
+      if (!(validate.isEmpty(username) && validate.isEmpty(password) && validate.isEmpty(email))) {
+        if (validate.isEmail(email)) {
+          if (validate.isAlphanumeric(username) && validate.isAlphanumeric(password)) {
+            next();
+          } else {
+            res.status(400).jsend.fail({
+              code: 400,
+              message: 'Username and password should contain only letters and numbers',
+            });
+          }
+        } else {
+          res.status(400).jsend.fail({
+            code: 400,
+            message: 'Please enter a valid email address',
+          });
+        }
+      } else {
+        res.status(400).jsend.fail({
+          code: 400,
+          message: 'All fields should not be empty',
+        });
+      }
+    } else {
+      res.status(400).jsend.fail({
+        code: 400,
+        message: 'All fields are required.',
+      });
+    }
+  }
+
+  static checkExpressErrors(err, req, res, next) {
+    res.status(500).jsend.error({
+      code: 500,
+      message: 'Something failed',
+    });
+    next();
   }
 }
 
