@@ -5,7 +5,7 @@ dotenv.config();
 const secret = process.env.SECRET;
 
 /**
- * Class repesenting authenticating a request form a user
+ * Class representing authenticating a request form a user
  */
 class Authenticate {
   /**
@@ -19,7 +19,7 @@ class Authenticate {
     if (!token) {
       res.status(401).jsend.fail({
         code: 401,
-        message: 'User not auhorized',
+        message: 'User not authorized',
       });
     } else {
       jwt.verify(token, secret, (err, decoded) => {

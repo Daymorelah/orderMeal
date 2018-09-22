@@ -1,6 +1,6 @@
 
 /**
- * Represents databse queris used by the 
+ * Represents database queries used by the 
  * route handlers/Controllers
  * @constant
  * @type {object}

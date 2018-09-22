@@ -1,7 +1,7 @@
 
 /**
  * @constant
- * @type {Array} - An array of obejcts containig each order.
+ * @type {Array} - An array of objects containing each order.
  */
 const orderModel = [
   {

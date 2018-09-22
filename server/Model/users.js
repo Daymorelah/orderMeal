@@ -21,7 +21,7 @@ const createUserTable = () => new Promise((resolve, reject) => {
             reject(Error('An error occurred trying to create table users. ', error));
           }
           if (response) {
-            resolve('Table users has been Created succesfully');
+            resolve('Table users has been Created successfully');
           }
         });
     } else {

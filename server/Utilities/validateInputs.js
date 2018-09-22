@@ -6,20 +6,20 @@ import validate from 'validator';
  * @param {object} objectWithValuesToTrim 
  */
 const trimValues = (objectWithValuesToTrim) => {
-  const trimedValues = objectWithValuesToTrim;
-  Object.keys(trimedValues).forEach((key) => {
-    trimedValues[key] = trimedValues[key].trim();
+  const trimmedValues = objectWithValuesToTrim;
+  Object.keys(trimmedValues).forEach((key) => {
+    trimmedValues[key] = trimmedValues[key].trim();
   });
-  return trimedValues;
+  return trimmedValues;
 };
 
-/** class reperesenting an handler's validation */
+/** class representing an handler's validation */
 class Validate {
   /** 
   * @param {object} req - Request object 
   * @param {object} res - Response object
   * @param {callback} next - The callback that passes the request to the next handler
-  * @returns {object} res - Responce object when query is invalid
+  * @returns {object} res - Response object when query is invalid
   */
   static validateGetAnOrder(req, res, next) {
     req.params = trimValues(req.params);
@@ -45,7 +45,7 @@ class Validate {
    * @param {object} req - Request object 
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
-   * @returns {object} res - Responce object when query is invalid
+   * @returns {object} res - Response object when query is invalid
    */
   static validateUpdateOrderStatus(req, res, next) {
     req.body = trimValues(req.body);
@@ -80,7 +80,7 @@ class Validate {
    * @param {object} req - Request object 
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
-   * @returns {object} res - Responce object when query is invalid
+   * @returns {object} res - Response object when query is invalid
    */
   static validateCreateOrder(req, res, next) {
     req.body = trimValues(req.body);
@@ -115,7 +115,7 @@ class Validate {
    * @param {object} req - Request object 
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
-   * @returns {object} res - Responce object when query is invalid
+   * @returns {object} res - Response object when query is invalid
    */
   static validateSignup(req, res, next) {
     trimValues(req.body);
@@ -133,7 +133,7 @@ class Validate {
           }
         } else {
           res.status(400).jsend.fail({
-            codde: 400,
+            code: 400,
             message: 'Please enter a valid email address',
           });
         }
@@ -154,7 +154,7 @@ class Validate {
   static checkExpressErrors(err, req, res, next) {
     res.status(500).jsend.error({
       code: 500,
-      message: 'Somethinng failed',
+      message: 'Something failed',
     });
     next();
   }
