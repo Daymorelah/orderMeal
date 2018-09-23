@@ -1,6 +1,7 @@
 
 import { OrderController, UserController } from '../Controller';
 import Validate from '../Utilities/validateInputs';
+import authenticate from '../Utilities/tokenAuth';
 
 /**
  * Handles request
@@ -9,7 +10,10 @@ import Validate from '../Utilities/validateInputs';
 const routes = (app) => {
   app.get('/api/v1', UserController.welcomeUSer);
   app.get('/api/v1/orders', OrderController.getAllOrders);
-  app.post('/api/v1/orders', Validate.validateCreateOrder, OrderController.createOrder);
+  app.post('/api/v1/orders',
+    authenticate.checkToken,
+    Validate.validateCreateOrder,
+    OrderController.createOrder);
   app.get('/api/v1/orders/:orderId', Validate.validateGetAnOrder, OrderController.getAnOrder);
   app.put('/api/v1/orders/:orderId',
     Validate.validateUpdateOrderStatus,

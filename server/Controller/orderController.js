@@ -1,6 +1,8 @@
 
 import data from '../Model/dummyModel';
 import getOrder from '../Utilities/helpers';
+import pool from '../Model/db/connectToDb';
+import queries from '../Model/queries';
 
 class OrderController {
   /**
@@ -23,32 +25,24 @@ class OrderController {
    * @returns {object} res - response from the server
    */
   static createOrder(req, res) {
-    const currentNumberOfOrders = data.length;
-    const orderToCreate = req.body;
-    const orderCreated = {
-      id: currentNumberOfOrders + 1,
-      name: orderToCreate.name,
-      meal: orderToCreate.meal,
-      quantity: orderToCreate.quantity,
-      drink: orderToCreate.drink,
-      prize: orderToCreate.prize,
-      address: orderToCreate.address,
-      isCompleted: false,
-    };
-    new Promise((resolve, reject) => {
-      if (orderToCreate.name === undefined) reject();
-      data.push(orderCreated);
-      if (data.length > currentNumberOfOrders) resolve();
-    }).then(() => {
-      res.jsend.success({
-        code: 200,
-        message: 'Order created succesfully',
-        orderCreated,
-      });
-    }).catch(() => res.status(400).jsend.error({
-      message: 'Order could not be created',
-      code: 400,
-    }));
+    const { name, meal, drink, address, quantity, prize } = req.body;
+    const { userId } = req.decoded;
+    pool.query(queries.createOrder, [`${name}`, `${meal}`, `${drink}`, `${quantity}`,
+      `${prize}`, `${address}`, `${userId}`],
+    (error, response) => {
+      if (error) {
+        res.status(500).jsend.error({
+          code: 500,
+          message: 'Internal server error',
+        });
+      } else if (response) {
+        res.jsend.success({
+          code: 200,
+          message: 'Order created successfully',
+          order: response.rows,
+        });
+      }
+    });
   }
 
   /**
