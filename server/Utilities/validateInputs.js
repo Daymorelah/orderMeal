@@ -1,4 +1,4 @@
-
+/* eslint-disable no-useless-escape */
 import validate from 'validator';
 
 /**
@@ -121,26 +121,19 @@ class Validate {
     trimValues(req.body);
     const { username, password, email } = req.body;
     if (username && password && email) {
-      if (!(validate.isEmpty(username) && validate.isEmpty(password) && validate.isEmpty(email))) {
-        if (validate.isEmail(email)) {
-          if (validate.isAlphanumeric(username) && validate.isAlphanumeric(password)) {
-            next();
-          } else {
-            res.status(400).jsend.fail({
-              code: 400,
-              message: 'Username and password should contain only letters and numbers',
-            });
-          }
+      if (email.match(/\w+@\w+\.\w{2,}/g) !== null) {
+        if (username.search(/[^\w\.-]/g) === -1 && password.length < 20) {
+          next();
         } else {
           res.status(400).jsend.fail({
             code: 400,
-            message: 'Please enter a valid email address',
+            message: 'Invalid username. It should contain only letters, numbers, -, . or _',
           });
         }
       } else {
         res.status(400).jsend.fail({
           code: 400,
-          message: 'All fields should not be empty',
+          message: 'Please enter a valid email address',
         });
       }
     } else {
@@ -170,7 +163,41 @@ class Validate {
       });
     }
   }
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Response object when query is invalid
+   */
+  static validateLogin(req, res, next) {
+    req.body = trimValues(req.body);
+    const { username, password } = req.body;
+    if (username && password) {
+      if (username.search(/[^\w\.-]/g) === -1 && password.length < 20) {
+        next();
+      } else {
+        res.status(400).jsend.fail({
+          code: 400,
+          message: 'User details are invalid',
+        });
+      }
+    } else {
+      res.status(400).jsend.fail({
+        code: 404,
+        message: 'All fields are required',
+      });
+    }
+  }
+  /* eslint-enable no-useless-escape */
 
+  /**
+   * @param {object} err - error object
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Response object when query is invalid
+   */
   static checkExpressErrors(err, req, res, next) {
     res.status(500).jsend.error({
       code: 500,
