@@ -3,8 +3,10 @@
 
 import OrderController from './orderController';
 import UserController from './userController';
+import MenuController from './menuController';
 
 export {
   OrderController,
   UserController,
+  MenuController,
 };

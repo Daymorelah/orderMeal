@@ -1,6 +1,7 @@
 
-import { OrderController, UserController } from '../Controller';
+import { OrderController, UserController, MenuController } from '../Controller';
 import Validate from '../Utilities/validateInputs';
+import authenticate from '../Utilities/tokenAuth';
 
 /**
  * Handles request
@@ -16,6 +17,10 @@ const routes = (app) => {
     OrderController.updateOrderStatus);
   app.post('/api/v1/auth/signup', Validate.validateSignup, UserController.userSignUp);
   app.post('/api/v1/auth/login', Validate.validateLogin, UserController.userLogin);
+  app.get('/api/v1/menu',
+    authenticate.checkToken,
+    Validate.validateViewMenu,
+    MenuController.getAllMenu);
 };
 
 export default routes;

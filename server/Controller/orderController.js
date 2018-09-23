@@ -2,6 +2,10 @@
 import data from '../Model/dummyModel';
 import getOrder from '../Utilities/helpers';
 
+/**
+ * Class representing the order controller
+ * @description order controller
+ */
 class OrderController {
   /**
    * 
