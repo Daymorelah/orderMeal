@@ -8,6 +8,20 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Integration test for the order model', () => {
+  let myToken;
+  before('Create user for testing', (done) => {
+    const user1 = {
+      username: 'Donnie',
+      password: 'password',
+      email: 'donnie@wemail.com',
+    };
+    chai.request(app).post('/api/v1/auth/signup')
+      .send(user1)
+      .end((err, res) => {
+        myToken = res.body.data.token;
+        done();
+      });
+  });
   describe('Test for handling invalid URLs', () => {
     it('should return a page not found for invalid URLs', (done) => {
       chai.request(app).get('/api/v1/order')
@@ -35,26 +49,28 @@ describe('Integration test for the order model', () => {
   describe('Test to create an order', () => {
     it('should create an order', (done) => {
       const userDetails = {
-        name: 'jane Doe',
+        name: 'jane_Doe',
         meal: 'Eba',
         quantity: '2',
         drink: 'Hollandia 1ltr',
-        prize: '300',
+        prize: '3',
         address: 'Ajegunle, Lagos Nigeria',
       };
       chai.request(app).post('/api/v1/orders')
+        .set('x-access-token', myToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(200);
           expect(res.body.data.code).to.deep.equal(200);
           expect(res.body.status).to.deep.equal('success');
           expect(res.body.data).to.have.property('message');
+          expect(res.body.data).to.have.property('order');
           done();
         });
     });
     it('should return invalid request when a string field has a non-string value', (done) => {
       const userDetails = {
-        name: 'jane Doe',
+        name: 'jane_Doe?',
         meal: '55',
         quantity: '2',
         drink: 'Hollandia 1ltr',
@@ -62,6 +78,7 @@ describe('Integration test for the order model', () => {
         address: 'Ajegunle, Lagos Nigeria',
       };
       chai.request(app).post('/api/v1/orders')
+        .set('x-access-token', myToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(400);
@@ -81,6 +98,7 @@ describe('Integration test for the order model', () => {
         address: 'Ajegunle, Lagos Nigeria',
       };
       chai.request(app).post('/api/v1/orders')
+        .set('x-access-token', myToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(400);
@@ -90,13 +108,14 @@ describe('Integration test for the order model', () => {
           done();
         });
     });
-    it('should send error message when ivalid object is passed', (done) => {
+    it('should send error message when invalid object is passed', (done) => {
       const userDetails = {
         drink: 'Hollandia 1ltr',
         prize: '300',
         address: 'Ajegunle, Lagos Nigeria',
       };
       chai.request(app).post('/api/v1/orders')
+        .set('x-access-token', myToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(400);
@@ -213,6 +232,39 @@ describe('Integration test for the order model', () => {
           expect(res.body.data).to.have.property('message');
           expect(res.status).to.deep.equal(404);
           expect(res.body.data.code).to.deep.equal(404);
+          done();
+        });
+    });
+  });
+  describe('Test to get history of orders', () => {
+    it('should return null when user has no orders yet.', (done) => {
+      chai.request(app).get('/api/v1/users/2/orders')
+        .set({ 'x-access-token': myToken })
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(200);
+          expect(res.body.status).to.deep.equal('success');
+          expect(res.body.data).to.have.property('message');
+          expect(res.body.data.orders).to.deep.equal(null);
+          done();
+        });
+    });
+    it('should return failed request when user ID is invalid.', (done) => {
+      chai.request(app).get('/api/v1/users/-1/orders')
+        .set({ 'x-access-token': myToken })
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should prevent a user from viewing another user\'s orders', (done) => {
+      chai.request(app).get('/api/v1/users/1/orders')
+        .set({ 'x-access-token': myToken })
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
           done();
         });
     });

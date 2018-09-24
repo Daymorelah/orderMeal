@@ -84,12 +84,12 @@ class Validate {
    */
   static validateCreateOrder(req, res, next) {
     req.body = trimValues(req.body);
-    const { name, meal, quantity, drink, prize, address } = req.body;
+    const { name, meal, drink, prize, quantity, address } = req.body;
     if (name && meal && quantity && drink && prize && address) {
-      if (validate.isAscii(name) && !validate.isInt(name) && validate.isAscii(meal) &&
-          !validate.isInt(meal) && validate.isAscii(drink) && validate.isAscii(address)) {
-        if (validate.isNumeric(quantity, { no_symbols: true }) && validate.isInt(quantity) &&
-                validate.isNumeric(prize, { no_symbols: true }) && validate.isInt(prize)) {
+      if (name.search(/[^\w\.]/g) === -1 && meal.search(/[^\w\s\.]/g) === -1 &&
+          drink.search(/[^\w\s\.]/g) === -1 && address.search(/[^\w\s\.,]/g) === -1) {
+        if (((quantity.search(/\D/g) === -1) && parseInt(quantity, 10) > 0) &&
+            ((prize.search(/\D/g) === -1) && parseInt(prize, 10) > 0)) {
           next();
         } else {
           res.status(400).jsend.fail({
@@ -143,6 +143,27 @@ class Validate {
       });
     }
   }
+  
+  static validateOrderHistory(req, res, next) {
+    req.params = trimValues(req.params);
+    const { userId } = req.params;
+    if (userId) {
+      if (isNaN(parseInt(userId, 10)) || (parseInt(userId, 10) < 0)) {
+        res.status(400).jsend.fail({
+          code: 400,
+          message: 'User ID is invalid',
+        });
+      } else {
+        next();
+      }
+    } else {
+      res.status(400).jsend.fail({
+        code: 400,
+        message: 'All fields are required',
+      });
+    }
+  }
+  
   /**
    * 
    * @param {object} req - Request object 
