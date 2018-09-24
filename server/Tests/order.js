@@ -49,26 +49,28 @@ describe('Integration test for the order model', () => {
   describe('Test to create an order', () => {
     it('should create an order', (done) => {
       const userDetails = {
-        name: 'jane Doe',
+        name: 'jane_Doe',
         meal: 'Eba',
         quantity: '2',
         drink: 'Hollandia 1ltr',
-        prize: '300',
+        prize: '3',
         address: 'Ajegunle, Lagos Nigeria',
       };
       chai.request(app).post('/api/v1/orders')
+        .set('x-access-token', myToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(200);
           expect(res.body.data.code).to.deep.equal(200);
           expect(res.body.status).to.deep.equal('success');
           expect(res.body.data).to.have.property('message');
+          expect(res.body.data).to.have.property('order');
           done();
         });
     });
     it('should return invalid request when a string field has a non-string value', (done) => {
       const userDetails = {
-        name: 'jane Doe',
+        name: 'jane_Doe?',
         meal: '55',
         quantity: '2',
         drink: 'Hollandia 1ltr',
@@ -76,6 +78,7 @@ describe('Integration test for the order model', () => {
         address: 'Ajegunle, Lagos Nigeria',
       };
       chai.request(app).post('/api/v1/orders')
+        .set('x-access-token', myToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(400);
@@ -95,6 +98,7 @@ describe('Integration test for the order model', () => {
         address: 'Ajegunle, Lagos Nigeria',
       };
       chai.request(app).post('/api/v1/orders')
+        .set('x-access-token', myToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(400);
@@ -104,13 +108,14 @@ describe('Integration test for the order model', () => {
           done();
         });
     });
-    it('should send error message when ivalid object is passed', (done) => {
+    it('should send error message when invalid object is passed', (done) => {
       const userDetails = {
         drink: 'Hollandia 1ltr',
         prize: '300',
         address: 'Ajegunle, Lagos Nigeria',
       };
       chai.request(app).post('/api/v1/orders')
+        .set('x-access-token', myToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(400);
