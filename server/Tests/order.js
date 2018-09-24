@@ -9,6 +9,7 @@ const { expect } = chai;
 
 describe('Integration test for the order controller', () => {
   let myToken;
+  let user1Id;
   before('Create user for testing in order controller', (done) => {
     const user1 = {
       username: 'Donnie1',
@@ -19,6 +20,7 @@ describe('Integration test for the order controller', () => {
       .send(user1)
       .end((err, res) => {
         myToken = res.body.data.token;
+        user1Id = res.body.data.id;
         done();
       });
   });
@@ -238,7 +240,7 @@ describe('Integration test for the order controller', () => {
   });
   describe('Test to get history of orders', () => {
     it('should return null when user has no orders yet.', (done) => {
-      chai.request(app).get('/api/v1/users/3/orders')
+      chai.request(app).get(`/api/v1/users/${user1Id}/orders`)
         .set({ 'x-access-token': myToken })
         .end((err, res) => {
           expect(res.status).to.deep.equal(200);
