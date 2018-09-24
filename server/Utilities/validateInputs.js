@@ -144,6 +144,25 @@ class Validate {
     }
   }
 
+  static validateOrderHistory(req, res, next) {
+    req.params = trimValues(req.params);
+    const { userId } = req.params;
+    if (userId) {
+      if (isNaN(parseInt(userId, 10)) || (parseInt(userId, 10) < 0)) {
+        res.status(400).jsend.fail({
+          code: 400,
+          message: 'User ID is invalid',
+        });
+      } else {
+        next();
+      }
+    } else {
+      res.status(400).jsend.fail({
+        code: 400,
+        message: 'All fields are required',
+      });
+    }
+  }
   /**
    * 
    * @param {object} req - Request object 
