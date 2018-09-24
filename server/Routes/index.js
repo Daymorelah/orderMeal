@@ -1,5 +1,6 @@
 
-import { OrderController, UserController } from '../Controller';
+
+import { OrderController, UserController, MenuController } from '../Controller';
 import { Validate, Authenticate } from '../Utilities';
 
 /**
@@ -24,6 +25,10 @@ const routes = (app) => {
     Validate.validateOrderHistory,
     OrderController.getOrderHistory);
   app.post('/api/v1/auth/login', Validate.validateLogin, UserController.userLogin);
+  app.get('/api/v1/menu',
+    authenticate.checkToken,
+    Validate.validateViewMenu,
+    MenuController.getAllMenu);
 };
 
 export default routes;

@@ -4,6 +4,10 @@ import getOrder from '../Utilities/helpers';
 import pool from '../Model/db/connectToDb';
 import queries from '../Model/queries';
 
+/**
+ * Class representing the order controller
+ * @description order controller
+ */
 class OrderController {
   /**
    * 

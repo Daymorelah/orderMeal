@@ -143,6 +143,7 @@ class Validate {
       });
     }
   }
+  
   static validateOrderHistory(req, res, next) {
     req.params = trimValues(req.params);
     const { userId } = req.params;
@@ -190,6 +191,17 @@ class Validate {
     }
   }
   /* eslint-enable no-useless-escape */
+
+  /**
+   * @param {object} err - error object
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Response object when query is invalid
+   */
+  static validateViewMenu(req, res, next) {
+    next();
+  }
 
   /**
    * @param {object} err - error object
