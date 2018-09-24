@@ -9,7 +9,7 @@ const { expect } = chai;
 
 describe('Integration test for the Menu controller', () => {
   let myToken;
-  before('Create user for testing', (done) => {
+  before('Create user for testing in menu controller', (done) => {
     const user1 = {
       username: 'Donnie2',
       password: 'password',
@@ -28,7 +28,7 @@ describe('Integration test for the Menu controller', () => {
         .set('x-access-token', myToken)
         .end((error, res) => {
           expect(res.status).to.deep.equal(200);
-          expect(res.body.status).to.decrease.equal('success');
+          expect(res.body.status).to.deep.equal('success');
           expect(res.body.data).to.have.property('menu');
           expect(res.body.data.menu).to.deep.equal(null);
           expect(res.body.data).to.have.property('message');

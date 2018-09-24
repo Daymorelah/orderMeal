@@ -104,7 +104,12 @@ class OrderController {
       message: 'Order requested not found',
     }));
   }
-
+  /**
+   * 
+   * @param {object} req - request object 
+   * @param {object} res - response object
+   * @returns {object} res - response from the server
+   */
   static getOrderHistory(req, res) {
     const paramsUserId = req.params.userId;
     const tokenUserId = req.decoded.userId;

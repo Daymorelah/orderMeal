@@ -7,13 +7,13 @@ import app from '../app';
 chai.use(chaiHttp);
 const { expect } = chai;
 
-describe('Integration test for the order model', () => {
+describe('Integration test for the order controller', () => {
   let myToken;
-  before('Create user for testing', (done) => {
+  before('Create user for testing in order controller', (done) => {
     const user1 = {
-      username: 'Donnie',
+      username: 'Donnie1',
       password: 'password',
-      email: 'donnie@wemail.com',
+      email: 'donnie1@wemail.com',
     };
     chai.request(app).post('/api/v1/auth/signup')
       .send(user1)
@@ -238,13 +238,12 @@ describe('Integration test for the order model', () => {
   });
   describe('Test to get history of orders', () => {
     it('should return null when user has no orders yet.', (done) => {
-      chai.request(app).get('/api/v1/users/2/orders')
+      chai.request(app).get('/api/v1/users/3/orders')
         .set({ 'x-access-token': myToken })
         .end((err, res) => {
           expect(res.status).to.deep.equal(200);
           expect(res.body.status).to.deep.equal('success');
-          expect(res.body.data).to.have.property('message');
-          expect(res.body.data.orders).to.deep.equal(null);
+          expect(res.body.data).to.have.property('orders');
           done();
         });
     });

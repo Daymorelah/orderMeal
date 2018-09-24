@@ -143,18 +143,24 @@ class Validate {
       });
     }
   }
-  
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Response object when query is invalid
+   */
   static validateOrderHistory(req, res, next) {
     req.params = trimValues(req.params);
     const { userId } = req.params;
     if (userId) {
-      if (isNaN(parseInt(userId, 10)) || (parseInt(userId, 10) < 0)) {
+      if ((userId.search(/\D/g) === -1) && (parseInt(userId, 10) > 0)) {
+        next();
+      } else {
         res.status(400).jsend.fail({
           code: 400,
           message: 'User ID is invalid',
         });
-      } else {
-        next();
       }
     } else {
       res.status(400).jsend.fail({
@@ -163,7 +169,6 @@ class Validate {
       });
     }
   }
-  
   /**
    * 
    * @param {object} req - Request object 

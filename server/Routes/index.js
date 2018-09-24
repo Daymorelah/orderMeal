@@ -11,7 +11,7 @@ const routes = (app) => {
   app.get('/api/v1', UserController.welcomeUSer);
   app.get('/api/v1/orders', OrderController.getAllOrders);
   app.post('/api/v1/orders',
-    authenticate.checkToken,
+    Authenticate.checkToken,
     Validate.validateCreateOrder,
     OrderController.createOrder);
   app.get('/api/v1/orders/:orderId', Validate.validateGetAnOrder, OrderController.getAnOrder);
@@ -26,7 +26,7 @@ const routes = (app) => {
     OrderController.getOrderHistory);
   app.post('/api/v1/auth/login', Validate.validateLogin, UserController.userLogin);
   app.get('/api/v1/menu',
-    authenticate.checkToken,
+    Authenticate.checkToken,
     Validate.validateViewMenu,
     MenuController.getAllMenu);
 };
