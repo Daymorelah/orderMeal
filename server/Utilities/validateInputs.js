@@ -122,12 +122,12 @@ class Validate {
     const { username, password, email } = req.body;
     if (username && password && email) {
       if (email.match(/\w+@\w+\.\w{2,}/g) !== null) {
-        if (username.search(/[^\w\.-]/g) === -1 && password.length < 20) {
+        if (username.search(/[^\w\._]/g) === -1 && password.length < 20) {
           next();
         } else {
           res.status(400).jsend.fail({
             code: 400,
-            message: 'Invalid username. It should contain only letters, numbers, -, . or _',
+            message: 'Invalid username. It should contain only letters, numbers, . or _',
           });
         }
       } else {

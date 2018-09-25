@@ -30,6 +30,7 @@ const routes = (app) => {
     Validate.validateViewMenu,
     MenuController.getAllMenu);
   app.post('/api/v1/auth/admin/signup', Validate.validateSignup, UserController.adminSignup);
+  app.post('/api/v1/auth/admin/login', Validate.validateLogin, UserController.adminLogin);
 };
 
 export default routes;

@@ -92,10 +92,10 @@ class UserController {
           message: 'An error occurred trying to verify the user.',
         });
       } else if (response) {
-        if (response.rows.length === 0) {
+        if (!response.rowCount) {
           res.status(400).jsend.fail({
             code: 400,
-            message: 'Username or password is incorrect',
+            message: 'Username or password is invalid',
           });
         } else {
           const userGottenFromDb = response.rows[0];
@@ -173,6 +173,62 @@ class UserController {
         code: 500,
         message: 'An error occurred trying to save the user\'s detail',
       });
+    });
+  }
+
+  /**
+   * Login an admin
+   * Route: POST: /auth/admin/login
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @returns {res} res - Response object
+   * @memberof USerController
+   */
+  static adminLogin(req, res) {
+    const { username, password } = req.body;
+    pool.query(`${queries.isUsernameValid}'${username}'`, (err, response) => {
+      if (err) {
+        res.status(500).jsend.error({
+          code: 500,
+          message: 'An error occurred trying to verify the user.',
+        });
+      } else if (response) {
+        if (!response.rowCount) {
+          res.status(400).jsend.fail({
+            code: 400,
+            message: 'Username or password is invalid',
+          });
+        } else {
+          const userGottenFromDb = response.rows[0];
+          CryptData.decryptData(password, userGottenFromDb.password)
+            .then((isPasswordCorrect) => {
+              if (isPasswordCorrect) {
+                const token = jwt.sign({
+                  userId: userGottenFromDb.id,
+                  username: userGottenFromDb.username,
+                  email: userGottenFromDb.email,
+                }, adminSecret, { expiresIn: '1 day' });
+                res.jsend.success({
+                  message: `Admin ${userGottenFromDb.username} logged in successfully`,
+                  id: userGottenFromDb.id,
+                  username: userGottenFromDb.username,
+                  email: userGottenFromDb.email,
+                  token,
+                });
+              } else {
+                res.status(400).jsend.fail({
+                  code: 400,
+                  message: 'Username or password is incorrect',
+                });
+              }
+            }).catch(() => {
+              res.status(500).jsend.error({
+                code: 500,
+                message: 'Server error. Could not verify the user.',
+              });
+            });
+        }
+      }
     });
   }
 }
