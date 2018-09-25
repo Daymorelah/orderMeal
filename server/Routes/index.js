@@ -29,6 +29,7 @@ const routes = (app) => {
     Authenticate.checkToken,
     Validate.validateViewMenu,
     MenuController.getAllMenu);
+  app.post('/api/v1/auth/admin/signup', Validate.validateSignup, UserController.adminSignup);
 };
 
 export default routes;

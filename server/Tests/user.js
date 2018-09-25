@@ -161,4 +161,85 @@ describe('Integration test for the users controller', () => {
         });
     });
   });
+  describe('Test to signup an admin', () => {
+    it('should create an admin and send a message that the admin has ben created', (done) => {
+      const userDetails = {
+        username: 'Thomas2',
+        password: 'tomnjerry',
+        email: 'tommy2@wemail.com',
+      };
+      chai.request(app).post('/api/v1/auth/admin/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(201);
+          expect(res.body.data).to.have.property('token');
+          expect(res.body.status).to.deep.equal('success');
+          expect(res.body.data.message).to.deep.equal('Admin Thomas2 created successfully');
+          done();
+        });
+    });
+    it('should return an error if any required detail is not present in the body', (done) => {
+      const userDetails = {
+        username: 'Thomas',
+        email: 'tommy@wemail.com',
+      };
+      chai.request(app).post('/api/v1/auth/admin/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.not.have.property('token');
+          expect(res.body.status).to.deep.equal('fail');
+          done();
+        });
+    });
+    it('should return an error if email is invalid', (done) => {
+      const userDetails = {
+        username: 'Thomas',
+        password: 'password',
+        email: 'tommywemail.com',
+      };
+      chai.request(app).post('/api/v1/auth/admin/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.not.have.property('token');
+          expect(res.body.status).to.deep.equal('fail');
+          done();
+        });
+    });
+    it('should return an error if username or password is invalid', (done) => {
+      const userDetails = {
+        username: 'Thomas&',
+        password: 'password',
+        email: 'tommy@wemail.com',
+      };
+      chai.request(app).post('/api/v1/auth/admin/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.not.have.property('token');
+          expect(res.body.status).to.deep.equal('fail');
+          done();
+        });
+    });
+    it('should return an error if any user detail is empty', (done) => {
+      const userDetails = {
+        username: 'Thomas',
+        password: '',
+        email: 'tommy@wemail.com',
+      };
+      chai.request(app).post('/api/v1/auth/admin/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.not.have.property('token');
+          expect(res.body.status).to.deep.equal('fail');
+          done();
+        });
+    });
+  });
 });

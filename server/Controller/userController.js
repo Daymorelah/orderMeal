@@ -7,16 +7,21 @@ import queries from '../Model/queries';
 
 dotenv.config();
 const secret = process.env.SECRET;
+const adminSecret = process.env.ADMIN_SECRET;
 
 /**
  * Class representing the user controller
+ * @class USerController
  * @description users controller
  */
 class UserController {
   /**
+   * Welcomes user to the API
+   * Route: GET: /
    * @param {object} req -Request object
    * @param {object} res - Response object
-   * @return {object} - Response object
+   * @return {res} - Response object
+   * @memberof USerController
    */
   static welcomeUSer(req, res) {
     res.jsend.success({
@@ -26,9 +31,12 @@ class UserController {
   }
 
   /**
+   * Sign up a user
+   * Route: POST: /auth/signup
    * @param {object} req -Request object
    * @param {object} res - Response object
-   * @return {object} - Response object
+   * @return {res} res - Response object
+   * @memberof USerController
    */
   static userSignUp(req, res) {
     const { username, password, email } = req.body;
@@ -68,9 +76,12 @@ class UserController {
   }
 
   /**
-   * @param {object} req -Request object
+   * Log in a user
+   * Route: POST: /auth/login
+   * @param {object} req - Request object
    * @param {object} res - Response object
-   * @return {object} - Response object
+   * @return {res} res - Response object
+   * @memberof USerController
    */
   static userLogin(req, res) {
     const { username, password } = req.body;
@@ -117,6 +128,51 @@ class UserController {
             });
         }
       }
+    });
+  }
+
+  /**
+   * Create an admin account
+   * Route: POST: /auth/admin/signup
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @returns {res} res - Response object
+   * @memberof USerController
+   */
+  static adminSignup(req, res) {
+    const { username, password, email } = req.body;
+    let encryptedPassword;
+    CryptData.encryptData(password).then((hash) => {
+      encryptedPassword = hash;
+      pool.query(queries.signup, [username, encryptedPassword, email],
+        (error, response) => {
+          if (error) {
+            res.status(409).jsend.fail({
+              code: 409,
+              message: 'User details already exist. Signup was not successful',
+            });
+          } else {
+            const result = response.rows[0];
+            const token = jwt.sign({
+              userId: result.id,
+              username: result.username,
+              email: result.email,
+            }, adminSecret, { expiresIn: '1 day' });
+            res.status(201).jsend.success({
+              message: `Admin ${result.username} created successfully`,
+              id: result.id,
+              username: result.username,
+              email: result.email,
+              token,
+            });
+          }
+        },
+      );
+    }).catch(() => {
+      res.status(500).jsend.error({
+        code: 500,
+        message: 'An error occurred trying to save the user\'s detail',
+      });
     });
   }
 }
