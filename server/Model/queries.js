@@ -14,6 +14,8 @@ const queries = {
                 VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
   getAllOrders: 'SELECT * FROM orders LIMIT 6',
   getAnOrder: 'SELECT * FROM orders WHERE id=',
+  addMealToMenu: `INSERT INTO menu (meal, prize, meal_type, userId)
+                  values($1,$2,$3,$4) RETURNING *`,
 };
 
 export default queries;

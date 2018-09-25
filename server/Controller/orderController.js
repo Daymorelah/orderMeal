@@ -63,11 +63,13 @@ class OrderController {
           message: 'Internal server error',
         });
       } else if (response) {
-        res.jsend.success({
-          code: 200,
-          message: 'Order created successfully',
-          order: response.rows,
-        });
+        if (response.rowCount) {
+          res.jsend.success({
+            code: 200,
+            message: 'Order created successfully',
+            order: response.rows,
+          });
+        }
       }
     });
   }
