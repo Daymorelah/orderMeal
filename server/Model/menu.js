@@ -16,7 +16,7 @@ const createMenuTable = () => new Promise((resolve, reject) => {
         meal_type VARCHAR(255) NOT NULL,
         meal VARCHAR(255) NOT NULL,
         prize INTEGER NOT NULL,
-        userId SMALLINT NOT NULL CHECK(userId = 5), 
+        userId SMALLINT NOT NULL, 
         FOREIGN KEY (userId) REFERENCES users(id)  
         )`, (error, response) => {
           if (error) {

@@ -16,7 +16,10 @@ const routes = (app) => {
     Authenticate.checkToken,
     Validate.validateCreateOrder,
     OrderController.createOrder);
-  app.get('/api/v1/orders/:orderId', Validate.validateGetAnOrder, OrderController.getAnOrder);
+  app.get('/api/v1/orders/:orderId',
+    Authenticate.checkAdminToken,
+    Validate.validateGetAnOrder,
+    OrderController.getAnOrder);
   app.put('/api/v1/orders/:orderId',
     Validate.validateUpdateOrderStatus,
     OrderController.updateOrderStatus);
@@ -33,6 +36,10 @@ const routes = (app) => {
     MenuController.getAllMenu);
   app.post('/api/v1/auth/admin/signup', Validate.validateSignup, UserController.adminSignup);
   app.post('/api/v1/auth/admin/login', Validate.validateLogin, UserController.adminLogin);
+  app.post('/api/v1/menu',
+    Authenticate.checkAdminToken,
+    Validate.validateAddMealTOMenu,
+    MenuController.addMealToMenu);
 };
 
 export default routes;
