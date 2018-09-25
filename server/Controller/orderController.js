@@ -6,27 +6,50 @@ import queries from '../Model/queries';
 
 /**
  * Class representing the order controller
+ * @class Order controller
  * @description order controller
  */
 class OrderController {
   /**
-   * 
+   * Get All Orders
+   * Route: GET: /orders
    * @param {object} req - request object 
    * @param {object} res - response object
-   * @returns {object} res - response from the server
+   * @returns {res} res - response from the server
+   * @memberof OrderController
    */
   static getAllOrders(req, res) {
-    res.jsend.success({
-      code: 200,
-      mealsOrdered: data,
+    pool.query(queries.getAllOrders, (error, response) => {
+      if (error) {
+        res.status(500).jsend.error({
+          code: 500,
+          message: 'Internal server error',
+        });
+      } else if (response) {
+        if (response.rowCount) {
+          res.jsend.success({
+            code: 200,
+            message: 'Request completed successfully',
+            orders: response.rows,
+          });
+        } else {
+          res.jsend.success({
+            code: 200,
+            message: 'There are no orders created yet',
+            orders: null,
+          });
+        }
+      }
     });
   }
 
   /**
-   * 
+   * Create An Order
+   * Route: POST: /orders
    * @param {object} req - request object 
    * @param {object} res - response object
-   * @returns {object} res - response from the server
+   * @returns {res} res - response from the server
+   * @memberof OrderController
    */
   static createOrder(req, res) {
     const { name, meal, drink, address, quantity, prize } = req.body;
@@ -50,10 +73,12 @@ class OrderController {
   }
 
   /**
-   * 
+   * Get A Particular Order
+   * Route: GET: /orders/:orderId
    * @param {object} req - request object 
    * @param {object} res - response object
-   * @returns {object} res - response from the server
+   * @returns {res} res - response from the server
+   * @memberof OrderController
    */
   static getAnOrder(req, res) {
     const { orderId } = req.params;
@@ -75,10 +100,12 @@ class OrderController {
   }
 
   /**
-   * 
+   * Update The Status Of An Order
+   * Route: PUT: /orders/:orderId
    * @param {object} req - request object 
    * @param {object} res - response object
-   * @returns {object} res - response from the server
+   * @returns {res} res - response from the server
+   * @memberof OrderController
    */
   static updateOrderStatus(req, res) {
     const { orderId } = req.params;
@@ -105,10 +132,12 @@ class OrderController {
     }));
   }
   /**
-   * 
+   * Get The Order History Of A User
+   * Route: GET: /users/:userId/orders
    * @param {object} req - request object 
    * @param {object} res - response object
-   * @returns {object} res - response from the server
+   * @returns {res} res - response from the server
+   * @memberof OrderController
    */
   static getOrderHistory(req, res) {
     const paramsUserId = req.params.userId;
