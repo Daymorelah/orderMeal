@@ -160,6 +160,21 @@ describe('Integration test for the users controller', () => {
           done();
         });
     });
+    it('should send a failed request message when username does not exist', (done) => {
+      const userDetails = {
+        username: 'miagi',
+        password: 'tomnjerry',
+      };
+      chai.request(app).post('/api/v1/auth/login')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.data).to.have.property('message');
+          expect(res.body.status).to.deep.equal('fail');
+          done();
+        });
+    });
   });
   describe('Test to signup an admin', () => {
     it('should create an admin and send a message that the admin has ben created', (done) => {
@@ -237,6 +252,68 @@ describe('Integration test for the users controller', () => {
           expect(res.status).to.deep.equal(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.not.have.property('token');
+          expect(res.body.status).to.deep.equal('fail');
+          done();
+        });
+    });
+  });
+  describe('Test to login an admin', () => {
+    it('should log in an admin when correct details are given', (done) => {
+      const userDetails = {
+        username: 'Thomas2',
+        password: 'tomnjerry',
+      };
+      chai.request(app).post('/api/v1/auth/admin/login')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(200);
+          expect(res.body.data).to.have.property('message');
+          expect(res.body.data).to.have.property('token');
+          expect(res.body.status).to.deep.equal('success');
+          done();
+        });
+    });
+    it('should send failed request when invalid username is given', (done) => {
+      const userDetails = {
+        username: 'Thomas?',
+        password: 'tomnjerry',
+      };
+      chai.request(app).post('/api/v1/auth/admin/login')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.data).to.have.property('message');
+          expect(res.body.status).to.deep.equal('fail');
+          done();
+        });
+    });
+    it('should send failed request when invalid password is given', (done) => {
+      const userDetails = {
+        username: 'Thomas?',
+        password: 'tomnjerrydfgeertrewdfgfd',
+      };
+      chai.request(app).post('/api/v1/auth/admin/login')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.data).to.have.property('message');
+          expect(res.body.status).to.deep.equal('fail');
+          done();
+        });
+    });
+    it('should send a failed request message when username does not exist', (done) => {
+      const userDetails = {
+        username: 'miagi',
+        password: 'tomnjerry',
+      };
+      chai.request(app).post('/api/v1/auth/admin/login')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.data).to.have.property('message');
           expect(res.body.status).to.deep.equal('fail');
           done();
         });
