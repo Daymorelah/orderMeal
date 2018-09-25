@@ -9,7 +9,9 @@ import { Validate, Authenticate } from '../Utilities';
  */
 const routes = (app) => {
   app.get('/api/v1', UserController.welcomeUSer);
-  app.get('/api/v1/orders', OrderController.getAllOrders);
+  app.get('/api/v1/orders',
+    Authenticate.checkAdminToken,
+    OrderController.getAllOrders);
   app.post('/api/v1/orders',
     Authenticate.checkToken,
     Validate.validateCreateOrder,
