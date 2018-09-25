@@ -82,21 +82,26 @@ class OrderController {
    */
   static getAnOrder(req, res) {
     const { orderId } = req.params;
-    new Promise((resolve, reject) => {
-      const orderRequested = getOrder(orderId);
-      if (orderRequested === undefined) reject();
-      else {
-        resolve(orderRequested);
+    pool.query(`${queries.getAnOrder}${orderId}`, (err, response) => {
+      if (err) {
+        res.status(500).jsend.error({
+          code: 500,
+          message: 'Internal sever error',
+        });
+      } else if (response) {
+        if (response.rowCount) {
+          res.jsend.success({
+            code: 200,
+            order: response.rows,
+          });
+        } else {
+          res.status(404).jsend.fail({
+            code: 404,
+            message: 'The ride requested for does not exist',
+          });
+        }
       }
-    }).then((order) => {
-      res.jsend.success({
-        code: 200,
-        order,
-      });
-    }).catch(() => res.status(404).jsend.fail({
-      code: 404,
-      message: 'Order requested not found',
-    }));
+    });
   }
 
   /**

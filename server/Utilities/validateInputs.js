@@ -25,18 +25,18 @@ class Validate {
     req.params = trimValues(req.params);
     const { orderId } = req.params;
     if (orderId) {
-      if (validate.isNumeric(orderId, { no_symbols: true }) && validate.isInt(orderId)) {
+      if ((orderId.search(/\D/g) === -1) && parseInt(orderId, 10) > 0) {
         next();
       } else {
         res.status(400).jsend.fail({
           code: 400,
-          message: 'The order requested should be an integer and contain only numbers',
+          message: 'The order requested should be a positive integer.',
         });
       }
     } else {
       res.status(400).jsend.fail({
         code: 400,
-        message: 'Invalid request. User-input required',
+        message: 'Invalid request. Order ID required',
       });
     }
   }
