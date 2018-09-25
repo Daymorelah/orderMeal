@@ -21,6 +21,7 @@ const routes = (app) => {
     Validate.validateGetAnOrder,
     OrderController.getAnOrder);
   app.put('/api/v1/orders/:orderId',
+    Authenticate.checkAdminToken,
     Validate.validateUpdateOrderStatus,
     OrderController.updateOrderStatus);
   app.post('/api/v1/auth/signup', Validate.validateSignup, UserController.userSignUp);

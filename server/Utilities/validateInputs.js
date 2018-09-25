@@ -1,6 +1,4 @@
 /* eslint-disable no-useless-escape */
-import validate from 'validator';
-
 /**
  * Trims input values from user
  * @param {object} objectWithValuesToTrim - request body to trim
@@ -30,7 +28,7 @@ class Validate {
     req.params = trimValues(req.params);
     const { orderId } = req.params;
     if (orderId) {
-      if ((orderId.search(/\D/g) === -1) && parseInt(orderId, 10) > 0) {
+      if ((orderId.search(/\D\+/g) === -1) && parseInt(orderId, 10) > 0) {
         next();
       } else {
         res.status(400).jsend.fail({
@@ -54,30 +52,31 @@ class Validate {
    * @memberof Validate
    */
   static validateUpdateOrderStatus(req, res, next) {
+    const allowedValues = ['new', 'processing', 'cancelled', 'completed'];
     req.body = trimValues(req.body);
     req.params = trimValues(req.params);
     const { orderId } = req.params;
-    const { isCompleted } = req.body;
-    if (isCompleted && orderId) {
-      if (validate.isNumeric(orderId, { no_symbols: true }) && validate.isInt(orderId)) {
-        if (validate.isBoolean(isCompleted) && !validate.isNumeric(isCompleted)) {
+    const { status } = req.body;
+    if (status && orderId) {
+      if ((orderId.search(/\D\+/g) === -1) && parseInt(orderId, 10) > 0) {
+        if (allowedValues.includes(status.toLowerCase())) {
           next();
         } else {
           res.status(400).jsend.fail({
             code: 400,
-            message: 'Invalid request. "isCompleted" should be a boolean.',
+            message: 'Invalid status. Valid values are new, processing, cancelled or completed.',
           });
         }
       } else {
         res.status(400).jsend.fail({
           code: 400,
-          message: 'The order requested should be an integer and contain only numbers',
+          message: 'The order ID should be an integer.',
         });
       }
     } else {
       res.status(400).jsend.fail({
         code: 400,
-        message: 'Invalid request. User-inputs required',
+        message: 'Invalid request. All fields are required',
       });
     }
   }
