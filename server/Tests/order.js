@@ -10,6 +10,7 @@ const { expect } = chai;
 describe('Integration test for the order controller', () => {
   let myToken;
   let user1Id;
+  let myAdminToken;
   before('Create user for testing in order controller', (done) => {
     const user1 = {
       username: 'Donnie1',
@@ -21,6 +22,19 @@ describe('Integration test for the order controller', () => {
       .end((err, res) => {
         myToken = res.body.data.token;
         user1Id = res.body.data.id;
+        done();
+      });
+  });
+  before('Create admin for testing in order controller', (done) => {
+    const admin1 = {
+      username: 'Admin1',
+      password: 'password',
+      email: 'Admin1@wemail.com',
+    };
+    chai.request(app).post('/api/v1/auth/admin/signup')
+      .send(admin1)
+      .end((err, res) => {
+        myAdminToken = res.body.data.token;
         done();
       });
   });
@@ -40,10 +54,12 @@ describe('Integration test for the order controller', () => {
   describe('Test to get all orders', () => {
     it('should return all orders', (done) => {
       chai.request(app).get('/api/v1/orders')
+        .set('x-access-token', myAdminToken)
         .end((err, res) => {
           expect(res.body.data.code).to.deep.equal(200);
-          expect(res.body.data).to.have.property('mealsOrdered');
+          expect(res.body.data).to.have.property('message');
           expect(res.body.status).to.deep.equal('success');
+          expect(res.body.data).to.have.property('orders');
           done();
         });
     });
@@ -129,17 +145,29 @@ describe('Integration test for the order controller', () => {
   });
   describe('Tests to get a particular order', () => {
     it('should return details of the order requested', (done) => {
-      chai.request(app).get('/api/v1/orders/2')
+      chai.request(app).get('/api/v1/orders/1')
+        .set('x-access-token', myAdminToken)
         .end((err, res) => {
-          expect(res.body.data).to.have.property('order');
           expect(res.status).to.deep.equal(200);
           expect(res.body.status).to.deep.equal('success');
           expect(res.body.data.code).to.deep.equal(200);
           done();
         });
     });
+    it('should return user forbidden when user is not an admin', (done) => {
+      chai.request(app).get('/api/v1/orders/2/')
+        .set('x-access-token', myToken)
+        .end((err, res) => {
+          expect(res.body.data).to.have.property('message');
+          expect(res.status).to.deep.equal(403);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data.code).to.deep.equal(403);
+          done();
+        });
+    });
     it('should return invalid request when order requested is not given', (done) => {
       chai.request(app).get('/api/v1/orders/ /')
+        .set('x-access-token', myAdminToken)
         .end((err, res) => {
           expect(res.body.data).to.have.property('message');
           expect(res.status).to.deep.equal(400);
@@ -150,6 +178,7 @@ describe('Integration test for the order controller', () => {
     });
     it('should return invalid request when orderId is not an integer', (done) => {
       chai.request(app).get('/api/v1/orders/we/')
+        .set('x-access-token', myAdminToken)
         .end((err, res) => {
           expect(res.body.data).to.have.property('message');
           expect(res.status).to.deep.equal(400);
@@ -160,6 +189,7 @@ describe('Integration test for the order controller', () => {
     });
     it('should return not found if the order requested for does not exist', (done) => {
       chai.request(app).get('/api/v1/orders/12')
+        .set('x-access-token', myAdminToken)
         .end((err, res) => {
           expect(res.status).to.deep.equal(404);
           expect(res.body.status).to.deep.equal('fail');

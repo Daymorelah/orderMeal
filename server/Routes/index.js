@@ -9,12 +9,17 @@ import { Validate, Authenticate } from '../Utilities';
  */
 const routes = (app) => {
   app.get('/api/v1', UserController.welcomeUSer);
-  app.get('/api/v1/orders', OrderController.getAllOrders);
+  app.get('/api/v1/orders',
+    Authenticate.checkAdminToken,
+    OrderController.getAllOrders);
   app.post('/api/v1/orders',
     Authenticate.checkToken,
     Validate.validateCreateOrder,
     OrderController.createOrder);
-  app.get('/api/v1/orders/:orderId', Validate.validateGetAnOrder, OrderController.getAnOrder);
+  app.get('/api/v1/orders/:orderId',
+    Authenticate.checkAdminToken,
+    Validate.validateGetAnOrder,
+    OrderController.getAnOrder);
   app.put('/api/v1/orders/:orderId',
     Validate.validateUpdateOrderStatus,
     OrderController.updateOrderStatus);

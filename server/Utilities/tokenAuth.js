@@ -53,9 +53,9 @@ class Authenticate {
     } else {
       jwt.verify(token, adminSecret, (err, decoded) => {
         if (err) {
-          res.status(401).jsend.fail({
-            code: 401,
-            message: 'Authentication failed',
+          res.status(403).jsend.fail({
+            code: 403,
+            message: 'User not allowed to access this route.',
           });
         } else {
           req.decoded = decoded;
