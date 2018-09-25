@@ -85,7 +85,7 @@ class UserController {
    */
   static userLogin(req, res) {
     const { username, password } = req.body;
-    pool.query(`${queries.isUsernameValid}'${username}'`, (err, response) => {
+    pool.query(`${queries.isUsernameValid}`, [`${username}`], (err, response) => {
       if (err) {
         res.status(500).jsend.error({
           code: 500,
@@ -186,7 +186,7 @@ class UserController {
    */
   static adminLogin(req, res) {
     const { username, password } = req.body;
-    pool.query(`${queries.isUsernameValid}'${username}'`, (err, response) => {
+    pool.query(`${queries.isUsernameValid}`, [`${username}`], (err, response) => {
       if (err) {
         res.status(500).jsend.error({
           code: 500,

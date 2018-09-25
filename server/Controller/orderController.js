@@ -1,6 +1,4 @@
 
-import data from '../Model/dummyModel';
-import getOrder from '../Utilities/helpers';
 import pool from '../Model/db/connectToDb';
 import queries from '../Model/queries';
 
@@ -42,7 +40,6 @@ class OrderController {
       }
     });
   }
-
   /**
    * Create An Order
    * Route: POST: /orders
@@ -73,7 +70,6 @@ class OrderController {
       }
     });
   }
-
   /**
    * Get A Particular Order
    * Route: GET: /orders/:orderId
@@ -84,7 +80,7 @@ class OrderController {
    */
   static getAnOrder(req, res) {
     const { orderId } = req.params;
-    pool.query(`${queries.getAnOrder}${orderId}`, (err, response) => {
+    pool.query(`${queries.getAnOrder}`, [`${orderId}`], (err, response) => {
       if (err) {
         res.status(500).jsend.error({
           code: 500,
@@ -105,7 +101,6 @@ class OrderController {
       }
     });
   }
-
   /**
    * Update The Status Of An Order
    * Route: PUT: /orders/:orderId
@@ -116,27 +111,41 @@ class OrderController {
    */
   static updateOrderStatus(req, res) {
     const { orderId } = req.params;
-    const { isCompleted } = req.body;
-    new Promise((resolve, reject) => {
-      const orderRequested = getOrder(orderId);
-      if (orderRequested === undefined) reject();
-      else {
-        resolve(orderRequested);
+    const { status } = req.body;
+    pool.query(`${queries.isOrderValid}`, [`${orderId}`], (error, response) => {
+      if (error) {
+        res.status(500).jsend.error({
+          code: 500,
+          message: 'Internal server error.',
+        });
+      } else if (response) {
+        if (response.rowCount) {
+          pool.query(`${queries.updateOrderStatus}`,
+            [`${status.toLowerCase()}`, `${orderId}`],
+            (err, resp) => {
+              if (err) {
+                res.status(500).jsend.error({
+                  code: 500,
+                  message: 'Internal server error.',
+                });
+              } else if (resp) {
+                if (resp.rowCount) {
+                  res.jsend.success({
+                    code: 200,
+                    message: 'Update was successful',
+                    order: resp.rows,
+                  });
+                }
+              }
+            });
+        } else {
+          res.status(404).jsend.fail({
+            code: 404,
+            message: 'Order requested is not found',
+          });
+        }
       }
-    }).then((order) => {
-      const updatedOrder = order;
-      if (isCompleted) {
-        updatedOrder.isCompleted = isCompleted;
-        data.splice(updatedOrder.id, 1, updatedOrder);
-      }
-      res.jsend.success({
-        code: 200,
-        order: updatedOrder,
-      });
-    }).catch(() => res.status(404).jsend.fail({
-      code: 404,
-      message: 'Order requested not found',
-    }));
+    });
   }
   /**
    * Get The Order History Of A User
@@ -150,7 +159,7 @@ class OrderController {
     const paramsUserId = req.params.userId;
     const tokenUserId = req.decoded.userId;
     if (parseInt(paramsUserId, 10) === tokenUserId) {
-      pool.query(`${queries.orderHistory}'${tokenUserId}'`, (err, response) => {
+      pool.query(`${queries.orderHistory}`, [`${tokenUserId}`], (err, response) => {
         if (err) {
           res.status(500).jsend.error({
             code: 500,

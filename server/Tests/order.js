@@ -202,23 +202,26 @@ describe('Integration test for the order controller', () => {
   describe('Tests to update status of an order', () => {
     it('should update the status of a order', (done) => {
       const userDetails = {
-        isCompleted: 'true',
+        status: 'processing',
       };
-      chai.request(app).put('/api/v1/orders/3')
+      chai.request(app).put('/api/v1/orders/1')
+        .set('x-access-token', myAdminToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(200);
           expect(res.body.data.code).to.deep.equal(200);
           expect(res.body.status).to.deep.equal('success');
           expect(res.body.data).to.have.property('order');
+          expect(res.body.data.order[0].status).to.deep.equal('processing');
           done();
         });
     });
-    it('should return invalid request when request body is not a boolean', (done) => {
+    it('should return failed request when request body is invalid', (done) => {
       const userDetails = {
-        isCompleted: '1',
+        status: '1',
       };
-      chai.request(app).put('/api/v1/orders/wrong')
+      chai.request(app).put('/api/v1/orders/1')
+        .set('x-access-token', myAdminToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(400);
@@ -228,11 +231,12 @@ describe('Integration test for the order controller', () => {
           done();
         });
     });
-    it('should return invalid request when orderId is not an integer', (done) => {
+    it('should return failed request when orderId is not an integer', (done) => {
       const userDetails = {
-        isCompleted: 'true',
+        status: 'cancelled',
       };
       chai.request(app).put('/api/v1/orders/wrong')
+        .set('x-access-token', myAdminToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.deep.equal(400);
@@ -242,8 +246,9 @@ describe('Integration test for the order controller', () => {
           done();
         });
     });
-    it('should return invalid request when request body is an empty object', (done) => {
-      chai.request(app).put('/api/v1/orders/3')
+    it('should return failed request when request body is an empty object', (done) => {
+      chai.request(app).put('/api/v1/orders/1')
+        .set('x-access-token', myAdminToken)
         .send({})
         .end((err, res) => {
           expect(res.status).to.deep.equal(400);
@@ -255,9 +260,10 @@ describe('Integration test for the order controller', () => {
     });
     it('should return not found when order requested is invalid', (done) => {
       const userDetails = {
-        isCompleted: 'true',
+        status: 'completed',
       };
       chai.request(app).put('/api/v1/orders/14')
+        .set('x-access-token', myAdminToken)
         .send(userDetails)
         .end((err, res) => {
           expect(res.body.status).to.deep.equal('fail');
