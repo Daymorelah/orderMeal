@@ -95,7 +95,7 @@ class OrderController {
         } else {
           res.status(404).jsend.fail({
             code: 404,
-            message: 'The ride requested for does not exist',
+            message: 'The order requested for does not exist',
           });
         }
       }
