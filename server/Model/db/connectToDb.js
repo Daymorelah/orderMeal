@@ -3,7 +3,7 @@ import config from '../../Config';
 
 let pool;
 
-/** Check if DATABASE_URL environment varable is set. (used for production) */
+/** Check if DATABASE_URL environment variable is set. (used for production) */
 if (process.env.DATABASE_URL) {
   pool = new Pool({ connectionString: process.env.DATABASE_URL });
 }

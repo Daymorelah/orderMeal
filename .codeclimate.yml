@@ -1,0 +1,6 @@
+
+## other configuration excluded from example...
+exclude_patterns:
+- "server/Tests"
+- "server/Model/db/connectToDb.js"
+- "UI/"
