@@ -28,6 +28,7 @@ describe('Integration test for the Menu controller', () => {
       username: 'admin2',
       password: 'password',
       email: 'admin2@wemail.com',
+      role: 'admin',
     };
     chai.request(app).post('/api/v1/auth/admin/signup')
       .send(admin2)

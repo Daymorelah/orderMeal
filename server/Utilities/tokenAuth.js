@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { userNotAuthorized } from './helper';
 
 dotenv.config();
 const secret = process.env.SECRET;
@@ -18,10 +19,7 @@ class Authenticate {
   static checkToken(req, res, next) {
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (!token) {
-      res.status(401).jsend.fail({
-        code: 401,
-        message: 'User not authorized',
-      });
+      userNotAuthorized(res);
     } else {
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
@@ -46,10 +44,7 @@ class Authenticate {
   static checkAdminToken(req, res, next) {
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (!token) {
-      res.status.jsend.fail({
-        code: 401,
-        message: 'User not authorized',
-      });
+      userNotAuthorized(res);
     } else {
       jwt.verify(token, adminSecret, (err, decoded) => {
         if (err) {
