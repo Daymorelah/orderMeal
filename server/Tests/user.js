@@ -318,5 +318,19 @@ describe('Integration test for the users controller', () => {
           done();
         });
     });
+    it('should send a failed request when any required field is missing', (done) => {
+      const userDetails = {
+        username: 'miagi',
+      };
+      chai.request(app).post('/api/v1/auth/admin/login')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.data).to.have.property('message');
+          expect(res.body.status).to.deep.equal('fail');
+          done();
+        });
+    });
   });
 });

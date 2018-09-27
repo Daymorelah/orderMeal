@@ -134,7 +134,8 @@ class Validate {
         } else {
           res.status(400).jsend.fail({
             code: 400,
-            message: 'Invalid username. It should contain only letters, numbers, -, . or _',
+            message: `Invalid username or password. It should contain only letters,
+                      numbers, -, . or _`,
           });
         }
       } else {
@@ -199,7 +200,7 @@ class Validate {
       }
     } else {
       res.status(400).jsend.fail({
-        code: 404,
+        code: 400,
         message: 'All fields are required',
       });
     }

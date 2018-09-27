@@ -61,8 +61,8 @@ class MenuController {
           });
         } else if (response) {
           if (response.rowCount) {
-            res.jsend.success({
-              code: 200,
+            res.status(201).jsend.success({
+              code: 201,
               message: 'Request completed successfully',
               menuCreated: response.rows,
             });

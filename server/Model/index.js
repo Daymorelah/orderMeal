@@ -2,7 +2,6 @@
 import createUsersTable from './users';
 import createOrdersTable from './orders';
 import createMenuTable from './menu';
-
 /**
  * Creates tables for the app.
  * @constant

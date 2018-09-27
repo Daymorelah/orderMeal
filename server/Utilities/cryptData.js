@@ -1,4 +1,4 @@
-/* eslint-disable no-news */
+
 import bcrypt from 'bcrypt-nodejs';
 
 class CryptData {

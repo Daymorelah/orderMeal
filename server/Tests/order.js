@@ -78,8 +78,8 @@ describe('Integration test for the order controller', () => {
         .set('x-access-token', myToken)
         .send(userDetails)
         .end((err, res) => {
-          expect(res.status).to.deep.equal(200);
-          expect(res.body.data.code).to.deep.equal(200);
+          expect(res.status).to.deep.equal(201);
+          expect(res.body.data.code).to.deep.equal(201);
           expect(res.body.status).to.deep.equal('success');
           expect(res.body.data).to.have.property('message');
           expect(res.body.data).to.have.property('order');
@@ -106,13 +106,33 @@ describe('Integration test for the order controller', () => {
           done();
         });
     });
-    it('should return invalid request when an integer field has a non-integer value', (done) => {
+    it('should return invalid request when prize field has a non-integer value', (done) => {
       const userDetails = {
         name: 'jane Doe',
         meal: 'Eba',
         quantity: '2',
         drink: 'Hollandia 1ltr',
         prize: 'too costly',
+        address: 'Ajegunle, Lagos Nigeria',
+      };
+      chai.request(app).post('/api/v1/orders')
+        .set('x-access-token', myToken)
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should return a failed request when quantity contains non-integer value', (done) => {
+      const userDetails = {
+        name: 'jane Doe',
+        meal: 'Eba',
+        quantity: 'everything',
+        drink: 'Hollandia 1ltr',
+        prize: '400',
         address: 'Ajegunle, Lagos Nigeria',
       };
       chai.request(app).post('/api/v1/orders')
@@ -297,6 +317,16 @@ describe('Integration test for the order controller', () => {
     });
     it('should prevent a user from viewing another user\'s orders', (done) => {
       chai.request(app).get('/api/v1/users/1/orders')
+        .set({ 'x-access-token': myToken })
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should send a failed request when user ID is not given', (done) => {
+      chai.request(app).get('/api/v1/users/ /orders')
         .set({ 'x-access-token': myToken })
         .end((err, res) => {
           expect(res.status).to.deep.equal(400);

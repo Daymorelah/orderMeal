@@ -37,7 +37,7 @@ describe('Integration test for the Menu controller', () => {
       });
   });
   describe('Test for viewing available menu', () => {
-    it('should return null if no menu is available yet', () => {
+    it('should return null if no menu is available yet', (done) => {
       chai.request(app).get('/api/v1/menu')
         .set('x-access-token', myToken)
         .end((error, res) => {
@@ -46,6 +46,28 @@ describe('Integration test for the Menu controller', () => {
           expect(res.body.data).to.have.property('menu');
           expect(res.body.data.menu).to.deep.equal(null);
           expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should prevent an authorized user from accessing the route', (done) => {
+      chai.request(app).get('/api/v1/menu')
+        .set('x-access-token', 'rt%$tGbB')
+        .end((error, res) => {
+          expect(res.status).to.deep.equal(401);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('code');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should prevent a user without token from accessing the route', (done) => {
+      chai.request(app).get('/api/v1/menu')
+        .end((error, res) => {
+          expect(res.status).to.deep.equal(401);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('code');
+          expect(res.body.data).to.have.property('message');
+          done();
         });
     });
   });
@@ -60,8 +82,8 @@ describe('Integration test for the Menu controller', () => {
         .set('x-access-token', myAdminToken)
         .send(mealToAdd)
         .end((err, res) => {
-          expect(res.status).to.deep.equal(200);
-          expect(res.body.data.code).to.deep.equal(200);
+          expect(res.status).to.deep.equal(201);
+          expect(res.body.data.code).to.deep.equal(201);
           expect(res.body.status).to.deep.equal('success');
           expect(res.body.data).to.have.property('menuCreated');
           done();
@@ -101,7 +123,7 @@ describe('Integration test for the Menu controller', () => {
           done();
         });
     });
-    it('should not return null when a menu has been created', () => {
+    it('should not return null when a menu has been created', (done) => {
       chai.request(app).get('/api/v1/menu')
         .set('x-access-token', myToken)
         .end((error, res) => {
@@ -110,6 +132,33 @@ describe('Integration test for the Menu controller', () => {
           expect(res.body.data).to.have.property('menu');
           expect(res.body.data.menu).to.not.deep.equal(null);
           expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should prevent users without token from accessing the route', (done) => {
+      chai.request(app).get('/api/v1/menu')
+        .end((error, res) => {
+          expect(res.status).to.deep.equal(401);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('code');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should send a failed request when any required field is absent', (done) => {
+      const mealToAdd = {
+        meal: 'Ice-cream$',
+        mealType: 'Desert',
+      };
+      chai.request(app).post('/api/v1/menu')
+        .set('x-access-token', myAdminToken)
+        .send(mealToAdd)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.data.code).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
         });
     });
   });
