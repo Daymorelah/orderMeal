@@ -3,9 +3,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import jsend from 'jsend';
+import path from 'path';
+// import swaggerUiDist from '../apiDocs';
 import routes from './Routes';
 import expressError from './Utilities/validateInputs';
 
+// const pathToSwaggerUiDist = swaggerUiDist.absolutePath();
 const PORT = process.env.PORT || 2022;
 const app = express();
 
@@ -16,6 +19,7 @@ if (app.get('env') !== 'test') {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(jsend.middleware);
+app.use('/docs', express.static(path.resolve(`${__dirname}`, '../apiDocs')));
 
 routes(app);
 

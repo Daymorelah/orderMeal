@@ -5,9 +5,10 @@
       "document": true,
       "localStorage": true,
       "fetch": true,
-      "Request": true,
-      "describe": true,
-      "it": true,
-      "before": true
+      "Request": true
+    },
+    "env": {
+      "mocha": true,
+      "browser": true
     }
 }
