@@ -113,6 +113,23 @@ describe('Integration test for the users controller', () => {
           done();
         });
     });
+    it('should return forbidden request when role property is present', (done) => {
+      const userDetails = {
+        username: 'Thomas',
+        password: '',
+        email: 'tommy@wemail.com',
+        role: 'user',
+      };
+      chai.request(app).post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(403);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.not.have.property('token');
+          expect(res.body.status).to.deep.equal('fail');
+          done();
+        });
+    });
   });
   describe('Test to login a user', () => {
     it('should log a user in when correct details are given', (done) => {
@@ -175,6 +192,22 @@ describe('Integration test for the users controller', () => {
           done();
         });
     });
+    it('should return forbidden request when role property is present', (done) => {
+      const userDetails = {
+        username: 'Thomas',
+        password: 'something',
+        role: 'user',
+      };
+      chai.request(app).post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(403);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.not.have.property('token');
+          expect(res.body.status).to.deep.equal('fail');
+          done();
+        });
+    });
   });
   describe('Test to signup an admin', () => {
     it('should create an admin and send a message that the admin has ben created', (done) => {
@@ -182,6 +215,7 @@ describe('Integration test for the users controller', () => {
         username: 'Thomas2',
         password: 'tomnjerry',
         email: 'tommy2@wemail.com',
+        role: 'admin',
       };
       chai.request(app).post('/api/v1/auth/admin/signup')
         .send(userDetails)
@@ -189,7 +223,7 @@ describe('Integration test for the users controller', () => {
           expect(res.status).to.deep.equal(201);
           expect(res.body.data).to.have.property('token');
           expect(res.body.status).to.deep.equal('success');
-          expect(res.body.data.message).to.deep.equal('Admin Thomas2 created successfully');
+          expect(res.body.data.message).to.deep.equal('admin Thomas2 created successfully');
           done();
         });
     });

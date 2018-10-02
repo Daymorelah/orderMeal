@@ -4,14 +4,10 @@
       "window": true,
       "document": true,
       "localStorage": true,
-      "fetch": true,
-      "Request": true,
-      "describe": true,
-      "it": true,
-      "before": true
+      "fetch": true
     },
-    "env":{
-      "browser": true,
-      "node": true
-  }
+    "env": {
+      "mocha": true,
+      "browser": true
+    }
 }
