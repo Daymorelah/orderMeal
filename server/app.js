@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import jsend from 'jsend';
+import cors from 'cors';
 import routes from './Routes';
 import expressError from './Utilities/validateInputs';
 
@@ -16,6 +17,7 @@ if (app.get('env') !== 'test') {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(jsend.middleware);
+app.use(cors());
 
 routes(app);
 
