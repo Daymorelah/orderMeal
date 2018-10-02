@@ -1,4 +1,18 @@
 import pool from './db/connectToDb';
+import {
+  tableCreated,
+  couldNotCreatTable,
+  couldNotDropTable,
+  somethingAwkwardHappened } from '../Utilities/helper';
+
+const queryToCreateTable = `CREATE TABLE menu(
+  id SERIAL PRIMARY KEY,
+  meal_type VARCHAR(255) NOT NULL,
+  meal VARCHAR(255) NOT NULL,
+  prize INTEGER NOT NULL,
+  userId SMALLINT NOT NULL, 
+  FOREIGN KEY (userId) REFERENCES users(id)  
+  )`;
 
 /**
  * Creates a user table
@@ -9,24 +23,18 @@ import pool from './db/connectToDb';
 const createMenuTable = () => new Promise((resolve, reject) => {
   pool.query('DROP TABLE IF EXISTS menu CASCADE', (err, res) => {
     if (err) {
-      reject(Error('An error occurred trying to drop table menu.'));
-    } else if (res) {
-      pool.query(`CREATE TABLE menu(
-        id SERIAL PRIMARY KEY,
-        meal_type VARCHAR(255) NOT NULL,
-        meal VARCHAR(255) NOT NULL,
-        prize INTEGER NOT NULL,
-        userId SMALLINT NOT NULL, 
-        FOREIGN KEY (userId) REFERENCES users(id)  
-        )`, (error, response) => {
-          if (error) {
-            reject(Error('An error occurred trying to create table menu.'));
-          } else if (response) {
-            resolve('Table menu has been created successfully.');
-          }
-        });
+      reject(couldNotDropTable('menu'));
+    }
+    if (res) {
+      pool.query(queryToCreateTable, (error) => {
+        if (error) {
+          reject(couldNotCreatTable(), error);
+        } else {
+          resolve(tableCreated());
+        }
+      });
     } else {
-      reject('Something awkward happened!!');
+      reject(somethingAwkwardHappened());
     }
   });
 });

@@ -30,6 +30,7 @@ describe('Integration test for the order controller', () => {
       username: 'Admin1',
       password: 'password',
       email: 'Admin1@wemail.com',
+      role: 'admin',
     };
     chai.request(app).post('/api/v1/auth/admin/signup')
       .send(admin1)

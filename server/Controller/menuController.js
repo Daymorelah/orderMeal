@@ -1,6 +1,7 @@
 
 import pool from '../Model/db/connectToDb';
 import queries from '../Model/queries';
+import { sendServerError } from '../Utilities/helper';
 
 /**
  * Class representing the menu controller
@@ -19,10 +20,7 @@ class MenuController {
   static getAllMenu(req, res) {
     pool.query(queries.viewMenu, (error, response) => {
       if (error) {
-        res.status(500).jsend.error({
-          code: 500,
-          message: 'Internal server error while processing your request.',
-        });
+        sendServerError(res);
       } else if (response) {
         if (response.rowCount) {
           res.jsend.success({
@@ -55,10 +53,7 @@ class MenuController {
     pool.query(`${queries.addMealToMenu}`, [`${meal}`, `${prize}`, `${mealType}`, `${userId}`],
       (err, response) => {
         if (err) {
-          res.status(500).jsend.error({
-            code: 500,
-            message: 'Internal server error.',
-          });
+          sendServerError(res);
         } else if (response) {
           if (response.rowCount) {
             res.status(201).jsend.success({

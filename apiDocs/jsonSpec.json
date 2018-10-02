@@ -1,0 +1,855 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Order-Meal",
+    "description" : "A **_food ordering_** service app that allows users order for food from a restaurant and then the order gets delivered to the user.",
+    "contact" : {
+      "name" : "Ademola Hussain",
+      "email" : "demola.hussainin@gmail.com",
+      "url" : "https://github.com/Daymorelah"
+    },
+    "license" : {
+      "name" : "MIT",
+      "url" : "https://github.com/Daymorelah/orderMeal/blob/development/LICENSE"
+    }
+  },
+  "servers" : [{
+    "description" : "Production server",
+    "url" : "https://ordermymeal.herokuapp.com/api/v1"
+  } ],
+  "paths" : {
+    "/" : {
+      "get" : {
+        "tags" : [ "Welcome" ],
+        "responses" : {
+          "200" : {
+            "description" : "Request completed successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "Message" : "Welcome to the Order-Meal API"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signup" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "User registration",
+        "description" : "This endpoint creates a user. To be able to use the app, the user must register via this endpoint. The **Token** generated here must be used to authorize further requests to other user-accessible endpoints except the login endpoint.",
+        "responses" : {
+          "201" : {
+            "description" : "User created successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "status" : "success",
+                    "data" : {
+                      "message" : "User created succesfully",
+                      "id" : 3,
+                      "username" : "usernameEnteredByUSer",
+                      "email" : "wemail@wemail.com",
+                      "token" : "eyJhbGciOiJIVCJ9.eyJ1c2VySWQiOjExweHAiOj E1Mz.ogZKtEWCi6tcw_VvOGNNUQjhR_NA"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/invalidUserDetails"
+          },
+          "409" : {
+            "description" : "Input from user already exists in the database",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : "fail",
+                  "data" : {
+                    "code" : 409,
+                    "message" : "User details already exist. Signup was not successful"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "$ref" : "#/components/responses/internalServerError"
+          }
+        },
+        "requestBody" : {
+          "description" : "User details needed to create a user",
+          "required" : true,
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "username", "password", "email" ],
+                "properties" : {
+                  "username" : {
+                    "type" : "string",
+                    "example" : "JohnDoe"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "example" : "password"
+                  },
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "wemail@wemail.com"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "User login",
+        "description" : "This endpoint will log in a user when valid user details are used.",
+        "responses" : {
+          "200" : {
+            "description" : "User logged in successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "status" : "success",
+                    "data" : {
+                      "message" : "User logged in succesfully",
+                      "id" : 2,
+                      "username" : "usernameEnteredByUSer",
+                      "email" : "wemail@wemail.com",
+                      "token" : "eyJhbGciOiJIVCJ9.eyJ1c2VySWQiOjExweHAiOjE1MzMwNjQxMDF9.ogZKtEWCi6tcw_VvOGNNUQjhR_NA\""
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/invalidUserDetails"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/internalServerError"
+          }
+        },
+        "requestBody" : {
+          "description" : "User details needed to log in a user",
+          "required" : true,
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "username", "password" ],
+                "properties" : {
+                  "username" : {
+                    "type" : "string",
+                    "example" : "JohnDoe"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "example" : "password"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/admin/signup" : {
+      "post" : {
+        "tags" : [ "Admin" ],
+        "summary" : "Admin registration",
+        "description" : "This endpoint creates an admin. To be able to do administrative tasks on the app, there must be an admin and the admin register's via this endpoint. The **Token** generated here must be used to authorize further requests to other admin endpoints except the admin-login endpoint.",
+        "responses" : {
+          "201" : {
+            "description" : "Admin created successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "status" : "success",
+                    "data" : {
+                      "message" : "Admin created succesfully",
+                      "id" : 3,
+                      "username" : "usernameEnteredByUSer",
+                      "email" : "wemail@wemail.com",
+                      "token" : "eyJhbGciOiJIVCJ9.eyJ1c2VySWQiOjExweHAiOj E1Mz.ogZKtEWCi6tcw_VvOGNNUQjhR_NA"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/invalidUserDetails"
+          },
+          "409" : {
+            "description" : "Input from user already exists in the database",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : "fail",
+                  "data" : {
+                    "code" : 409,
+                    "message" : "User details already exist. Signup was not successful"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "$ref" : "#/components/responses/internalServerError"
+          }
+        },
+        "requestBody" : {
+          "description" : "User details needed to create an admin",
+          "required" : true,
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "username", "password", "email" ],
+                "properties" : {
+                  "username" : {
+                    "type" : "string",
+                    "example" : "JohnDoe"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "example" : "password"
+                  },
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "wemail@wemail.com"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/admin/login" : {
+      "post" : {
+        "tags" : [ "Admin" ],
+        "summary" : "Admin login",
+        "description" : "This endpoint will log in an admin when valid user details are used.",
+        "responses" : {
+          "200" : {
+            "description" : "Admin logged in successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "status" : "success",
+                    "data" : {
+                      "message" : "Admin logged in succesfully",
+                      "id" : 2,
+                      "username" : "usernameEnteredByUSer",
+                      "email" : "wemail@wemail.com",
+                      "token" : "eyJhbGciOiJIVCJ9.eyJ1c2VySWQiOjExweHAiOjE1MzMwNjQxMDF9.ogZKtEWCi6tcw_VvOGNNUQjhR_NA\""
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/invalidUserDetails"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/internalServerError"
+          }
+        },
+        "requestBody" : {
+          "description" : "User details needed to log in a user",
+          "required" : true,
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "username", "password" ],
+                "properties" : {
+                  "username" : {
+                    "type" : "string",
+                    "example" : "JohnDoe"
+                  },
+                  "password" : {
+                    "type" : "string",
+                    "example" : "password"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders" : {
+      "get" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Get all orders",
+        "description" : "Returns all available orders created by users of the app. It returns only six orders at a time. **NOTE:** Only the admin can access these route.",
+        "responses" : {
+          "200" : {
+            "description" : "A list of avaialable meal orders",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "status" : "success",
+                    "data" : {
+                      "code" : 200,
+                      "message" : "Request completed successfully",
+                      "Orders" : [ {
+                        "id" : "3,",
+                        "name" : "Jane_doe",
+                        "meal" : "Spagetti",
+                        "refreshment" : "Coca-Cola",
+                        "quantity" : 2,
+                        "prize" : 400,
+                        "address" : "Yaba, Lagos",
+                        "status" : "new",
+                        "usersid" : 9
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "$ref" : "#/components/responses/authenticationFailed"
+          },
+          "403" : {
+            "$ref" : "#/components/responses/userForbidden"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/internalServerError"
+          }
+        },
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/authorizationToken"
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Create an order",
+        "description" : "Users use these route to create an order on the app.",
+        "responses" : {
+          "201" : {
+            "description" : "An order has been created successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "status" : "success",
+                    "data" : {
+                      "code" : 201,
+                      "message" : "Order created successfully",
+                      "order" : [ {
+                        "id" : "3,",
+                        "name" : "Jane_doe",
+                        "meal" : "Spagetti",
+                        "refreshment" : "Coca-Cola",
+                        "quantity" : 4,
+                        "prize" : 400,
+                        "address" : "Yaba, Lagos",
+                        "status" : "new",
+                        "usersid" : 5
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/invalidUserDetails"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/authenticationFailed"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/internalServerError"
+          }
+        },
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/authorizationToken"
+        } ],
+        "requestBody" : {
+          "description" : "Details needed to create an order.",
+          "required" : true,
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "name", "meal", "drink", "quantity", "prize", "address" ],
+                "properties" : {
+                  "name" : {
+                    "type" : "string",
+                    "example" : "Jane_doe"
+                  },
+                  "meal" : {
+                    "type" : "string",
+                    "example" : "Spaghetti"
+                  },
+                  "drink" : {
+                    "type" : "string",
+                    "example" : "Coca-Cola"
+                  },
+                  "quantity" : {
+                    "type" : "string",
+                    "example" : "3"
+                  },
+                  "prize" : {
+                    "type" : "string",
+                    "example" : "400"
+                  },
+                  "address" : {
+                    "type" : "string",
+                    "example" : "Mushin, Lagos"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/orders" : {
+      "get" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Get order history of a user",
+        "description" : "Returns the history of orders made by a user specified by the **_userId_** parameter in the url.",
+        "responses" : {
+          "200" : {
+            "description" : "Request completed successfully.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "status" : "success",
+                    "data" : {
+                      "code" : 200,
+                      "orders" : [ {
+                        "id" : "3,",
+                        "name" : "Jane_doe",
+                        "meal" : "Spagetti",
+                        "refreshment" : "Coca-Cola",
+                        "quantity" : 4,
+                        "prize" : 400,
+                        "address" : "Yaba, Lagos",
+                        "status" : "new",
+                        "usersid" : 5
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/invalidUserDetails"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/authenticationFailed"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/internalServerError"
+          }
+        },
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/authorizationToken"
+        }, {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "User's orders to get.",
+          "required" : true,
+          "example" : 3,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ]
+      }
+    },
+    "/orders/{orderId}" : {
+      "get" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Get a specific order",
+        "description" : "Returns a specific order, showing the details of that order. **NOTE:** Only the admin can access these route.",
+        "responses" : {
+          "200" : {
+            "description" : "Details of a specific order",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "status" : "success",
+                    "data" : {
+                      "code" : 200,
+                      "order" : [ {
+                        "id" : "3,",
+                        "name" : "Jane_doe",
+                        "meal" : "Spagetti",
+                        "refreshment" : "Coca-Cola",
+                        "quantity" : 2,
+                        "prize" : 400,
+                        "address" : "Yaba, Lagos",
+                        "status" : "new",
+                        "usersid" : 9
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "$ref" : "#/components/responses/authenticationFailed"
+          },
+          "403" : {
+            "$ref" : "#/components/responses/userForbidden"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/resourceNotFound"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/internalServerError"
+          }
+        },
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/authorizationToken"
+        }, {
+          "$ref" : "#/components/parameters/orderId"
+        } ]
+      },
+      "put" : {
+        "tags" : [ "Orders" ],
+        "summary" : "update order status.",
+        "description" : "This end-point allows the admin to update the status of an order. **NOTE:** Only the admin can access this route.",
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/authorizationToken"
+        }, {
+          "$ref" : "#/components/parameters/orderId"
+        } ],
+        "requestBody" : {
+          "description" : "Contains the status to update to. **NOTE:** Only four type of values are considered valid namely 'new', 'processing', 'cancelled' or 'completed'",
+          "required" : true,
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "status" ],
+                "properties" : {
+                  "status" : {
+                    "type" : "string",
+                    "example" : "new"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Request completed successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "code" : 200,
+                    "message" : "request completed succesfully"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/invalidUserDetails"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/authenticationFailed"
+          },
+          "403" : {
+            "$ref" : "#/components/responses/userForbidden"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/resourceNotFound"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/internalServerError"
+          }
+        }
+      }
+    },
+    "/menu" : {
+      "get" : {
+        "tags" : [ "Menu" ],
+        "summary" : "Get all available menu",
+        "description" : "Returns all available menu created by the admin of the app. It returns only six menu items at a time.",
+        "responses" : {
+          "200" : {
+            "description" : "A list of all avaialable menu",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "status" : "success",
+                    "data" : {
+                      "code" : 200,
+                      "message" : "Request completed successfully",
+                      "menu" : [ {
+                        "id" : "16,",
+                        "meal_type" : "Desert,",
+                        "meal" : "Fruit-Salad,",
+                        "prize" : "40,",
+                        "userid" : 20
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "$ref" : "#/components/responses/authenticationFailed"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/internalServerError"
+          }
+        },
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/authorizationToken"
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Menu" ],
+        "summary" : "Add a menu to the app",
+        "description" : "Admin will use this route to create and add a menu on the app. **NOTE:** Only the admin can access this route.",
+        "responses" : {
+          "201" : {
+            "description" : "A menu has been added successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "example" : {
+                    "status" : "success",
+                    "data" : {
+                      "code" : 201,
+                      "message" : "Request completed successfully",
+                      "menuCreated" : [ {
+                        "id" : "1,",
+                        "meal_type" : "Desert,",
+                        "meal" : "Fruit-Salad,",
+                        "prize" : "40,",
+                        "userid" : 2
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/invalidUserDetails"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/authenticationFailed"
+          },
+          "403" : {
+            "$ref" : "#/components/responses/userForbidden"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/internalServerError"
+          }
+        },
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/authorizationToken"
+        } ],
+        "requestBody" : {
+          "description" : "Details needed to create a menu.",
+          "required" : true,
+          "content" : {
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "type" : "object",
+                "required" : [ "meal", "mealType", "prize" ],
+                "properties" : {
+                  "meal" : {
+                    "type" : "string",
+                    "example" : "Ice cream"
+                  },
+                  "mealType" : {
+                    "type" : "string",
+                    "example" : "Appetizer"
+                  },
+                  "prize" : {
+                    "type" : "string",
+                    "example" : "400"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "parameters" : {
+      "authorizationToken" : {
+        "name" : "x-access-token",
+        "in" : "header",
+        "required" : true,
+        "description" : "Token for authentication",
+        "schema" : {
+          "type" : "string",
+          "format" : "byte"
+        },
+        "style" : "simple"
+      },
+      "orderId" : {
+        "name" : "orderId",
+        "in" : "path",
+        "description" : "Particular order to query.",
+        "required" : true,
+        "example" : 3,
+        "schema" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "responses" : {
+      "internalServerError" : {
+        "description" : "Internal server error while processing the request",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "example" : {
+                "status" : "error",
+                "code" : 500,
+                "message" : "An error occured trying to process a request"
+              }
+            }
+          }
+        }
+      },
+      "authenticationFailed" : {
+        "description" : "Token sent by the user is not valid",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "example" : {
+                "status" : "fail",
+                "data" : {
+                  "code" : 401,
+                  "message" : "Authentication fialed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "userForbidden" : {
+        "description" : "User not allowed to access the route",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "example" : {
+                "status" : "fail",
+                "data" : {
+                  "code" : 403,
+                  "message" : "User not allowed to access this route."
+                }
+              }
+            }
+          }
+        }
+      },
+      "invalidUserDetails" : {
+        "description" : "Failed request due to invalid user details",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "example" : {
+                "status" : "fail",
+                "data" : {
+                  "code" : 400,
+                  "message" : "Message describing cause of failed request"
+                }
+              }
+            }
+          }
+        }
+      },
+      "resourceNotFound" : {
+        "description" : "Resource requested does not exist",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "example" : {
+                "status" : "fail",
+                "data" : {
+                  "code" : 404,
+                  "message" : "Detail of the resource not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "errorFromUser" : {
+        "description" : "Operation failed due to fault from the user",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "example" : {
+                "status" : "fail",
+                "data" : {
+                  "code" : 409,
+                  "message" : "Detail of the fault from user"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

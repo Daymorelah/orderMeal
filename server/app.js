@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import jsend from 'jsend';
 import cors from 'cors';
+import path from 'path';
 import routes from './Routes';
 import expressError from './Utilities/validateInputs';
 
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(jsend.middleware);
 app.use(cors());
+app.use('/docs', express.static(path.resolve(`${__dirname}`, '../apiDocs')));
 
 routes(app);
 
