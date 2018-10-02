@@ -9,5 +9,9 @@
       "describe": true,
       "it": true,
       "before": true
-    }
+    },
+    "env":{
+      "browser": true,
+      "node": true
+  }
 }
