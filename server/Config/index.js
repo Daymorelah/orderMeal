@@ -9,24 +9,19 @@ dotenv.config();
  * @type {object} - Configuration Object
  */
 const dbConfigurations = {
-  development: {
-    user: process.env.DB_CONFIG_USERNAME,
-    host: process.env.DB_CONFIG_HOST,
-    database: process.env.DB_CONFIG_DATABASE,
-    password: process.env.DB_CONFIG_PASSWORD,
-    port: process.env.DB_CONFIG_PORT,
-    max: process.env.DB_CONFIG_MAX,
-    idleTimeoutMillis: process.env.DB_CONFIG_IDLE_TIMEOUT_MILLIS,
-  },
-  test: {
-    user: process.env.DB_CONFIG_USERNAME,
-    host: process.env.DB_CONFIG_HOST,
-    database: process.env.DB_CONFIG_TEST_DATABASE,
-    password: process.env.DB_CONFIG_PASSWORD,
-    port: process.env.DB_CONFIG_PORT,
-    max: process.env.DB_CONFIG_MAX,
-    idleTimeoutMillis: process.env.DB_CONFIG_IDLE_TIMEOUT_MILLIS,
-  },
+  user: process.env.DB_CONFIG_USERNAME,
+  host: process.env.DB_CONFIG_HOST,
+  password: process.env.DB_CONFIG_PASSWORD,
+  port: process.env.DB_CONFIG_PORT,
+  max: process.env.DB_CONFIG_MAX,
+  idleTimeoutMillis: process.env.DB_CONFIG_IDLE_TIMEOUT_MILLIS,
 };
 
+if (process.env.NODE_ENV === 'test') {
+  dbConfigurations.database = process.env.DB_CONFIG_TEST_DATABASE;
+} else {
+  dbConfigurations.database = process.env.DB_CONFIG_DATABASE;
+}
+
 export default dbConfigurations;
+

@@ -1,4 +1,8 @@
 /* eslint-disable no-useless-escape */
+import {
+  checkForInteger,
+  valueShouldBeInteger,
+  allFieldsRequired } from './helper';
 /**
  * Trims input values from user
  * @param {object} objectWithValuesToTrim - request body to trim
@@ -28,13 +32,10 @@ class Validate {
     req.params = trimValues(req.params);
     const { orderId } = req.params;
     if (orderId) {
-      if ((orderId.search(/\D\+/g) === -1) && parseInt(orderId, 10) > 0) {
+      if (checkForInteger(orderId)) {
         next();
       } else {
-        res.status(400).jsend.fail({
-          code: 400,
-          message: 'The order requested should be a positive integer.',
-        });
+        valueShouldBeInteger(res, 'order ID');
       }
     } else {
       res.status(400).jsend.fail({
@@ -58,7 +59,7 @@ class Validate {
     const { orderId } = req.params;
     const { status } = req.body;
     if (status && orderId) {
-      if ((orderId.search(/\D\+/g) === -1) && parseInt(orderId, 10) > 0) {
+      if (checkForInteger(orderId)) {
         if (allowedValues.includes(status.toLowerCase())) {
           next();
         } else {
@@ -68,16 +69,10 @@ class Validate {
           });
         }
       } else {
-        res.status(400).jsend.fail({
-          code: 400,
-          message: 'The order ID should be an integer.',
-        });
+        valueShouldBeInteger(res, 'order ID');
       }
     } else {
-      res.status(400).jsend.fail({
-        code: 400,
-        message: 'Invalid request. All fields are required',
-      });
+      allFieldsRequired(res);
     }
   }
   /**
@@ -94,14 +89,10 @@ class Validate {
     if (name && meal && quantity && drink && prize && address) {
       if (name.search(/[^\w\.\-]/g) === -1 && meal.search(/[^\w\s\.\-]/g) === -1 &&
           drink.search(/[^\w\s\.\-]/g) === -1 && address.search(/[^\w\s\.,\-]/g) === -1) {
-        if (((quantity.search(/\D\+/g) === -1) && parseInt(quantity, 10) > 0) &&
-            ((prize.search(/\D\+/g) === -1) && parseInt(prize, 10) > 0)) {
+        if (checkForInteger(quantity) && checkForInteger(prize)) {
           next();
         } else {
-          res.status(400).jsend.fail({
-            code: 400,
-            message: 'Invalid request. Numeric fields should contain integers only.',
-          });
+          valueShouldBeInteger(res, 'Integer fields');
         }
       } else {
         res.status(400).jsend.fail({
@@ -110,10 +101,7 @@ class Validate {
         });
       }
     } else {
-      res.status(400).jsend.fail({
-        code: 400,
-        message: 'Invalid request. All fields are required.',
-      });
+      allFieldsRequired(res);
     }
   }
   /**
@@ -126,9 +114,14 @@ class Validate {
    */
   static validateSignup(req, res, next) {
     trimValues(req.body);
-    const { username, password, email } = req.body;
-    if (username && password && email) {
-      if (email.match(/\w+@\w+\.\w{2,}/g) !== null) {
+    const { username, password, email, role } = req.body;
+    if (role && (role.toLowerCase() !== 'admin')) {
+      res.status(400).jsend.fail({
+        code: 400,
+        message: 'Invalid role. Role can only be admin',
+      });
+    } else if (username && password && email) {
+      if (email.match(/\w+@\w+\.\w{2,6}/g) !== null) {
         if (username.search(/[^\w\.\-_]/g) === -1 && password.length < 20) {
           next();
         } else {
@@ -145,10 +138,7 @@ class Validate {
         });
       }
     } else {
-      res.status(400).jsend.fail({
-        code: 400,
-        message: 'All fields are required.',
-      });
+      allFieldsRequired(res);
     }
   }
   /**
@@ -163,19 +153,13 @@ class Validate {
     req.params = trimValues(req.params);
     const { userId } = req.params;
     if (userId) {
-      if ((userId.search(/\D\+/g) === -1) && (parseInt(userId, 10) > 0)) {
+      if (checkForInteger(userId)) {
         next();
       } else {
-        res.status(400).jsend.fail({
-          code: 400,
-          message: 'User ID is invalid',
-        });
+        valueShouldBeInteger(res, 'user ID');
       }
     } else {
-      res.status(400).jsend.fail({
-        code: 400,
-        message: 'All fields are required',
-      });
+      allFieldsRequired(res);
     }
   }
   /**
@@ -199,13 +183,29 @@ class Validate {
         });
       }
     } else {
-      res.status(400).jsend.fail({
-        code: 400,
-        message: 'All fields are required',
-      });
+      allFieldsRequired(res);
     }
   }
-
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Response object when query is invalid
+   * @memberof Validate
+   */
+  static checkRoleForUser(req, res, next) {
+    req.body = trimValues(req.body);
+    const { role } = req.body;
+    if (role) {
+      res.status(403).jsend.fail({
+        code: 403,
+        message: 'Forbidden parameter, (role), in request',
+      });
+    } else {
+      next();
+    }
+  }
   /**
    * @param {object} req - Request object 
    * @param {object} res - Response object
@@ -229,13 +229,10 @@ class Validate {
     const { meal, prize, mealType } = req.body;
     if (meal && prize && mealType) {
       if ((meal.search(/[^\w\s\.\-]/g) === -1) && (mealType.search(/[^\w\.\-]/g) === -1)) {
-        if (prize.search(/\D\+/g) && (parseInt(prize, 10) > 0)) {
+        if (checkForInteger(prize)) {
           next();
         } else {
-          res.status(400).jsend.fail({
-            code: 400,
-            message: 'Prize must be an integer.',
-          });
+          valueShouldBeInteger(res, 'prize field');
         }
       } else {
         res.status(400).jsend.fail({
@@ -244,10 +241,7 @@ class Validate {
         });
       }
     } else {
-      res.status(400).jsend.fail({
-        code: 400,
-        message: 'All fields are required',
-      });
+      allFieldsRequired(res);
     }
   }
 

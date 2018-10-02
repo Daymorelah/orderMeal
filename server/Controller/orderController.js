@@ -1,6 +1,7 @@
 
 import pool from '../Model/db/connectToDb';
 import queries from '../Model/queries';
+import { sendServerError, noValuesYet } from '../Utilities/helper';
 
 /**
  * Class representing the order controller
@@ -19,10 +20,7 @@ class OrderController {
   static getAllOrders(req, res) {
     pool.query(queries.getAllOrders, (error, response) => {
       if (error) {
-        res.status(500).jsend.error({
-          code: 500,
-          message: 'Internal server error',
-        });
+        sendServerError(res);
       } else if (response) {
         if (response.rowCount) {
           res.jsend.success({
@@ -31,11 +29,7 @@ class OrderController {
             orders: response.rows,
           });
         } else {
-          res.jsend.success({
-            code: 200,
-            message: 'There are no orders created yet',
-            orders: null,
-          });
+          noValuesYet(res, 'orders created');
         }
       }
     });
@@ -49,16 +43,13 @@ class OrderController {
    * @memberof OrderController
    */
   static createOrder(req, res) {
-    const { name, meal, drink, address, quantity, prize } = req.body;
+    const { address, name, quantity, prize, meal, drink } = req.body;
     const { userId } = req.decoded;
     pool.query(queries.createOrder, [`${name}`, `${meal}`, `${drink}`, `${quantity}`,
       `${prize}`, `${address}`, `${userId}`],
     (error, response) => {
       if (error) {
-        res.status(500).jsend.error({
-          code: 500,
-          message: 'Internal server error',
-        });
+        sendServerError(res);
       } else if (response) {
         if (response.rowCount) {
           res.status(201).jsend.success({
@@ -82,10 +73,7 @@ class OrderController {
     const { orderId } = req.params;
     pool.query(`${queries.getAnOrder}`, [`${orderId}`], (err, response) => {
       if (err) {
-        res.status(500).jsend.error({
-          code: 500,
-          message: 'Internal sever error',
-        });
+        sendServerError(res);
       } else if (response) {
         if (response.rowCount) {
           res.jsend.success({
@@ -114,20 +102,15 @@ class OrderController {
     const { status } = req.body;
     pool.query(`${queries.isOrderValid}`, [`${orderId}`], (error, response) => {
       if (error) {
-        res.status(500).jsend.error({
-          code: 500,
-          message: 'Internal server error.',
-        });
-      } else if (response) {
+        sendServerError(res);
+      }
+      if (response) {
         if (response.rowCount) {
           pool.query(`${queries.updateOrderStatus}`,
             [`${status.toLowerCase()}`, `${orderId}`],
             (err, resp) => {
               if (err) {
-                res.status(500).jsend.error({
-                  code: 500,
-                  message: 'Internal server error.',
-                });
+                sendServerError(res);
               } else if (resp) {
                 if (resp.rowCount) {
                   res.jsend.success({
@@ -156,22 +139,13 @@ class OrderController {
    * @memberof OrderController
    */
   static getOrderHistory(req, res) {
-    const paramsUserId = req.params.userId;
-    const tokenUserId = req.decoded.userId;
-    if (parseInt(paramsUserId, 10) === tokenUserId) {
-      pool.query(`${queries.orderHistory}`, [`${tokenUserId}`], (err, response) => {
+    if (parseInt(req.params.userId, 10) === req.decoded.userId) {
+      pool.query(`${queries.orderHistory}`, [`${req.decoded.userId}`], (err, response) => {
         if (err) {
-          res.status(500).jsend.error({
-            code: 500,
-            message: 'Internal server Error',
-          });
+          sendServerError(res);
         } else if (response) {
           if (response.rowCount === 0) {
-            res.jsend.success({
-              code: 200,
-              message: 'You have not created any order yet.',
-              orders: null,
-            });
+            noValuesYet(res, 'orders created');
           } else {
             res.jsend.success({
               code: 200,
