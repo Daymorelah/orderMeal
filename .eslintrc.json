@@ -4,8 +4,7 @@
       "window": true,
       "document": true,
       "localStorage": true,
-      "fetch": true,
-      "Request": true
+      "fetch": true
     },
     "env": {
       "mocha": true,
