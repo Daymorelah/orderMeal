@@ -115,6 +115,14 @@ button {
   font-weight: 900;
   cursor: pointer;
 }
+#login {
+  text-align: center;
+}
+#login a {
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 900;
+}
 #footer {
   text-align: center;
   background: var(--primary);

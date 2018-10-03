@@ -1,7 +1,6 @@
 
 const loginFormContainer = document.querySelector('#login-form');
 const loginForm = document.querySelector('form');
-const signupButton = document.querySelector('#signup-button');
 const responseContainer = document.querySelector('#response-container');
 const responseContent = document.querySelector('#response-container p');
 
@@ -60,6 +59,3 @@ loginForm.addEventListener('submit', (event) => {
   });
 });
 
-signupButton.addEventListener('click', () => {
-  window.location = './signupPage.html';
-});
