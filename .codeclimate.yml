@@ -4,3 +4,5 @@ exclude_patterns:
 - "server/Tests"
 - "server/Model/db/connectToDb.js"
 - "UI/"
+- "client/"
+- "apiDocs/"
