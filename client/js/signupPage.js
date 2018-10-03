@@ -41,6 +41,8 @@ signupForm.addEventListener('submit', (event) => {
     },
   ).then(handleResponse).then((res) => {
     localStorage.setItem('token', `${res.data.token}`);
+    localStorage.setItem('userId', `${res.data.id}`);
+    localStorage.setItem('username', `${res.data.username}`);
     showErrorMessage(res, 'success');
     signupFormContainer.style.display = 'none';
     signupForm.reset();
