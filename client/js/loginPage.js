@@ -30,7 +30,7 @@ loginForm.addEventListener('submit', (event) => {
   };
   event.preventDefault();
   fetch(
-    'http://localhost:2022/api/v1/auth/login',
+    'https://ordermymeal.herokuapp.com/api/v1/auth/login',
     {
       method: 'POST',
       body: JSON.stringify(userDetails),
@@ -40,6 +40,8 @@ loginForm.addEventListener('submit', (event) => {
     },
   ).then(handleResponse).then((res) => {
     localStorage.setItem('token', `${res.data.token}`);
+    localStorage.setItem('userId', `${res.data.id}`);
+    localStorage.setItem('username', `${res.data.username}`);
     showResponseMessage(res, 'success');
     loginFormContainer.style.display = 'none';
     loginForm.reset();

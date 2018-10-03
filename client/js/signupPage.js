@@ -31,7 +31,7 @@ signupForm.addEventListener('submit', (event) => {
   };
   event.preventDefault();
   fetch(
-    'http://localhost:2022/api/v1/auth/signup',
+    'https://ordermymeal.herokuapp.com/api/v1/auth/signup',
     {
       method: 'POST',
       body: JSON.stringify(userDetails),
