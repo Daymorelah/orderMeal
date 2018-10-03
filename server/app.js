@@ -20,6 +20,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(jsend.middleware);
 app.use(cors());
 app.use('/docs', express.static(path.resolve(`${__dirname}`, '../apiDocs')));
+app.use('/public', express.static(path.resolve(`${__dirname}`, '../client/html')));
+app.use('/public/asset', express.static(path.resolve(`${__dirname}`, '../client/css')));
+app.use('/public/images', express.static(path.resolve(`${__dirname}`, '../client/images')));
+app.use('/public/js', express.static(path.resolve(`${__dirname}`, '../client/js')));
 
 routes(app);
 
