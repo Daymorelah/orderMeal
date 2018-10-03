@@ -118,6 +118,14 @@ button {
   font-weight: 900;
   cursor: pointer;
 }
+#signup {
+  text-align: center;
+}
+#signup a {
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 900;
+}
 #footer {
   text-align: center;
   background: var(--primary);

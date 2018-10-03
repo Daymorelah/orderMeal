@@ -2,11 +2,15 @@ const smallWidthNav = document.querySelector('#small-width-nav');
 const hamburger = document.querySelector('#hamburger');
 const profileName = document.querySelector('#user-identify-text h2');
 const greetUSer = document.querySelector('#user-identify-text p');
+const logUserOut = document.querySelector('#logout');
 
 hamburger.addEventListener('click', () => {
   if (smallWidthNav.classList) {
     smallWidthNav.classList.toggle('open');
   }
+});
+logUserOut.addEventListener('click', () => {
+  localStorage.clear();
 });
 /* eslint-disable no-else-return */
 const handleResponse = res => res.json().then((response) => {
