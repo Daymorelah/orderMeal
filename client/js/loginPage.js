@@ -4,6 +4,11 @@ const loginForm = document.querySelector('form');
 const signupButton = document.querySelector('#signup-button');
 const responseContainer = document.querySelector('#response-container');
 const responseContent = document.querySelector('#response-container p');
+
+loginForm.addEventListener('keypress', () => {
+  responseContainer.style.display = 'none';
+});
+
 /* eslint-disable no-else-return */
 const handleResponse = res => res.json().then((response) => {
   if (res.ok) {
@@ -16,11 +21,13 @@ const handleResponse = res => res.json().then((response) => {
   }
 });
 /* eslint-disable no-else-return */
+
 const showResponseMessage = (res, type) => {
   responseContainer.style.display = 'block';
   responseContainer.setAttribute('class', `${type}-response`);
   responseContent.textContent = `${res.data.message}!`;
 };
+
 loginForm.addEventListener('submit', (event) => {
   const username = document.querySelector('#username').value;
   const password = document.querySelector('#password').value;
