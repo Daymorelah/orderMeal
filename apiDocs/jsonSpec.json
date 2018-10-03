@@ -14,7 +14,7 @@
       "url" : "https://github.com/Daymorelah/orderMeal/blob/development/LICENSE"
     }
   },
-  "servers" : [{
+  "servers" : [ {
     "description" : "Production server",
     "url" : "https://ordermymeal.herokuapp.com/api/v1"
   } ],
@@ -176,7 +176,7 @@
       "post" : {
         "tags" : [ "Admin" ],
         "summary" : "Admin registration",
-        "description" : "This endpoint creates an admin. To be able to do administrative tasks on the app, there must be an admin and the admin register's via this endpoint. The **Token** generated here must be used to authorize further requests to other admin endpoints except the admin-login endpoint.",
+        "description" : "This endpoint creates an admin. To be able to do administrative tasks on the app, there must be an admin and the admin register's via this endpoint. The **Token** generated here must be used to authorize further requests to other admin endpoints except the admin-login endpoint. **NOTE:** There MUST be a **_role_** property with value '**_admin_**' when using this enpoint.",
         "responses" : {
           "201" : {
             "description" : "Admin created successfully.",
@@ -215,6 +215,9 @@
               }
             }
           },
+          "403" : {
+            "$ref" : "#/components/responses/userForbidden"
+          },
           "500" : {
             "$ref" : "#/components/responses/internalServerError"
           }
@@ -226,7 +229,7 @@
             "application/x-www-form-urlencoded" : {
               "schema" : {
                 "type" : "object",
-                "required" : [ "username", "password", "email" ],
+                "required" : [ "username", "password", "email", "role" ],
                 "properties" : {
                   "username" : {
                     "type" : "string",
@@ -240,6 +243,10 @@
                     "type" : "string",
                     "format" : "email",
                     "example" : "wemail@wemail.com"
+                  },
+                  "role" : {
+                    "type" : "string",
+                    "example" : "admin"
                   }
                 }
               }
@@ -252,7 +259,7 @@
       "post" : {
         "tags" : [ "Admin" ],
         "summary" : "Admin login",
-        "description" : "This endpoint will log in an admin when valid user details are used.",
+        "description" : "This endpoint will log in an admin when valid user details are used. **NOTE:** There MUST be a **_role_** property with value '**_admin_**' when using this enpoint.",
         "responses" : {
           "200" : {
             "description" : "Admin logged in successfully.",
@@ -277,6 +284,9 @@
           "400" : {
             "$ref" : "#/components/responses/invalidUserDetails"
           },
+          "403" : {
+            "$ref" : "#/components/responses/userForbidden"
+          },
           "500" : {
             "$ref" : "#/components/responses/internalServerError"
           }
@@ -288,7 +298,7 @@
             "application/x-www-form-urlencoded" : {
               "schema" : {
                 "type" : "object",
-                "required" : [ "username", "password" ],
+                "required" : [ "username", "password", "role" ],
                 "properties" : {
                   "username" : {
                     "type" : "string",
@@ -297,6 +307,10 @@
                   "password" : {
                     "type" : "string",
                     "example" : "password"
+                  },
+                  "role" : {
+                    "type" : "string",
+                    "example" : "admin"
                   }
                 }
               }
