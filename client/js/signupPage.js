@@ -3,29 +3,28 @@ const signupForm = document.querySelector('form');
 const responseContainer = document.querySelector('#response-container');
 const responseContent = document.querySelector('#response-container p');
 
+/**
+ * Adds an event listener for a keypress on the signup form
+ */
 signupForm.addEventListener('keypress', () => {
   responseContainer.style.display = 'none';
 });
 
-/* eslint-disable no-else-return */
-const handleResponse = res => res.json().then((response) => {
-  if (res.ok) {
-    return response;
-  } else {
-    return Promise.reject(Object.assign({}, response, {
-      status: res.status,
-      statusText: res.statusText,
-    }));
-  }
-});
-/* eslint-disable no-else-return */
-
+/**
+ * Defines a method that shows the error message from a fetch
+ * @param {object} res - Response object 
+ * @param {string} type - Type of message to show (error or success)
+ */
 const showErrorMessage = (res, type) => {
   responseContainer.style.display = 'block';
   responseContainer.setAttribute('class', `${type}-response`);
   responseContent.textContent = `${res.data.message}!`;
 };
 
+/* eslint-disable no-undef */
+/**
+ * Adds an event listener for a submit event on the signup form
+ */
 signupForm.addEventListener('submit', (event) => {
   const username = document.querySelector('#username').value;
   const password = document.querySelector('#password').value;
@@ -72,4 +71,4 @@ signupForm.addEventListener('submit', (event) => {
       }
     });
 });
-
+/* eslint-enable no-undef */

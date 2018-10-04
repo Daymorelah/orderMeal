@@ -4,29 +4,28 @@ const loginForm = document.querySelector('form');
 const responseContainer = document.querySelector('#response-container');
 const responseContent = document.querySelector('#response-container p');
 
+/**
+ * Adds an event listener for a keypress on the login form
+ */
 loginForm.addEventListener('keypress', () => {
   responseContainer.style.display = 'none';
 });
 
-/* eslint-disable no-else-return */
-const handleResponse = res => res.json().then((response) => {
-  if (res.ok) {
-    return response;
-  } else {
-    return Promise.reject(Object.assign({}, response, {
-      status: res.status,
-      statusText: res.statusText,
-    }));
-  }
-});
-/* eslint-disable no-else-return */
-
+/**
+ * Defines the method that shows the response message returned form the fetch method
+ * @param {object} res - Response object
+ * @param {String} type - Type of message to show (error or success) 
+ */
 const showResponseMessage = (res, type) => {
   responseContainer.style.display = 'block';
   responseContainer.setAttribute('class', `${type}-response`);
   responseContent.textContent = `${res.data.message}!`;
 };
 
+/* eslint-disable no-undef */
+/**
+ * Adds an event listener for a submit event on the login form 
+ */
 loginForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const username = document.querySelector('#username').value;
@@ -70,4 +69,5 @@ loginForm.addEventListener('submit', (event) => {
     }
   });
 });
+/* eslint-enable no-undef */
 
