@@ -41,7 +41,7 @@ nav{
   display: flex;
   justify-content: space-between;
 }
-#logo a, #large-width-nav a, #small-width-nav a, #hamburger, #meal-number, #logout {
+#logo a, #large-width-nav a, #meal-number, #logout {
   text-decoration: none;
   color: var(--dark);
   display: block;
@@ -65,32 +65,18 @@ nav{
   background: var(--primary-light);
   color: var(--dark)
 }
-#large-width-nav, #logout {
+#large-width-nav{
   display: none;
 }
 #large-width-nav a:hover, #logout:hover {
   background: var(--dark);
   color: var(--primary);
 }
-#small-width-nav {
-  position: absolute;
-  transform: translate(-280px, 0);
-  transition: transform 0.3s ease;
-  width: 200px;
-  background: var(--primary-light);
-}
-#small-width-nav a {
-  color: var(--dark);
-  font-size: 1.3em;
-  border-bottom: 2px solid var(--dark);
-  display: block;
-  margin: 0;
-}
-#small-width-nav.open {
-  transform: translate(0, 0);
-}
-#nav-menu, #large-width-nav {
+#large-width-nav {
   display: none;
+}
+#nav-menu {
+  display: block;
 }
 /* meal search */
 #search-meal-container {
@@ -397,8 +383,11 @@ button {
   #hamburger, #small-width-nav {
     display: none;
   }
-  #large-width-nav, #logout {
+  #large-width-nav {
     display: none;
+  }
+  #logout {
+    display: block;
   }
   #large-width-nav a {
     display: inline-block;

@@ -4,39 +4,50 @@ const profileName = document.querySelector('#user-identify-text h2');
 const greetUSer = document.querySelector('#user-identify-text p');
 const logUserOut = document.querySelector('#logout');
 
+/**
+ * Adds an event listener on the hamburger icon
+ */
 hamburger.addEventListener('click', () => {
   if (smallWidthNav.classList) {
     smallWidthNav.classList.toggle('open');
   }
 });
+
+/**
+ * Adds an event listener on the logout button
+ */
 logUserOut.addEventListener('click', () => {
-  localStorage.clear();
+  localStorage.removeItem('token');
 });
-/* eslint-disable no-else-return */
-const handleResponse = res => res.json().then((response) => {
-  if (res.ok) {
-    return response;
-  } else {
-    return Promise.reject(Object.assign({}, response, {
-      status: res.status,
-      statusText: res.statusText,
-    }));
-  }
-});
-/* eslint-disable no-else-return */
+
+/**
+ * Defines the method used to generate the image for a meal
+ */
 const generateMealImage = () => {
   const imageTag = document.createElement('img');
   imageTag.setAttribute('src', './images/burger.png');
   return imageTag;
 };
-const noOrdersYet = () => {
+
+/**
+ * Defines the method generate the message shown when null order
+ * is returned form the server
+ */
+const noContent = () => {
   const fragment = document.createDocumentFragment();
   const divTag = document.createElement('div');
   divTag.setAttribute('id', 'no-orders');
   divTag.innerHTML = `<h3>You have not created any orders yet</h3>
-    <p>You can start taking your orders by creating one <a href='./orderFoodPage.html'>Create Order</a></p>`;
+    <p>You can start taking your orders by creating one <a href='./availableOrders.html'>
+    Create Order</a></p>`;
   return fragment.appendChild(divTag);
 };
+
+/**
+ * Defines the method that generates the details of a meal
+ * @param {object} order - An object containing details of an order
+ * @returns {object} - A div tag that contains details of a meal  
+ */
 const generateMealDetails = (order) => {
   const fragment = document.createDocumentFragment();
   const divTag = document.createElement('div');
@@ -60,6 +71,11 @@ const generateMealDetails = (order) => {
   divTag.appendChild(fragment);
   return divTag;
 };
+
+/* eslint-disable no-undef */
+/**
+ * Defines the method that loads the user history
+ */
 const loadOrderHistory = () => {
   document.querySelector('#loader-container').style.display = 'flex';
   const username = localStorage.getItem('username');
@@ -82,7 +98,7 @@ const loadOrderHistory = () => {
         document.querySelector('#paginate-container').style.display = 'none';
         document.querySelector('#filter').style.display = 'none';
         document.querySelector('#loader-container').style.display = 'none';
-        fragment.appendChild(noOrdersYet());
+        fragment.appendChild(noContent());
       } else {
         document.querySelector('#meal-number').textContent = res.data.orders.length || 0;
         res.data.orders.forEach((order) => {
@@ -106,5 +122,6 @@ const loadOrderHistory = () => {
       }
     });
 };
+/* eslint-enable no-undef */
 
 window.onload = () => loadOrderHistory();
