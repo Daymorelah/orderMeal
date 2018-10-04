@@ -36,6 +36,9 @@ signupForm.addEventListener('submit', (event) => {
     email,
   };
   event.preventDefault();
+  const loginButton = event.target.children.item(2);
+  loginButton.disabled = 'true';
+  loginButton.textContent = 'Logging user in ...';
   fetch(
     'https://ordermymeal.herokuapp.com/api/v1/auth/signup',
     {
@@ -53,11 +56,20 @@ signupForm.addEventListener('submit', (event) => {
     signupFormContainer.style.display = 'none';
     signupForm.reset();
     setTimeout(() => {
-      window.location = './userProfile.html';
+      window.location = './availableOrders.html';
     }, 2500);
   })
     .catch((error) => {
-      showErrorMessage(error, 'error');
+      loginButton.disabled = false;
+      loginButton.textContent = 'Login';
+      if (error.message === 'Failed to fetch') {
+        responseContainer.style.display = 'block';
+        responseContainer.setAttribute('class', 'error-response');
+        document.querySelector('#response-container').textContent = `
+          No internet connection. Check Your connection`;
+      } else {
+        showErrorMessage(error, 'error');
+      }
     });
 });
 

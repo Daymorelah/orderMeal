@@ -1,5 +1,5 @@
 
-/* DEsigned for 320px min width */
+/* Designed for 320px min width */
 
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
@@ -126,12 +126,12 @@ nav{
   display: inline;
 }
 /* Design null orders  */
-#no-rides {
+#no-orders {
   text-align: center;
   font-size: 1em;
   margin-top: 1em;
 }
-#no-rides a{
+#no-orders a{
   text-decoration: none;
   background: var(--dark);
   color: var(--primary);

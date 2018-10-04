@@ -38,7 +38,6 @@ const routes = (app) => {
     Validate.validateLogin,
     UserController.userLogin);
   app.get('/api/v1/menu',
-    Authenticate.checkToken,
     Validate.validateViewMenu,
     MenuController.getAllMenu);
   app.post('/api/v1/auth/admin/signup', Validate.validateSignup, UserController.userSignUp);

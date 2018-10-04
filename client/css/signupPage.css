@@ -115,6 +115,11 @@ button {
   font-weight: 900;
   cursor: pointer;
 }
+button:disabled {
+  background: var(--primary-light);
+  font-size: 1em;
+  font-style: italic;
+}
 #login {
   text-align: center;
 }
@@ -122,6 +127,7 @@ button {
   text-decoration: none;
   color: var(--dark);
   font-weight: 900;
+  font-style: italic;
 }
 #footer {
   text-align: center;

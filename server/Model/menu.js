@@ -30,7 +30,7 @@ const createMenuTable = () => new Promise((resolve, reject) => {
         if (error) {
           reject(couldNotCreatTable(), error);
         } else {
-          resolve(tableCreated());
+          resolve(tableCreated('menu'));
         }
       });
     } else {

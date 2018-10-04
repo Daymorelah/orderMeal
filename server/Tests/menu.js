@@ -50,27 +50,6 @@ describe('Integration test for the Menu controller', () => {
           done();
         });
     });
-    it('should prevent an authorized user from accessing the route', (done) => {
-      chai.request(app).get('/api/v1/menu')
-        .set('x-access-token', 'rt%$tGbB')
-        .end((error, res) => {
-          expect(res.status).to.deep.equal(401);
-          expect(res.body.status).to.deep.equal('fail');
-          expect(res.body.data).to.have.property('code');
-          expect(res.body.data).to.have.property('message');
-          done();
-        });
-    });
-    it('should prevent a user without token from accessing the route', (done) => {
-      chai.request(app).get('/api/v1/menu')
-        .end((error, res) => {
-          expect(res.status).to.deep.equal(401);
-          expect(res.body.status).to.deep.equal('fail');
-          expect(res.body.data).to.have.property('code');
-          expect(res.body.data).to.have.property('message');
-          done();
-        });
-    });
   });
   describe('Test for adding a meal to the menu', () => {
     it('should add a meal to the menu', (done) => {
@@ -139,8 +118,8 @@ describe('Integration test for the Menu controller', () => {
     it('should prevent users without token from accessing the route', (done) => {
       chai.request(app).get('/api/v1/menu')
         .end((error, res) => {
-          expect(res.status).to.deep.equal(401);
-          expect(res.body.status).to.deep.equal('fail');
+          expect(res.status).to.deep.equal(200);
+          expect(res.body.status).to.deep.equal('success');
           expect(res.body.data).to.have.property('code');
           expect(res.body.data).to.have.property('message');
           done();
