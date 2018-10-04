@@ -3,30 +3,30 @@ const signupForm = document.querySelector('form');
 const responseContainer = document.querySelector('#response-container');
 const responseContent = document.querySelector('#response-container p');
 
+/**
+ * Adds an event listener for a keypress on the signup form
+ */
 signupForm.addEventListener('keypress', () => {
   responseContainer.style.display = 'none';
 });
 
-/* eslint-disable no-else-return */
-const handleResponse = res => res.json().then((response) => {
-  if (res.ok) {
-    return response;
-  } else {
-    return Promise.reject(Object.assign({}, response, {
-      status: res.status,
-      statusText: res.statusText,
-    }));
-  }
-});
-/* eslint-disable no-else-return */
-
+/**
+ * Defines a method that shows the error message from a fetch
+ * @param {object} res - Response object 
+ * @param {string} type - Type of message to show (error or success)
+ */
 const showErrorMessage = (res, type) => {
   responseContainer.style.display = 'block';
   responseContainer.setAttribute('class', `${type}-response`);
   responseContent.textContent = `${res.data.message}!`;
 };
 
+/* eslint-disable no-undef */
+/**
+ * Adds an event listener for a submit event on the signup form
+ */
 signupForm.addEventListener('submit', (event) => {
+  event.preventDefault();
   const username = document.querySelector('#username').value;
   const password = document.querySelector('#password').value;
   const email = document.querySelector('#email').value;
@@ -35,10 +35,9 @@ signupForm.addEventListener('submit', (event) => {
     password,
     email,
   };
-  event.preventDefault();
-  const loginButton = event.target.children.item(2);
-  loginButton.disabled = 'true';
-  loginButton.textContent = 'Signing in ...';
+  const signInButton = event.target.children.item(3);
+  signInButton.disabled = 'true';
+  signInButton.textContent = 'Signing in ...';
   fetch(
     'https://ordermymeal.herokuapp.com/api/v1/auth/signup',
     {
@@ -60,8 +59,8 @@ signupForm.addEventListener('submit', (event) => {
     }, 2500);
   })
     .catch((error) => {
-      loginButton.disabled = false;
-      loginButton.textContent = 'Login';
+      signInButton.disabled = false;
+      signInButton.textContent = 'Sign Up';
       if (error.message === 'Failed to fetch') {
         responseContainer.style.display = 'block';
         responseContainer.setAttribute('class', 'error-response');
@@ -72,4 +71,4 @@ signupForm.addEventListener('submit', (event) => {
       }
     });
 });
-
+/* eslint-enable no-undef */
