@@ -214,7 +214,20 @@ class Validate {
    * @memberof Validate
    */
   static validateViewMenu(req, res, next) {
-    next();
+    req.query = trimValues(req.query);
+    const { filter } = req.query;
+    if (filter) {
+      if (filter.search(/[^\w]/g) === -1) {
+        next();
+      } else {
+        res.status(400).jsend.fail({
+          code: 400,
+          message: 'Invalid query param \'filter\'',
+        });
+      }
+    } else {
+      next();
+    }
   }
 
   /**

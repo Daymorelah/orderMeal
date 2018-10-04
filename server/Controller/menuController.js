@@ -18,25 +18,47 @@ class MenuController {
    * @memberof MenuController
    */
   static getAllMenu(req, res) {
-    pool.query(queries.viewMenu, (error, response) => {
-      if (error) {
-        sendServerError(res);
-      } else if (response) {
-        if (response.rowCount) {
-          res.jsend.success({
-            code: 200,
-            message: 'Request completed successfully',
-            menu: response.rows,
-          });
-        } else {
-          res.jsend.success({
-            code: 200,
-            message: 'Request completed successfully. No menu available yet.',
-            menu: null,
-          });
+    if (req.query.filter) {
+      pool.query(queries.viewMenuFilter, [`${req.query.filter}`], (error, response) => {
+        if (error) {
+          sendServerError(res);
+        } else if (response) {
+          if (response.rowCount) {
+            res.jsend.success({
+              code: 200,
+              message: 'Request completed successfully',
+              menu: response.rows,
+            });
+          } else {
+            res.jsend.success({
+              code: 200,
+              message: `Request completed successfully. No ${req.query.filter} available yet.`,
+              menu: null,
+            });
+          }
         }
-      }
-    });
+      });
+    } else {
+      pool.query(queries.viewMenu, (error, response) => {
+        if (error) {
+          sendServerError(res);
+        } else if (response) {
+          if (response.rowCount) {
+            res.jsend.success({
+              code: 200,
+              message: 'Request completed successfully',
+              menu: response.rows,
+            });
+          } else {
+            res.jsend.success({
+              code: 200,
+              message: 'Request completed successfully. No menu available yet.',
+              menu: null,
+            });
+          }
+        }
+      });
+    }
   }
 
   /**
