@@ -9,7 +9,7 @@ const menuContent = document.querySelector('#menu-content');
 const searchMeal = document.querySelector('#search-meal-icon');
 const filterBy = document.querySelector('#filter');
 
-const getMenuURl = 'https://ordermymeal.herokuapp.com/api/v1/menu';
+const menuUrl = 'http://localhost:2022/api/v1/menu';
 const closeModalView = () => {
   modalContainer.style.display = 'none';
 };
@@ -31,7 +31,7 @@ const handleResponse = res => res.json().then((response) => {
   }
 });
 /* eslint-disable no-else-return */
-const noMenuYet = (menu) => {
+const noContent = (menu) => {
   const fragment = document.createDocumentFragment();
   const divTag = document.createElement('div');
   divTag.setAttribute('id', 'no-menu');
@@ -97,13 +97,17 @@ const createMenuItem = () => {
     showResponseMessage(error, 'error');
   });
 };
+const addMenuToCart = (event) => {
+  const mealType = event.target.parentElement.parentElement.children.item(1).textContent.split(' ');
+  console.log(mealType);
+};
 const loadMenu = () => {
   let URL;
   if (filterBy.value.length) {
     const filter = `?filter=${filterBy.value}`;
-    URL = `${getMenuURl}${filter}`;
+    URL = `${menuUrl}${filter}`;
   } else {
-    URL = `${getMenuURl}`;
+    URL = `${menuUrl}`;
   }
   document.querySelector('#loader-container').style.display = 'flex';
   fetch(`${URL}`,
@@ -120,14 +124,19 @@ const loadMenu = () => {
       document.querySelector('#loader-container').style.display = 'none';
       numberOfMenu.textContent = 'meals available | 0';
       mealCardContainer.style.justifyContent = 'center';
-      mealCardContainer.appendChild(noMenuYet(`${filterBy.value}`));
+      mealCardContainer.appendChild(noContent(`${filterBy.value}`));
     } else {
       numberOfMenu.textContent = `meals available | ${res.data.menu.length}`;
       res.data.menu.forEach((menu) => {
         fragment.appendChild(createMealCard(menu));
       });
       mealCardContainer.appendChild(fragment);
+      const addToCart = document.querySelectorAll('.add-to-cart');
+      addToCart.forEach((addToCartButton) => {
+        addToCartButton.addEventListener('click', event => addMenuToCart(event));
+      });
       document.querySelector('#loader-container').style.display = 'none';
+      document.querySelector('#no-internet').style.display = 'none';
     }
   }).catch((err) => {
     if (err.message === 'Failed to fetch') {
@@ -144,9 +153,19 @@ const filterMealSearch = () => {
   mealCardContainer.innerHTML = '';
   loadMenu();
 };
+const checkIfRegistered = () => {
+  const logout = document.querySelector('#logout');
+  if (localStorage.getItem('token') === null) {
+    logout.textContent = 'Sign Up';
+    logout.setAttribute('href', './signupPage.html');
+  } else {
+    logout.textContent = 'View Profile';
+    logout.setAttribute('href', './userProfile.html');
+  }
+};
 searchMeal.addEventListener('click', filterMealSearch);
 closeModal.addEventListener('click', closeModalView);
 cancelMeal.addEventListener('click', closeModalView);
 createMeal.addEventListener('click', createMenuItem);
 
-window.onload = () => loadMenu();
+window.onload = () => checkIfRegistered(); loadMenu();

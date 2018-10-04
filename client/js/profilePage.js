@@ -10,7 +10,7 @@ hamburger.addEventListener('click', () => {
   }
 });
 logUserOut.addEventListener('click', () => {
-  localStorage.clear();
+  localStorage.removeItem('token');
 });
 /* eslint-disable no-else-return */
 const handleResponse = res => res.json().then((response) => {
@@ -29,7 +29,7 @@ const generateMealImage = () => {
   imageTag.setAttribute('src', './images/burger.png');
   return imageTag;
 };
-const noOrdersYet = () => {
+const noContent = () => {
   const fragment = document.createDocumentFragment();
   const divTag = document.createElement('div');
   divTag.setAttribute('id', 'no-orders');
@@ -82,7 +82,7 @@ const loadOrderHistory = () => {
         document.querySelector('#paginate-container').style.display = 'none';
         document.querySelector('#filter').style.display = 'none';
         document.querySelector('#loader-container').style.display = 'none';
-        fragment.appendChild(noOrdersYet());
+        fragment.appendChild(noContent());
       } else {
         document.querySelector('#meal-number').textContent = res.data.orders.length || 0;
         res.data.orders.forEach((order) => {

@@ -1,7 +1,7 @@
 
 const checkToken = () => {
-  if (localStorage.getItem('token') === null) {
-    window.location = './signupPage.html';
+  if (localStorage.getItem('token') !== null) {
+    window.location = './userProfile.html';
   }
 };
 

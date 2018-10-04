@@ -1,0 +1,183 @@
+
+/* DEsigned for 320px min width */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+:root {
+  --light: #f0ece2;
+  --dark: #596e79;
+  --primary: #c7b198;
+  --primary-light: #dfd3c3;
+}
+* {
+  box-sizing: border-box;
+}
+html,body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  background: var(--light);
+  color: var(--dark);
+  font-family: 'Roboto Condensed', sans-serif;
+}
+h1,p,h3 {
+  margin: 0;
+}
+img {
+  max-width: 100%;
+}
+/* Dsign navigation */
+nav{
+  background: var(--primary);
+  display: flex;
+  justify-content: space-between;
+}
+#logo a, #large-width-nav a, #small-width-nav a, #hamburger, #meal-number, #logout {
+  text-decoration: none;
+  color: var(--dark);
+  display: block;
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 1em;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+#logo a {
+  border: 2px solid var(--dark);
+  align-self: center;
+}
+#logout {
+  background: var(--primary);
+  color: var(--dark);
+  margin: 0 2em;
+  padding: 1.3em;
+}
+#large-width-nav #active {
+  background: var(--primary-light);
+  color: var(--dark)
+}
+#large-width-nav, #logout {
+  display: none;
+}
+#large-width-nav a:hover, #logout:hover {
+  background: var(--dark);
+  color: var(--primary);
+}
+#small-width-nav {
+  position: absolute;
+  transform: translate(-280px, 0);
+  transition: transform 0.3s ease;
+  width: 200px;
+  background: var(--primary-light);
+}
+#small-width-nav a {
+  color: var(--dark);
+  font-size: 1.3em;
+  border-bottom: 2px solid var(--dark);
+  display: block;
+  margin: 0;
+}
+#small-width-nav.open {
+  transform: translate(0, 0);
+}
+/* form-header-text */
+#form-header-text {
+  text-align: left;
+  text-transform: capitalize;
+  font-size: 1.3em;
+  margin: 0.8em 0;
+}
+/* Order form */
+#order-form-container {
+  width: 90%;
+  margin: 10vh auto;
+  padding: 2em 1em;
+  background: var(--primary-light);
+  border-radius: 8px;
+}
+input, select, button, textarea {
+  width: 100%;
+  height: 2em;
+  margin: auto;
+  outline: none;
+  border: none;
+  display: block;
+  margin-bottom: 1em;
+  border-radius: 8px;
+  padding: 0.5em;
+  font-size: 1em;
+  background: var(--light);
+  color: var(--dark);
+  font-family: 'Roboto Condensed', sans-serif;
+}
+label {
+  font-size: 1.4em;
+}
+#prize {
+  background: none;
+}
+textarea {
+  font-size: 1.3em;
+  height: 3em;
+}
+button {
+  background: var(--dark);
+  color: var(--primary-light);
+  text-transform: capitalize;
+}
+/* footer */
+#footer {
+  text-align: center;
+  background: var(--primary);
+  color: var(--dark);
+  font-size: 1.3em;
+  padding: 0.5em;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+#footer p {
+  margin: 0;
+}
+
+@media screen and (min-width: 360px) {
+  #order-form-container {
+    width: 85%;
+  }
+}
+@media screen and (min-width: 440px) {
+  #order-form-container {
+    width: 75%;
+  }
+}
+@media screen and (min-width: 500px) {
+  #order-form, #form-header-text {
+    width: 85%;
+    margin: auto;
+  }
+  #form-header-text {
+    margin: 0.8em auto;
+  }
+}
+@media screen and (min-width: 630px) {
+  #hamburger, #small-width-nav {
+    display: none;
+  }
+  #large-width-nav, #logout {
+    display: block;
+  }
+  #large-width-nav a {
+    display: inline-block;
+    margin: 0 0.5em;
+    padding: 1.3em;
+  }
+}
+@media screen and (min-width: 640px) {
+  #order-form-container {
+    width: 30%;
+  }
+  
+}

@@ -38,7 +38,7 @@ signupForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const loginButton = event.target.children.item(2);
   loginButton.disabled = 'true';
-  loginButton.textContent = 'Logging user in ...';
+  loginButton.textContent = 'Signing in ...';
   fetch(
     'https://ordermymeal.herokuapp.com/api/v1/auth/signup',
     {

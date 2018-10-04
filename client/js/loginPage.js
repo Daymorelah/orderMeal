@@ -28,16 +28,16 @@ const showResponseMessage = (res, type) => {
 };
 
 loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
   const username = document.querySelector('#username').value;
   const password = document.querySelector('#password').value;
   const userDetails = {
     username,
     password,
   };
-  event.preventDefault();
   const loginButton = event.target.children.item(2);
   loginButton.disabled = 'true';
-  loginButton.textContent = 'Logging user in ...';
+  loginButton.textContent = 'Logging in ...';
   fetch(
     'https://ordermymeal.herokuapp.com/api/v1/auth/login',
     {
