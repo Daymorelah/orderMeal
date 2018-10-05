@@ -1,5 +1,5 @@
 
-/* DEsigned for 320px min width */
+/* Designed for 320px min width */
 
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
@@ -35,7 +35,7 @@ img {
 #page-container {
   margin-bottom: 6em;
 }
-/* Dsign navigation */
+/* Design navigation */
 nav{
   background: var(--primary);
   display: flex;
@@ -125,13 +125,14 @@ nav{
   font-size: 1.2em;
   text-transform: capitalize;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 #ordered-meal-text h3 {
   padding: 0.5em;
 }
 #add-order {
-  color: var(--primary-light);
+  color: #ffffff;
   background: #8acc8a;
   border-radius: 8px;
   cursor: pointer;
@@ -283,6 +284,41 @@ button {
   margin: 0;
 }
 
+@media screen and (min-width: 910px) { 
+  nav {
+    padding: 0 2em;
+  }
+}
+@media screen and (max-width: 1050px) {
+  .card-footer {
+    width: 70%;
+  }
+  h2{
+    font-size: 1.2em;
+  }
+}
+@media screen and (max-width: 960px) {
+  h2 {
+    font-size: 1em;
+  }
+}
+@media screen and (max-width: 860px) {
+  .container {
+    width: 85%;
+    margin: auto;
+  }
+  #meal-card-container {
+    justify-content: space-evenly;
+  }
+  .card-footer {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 780px) {
+  .container {
+    width: 90%;
+  }
+}
 @media screen and (min-width: 630px) {
   #hamburger, #small-width-nav {
     display: none;
@@ -297,5 +333,67 @@ button {
   }
   #logo {
     margin: 0 2em;
+  }
+}
+@media screen and (max-width: 670px) {
+  .container {
+    width: 80%;
+  }
+  .meal-cards {
+    width: 45%;
+  }
+}
+@media screen and (max-width: 580px) {
+  #search-meal-card-container input {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 536px) {
+  .container {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 480px) {
+  /* #ordered-meal-text {
+    justify-content: space-between;
+  } */
+  .container {
+    width: 70%;
+  }
+  .meal-cards {
+    width: 80%;
+  }
+  .meal-property {
+    font-size: 1.3em;
+  }
+  .card-footer {
+    width: 65%;
+  }
+  #search-meal-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  #filter {
+    width: 80%;
+    margin-top: 0.5em;
+  }
+  #search-meal-container input {
+    width: 60%;
+  }
+  #search-meal-icon {
+    width: 10%;
+    align-self: center;
+  }
+}
+@media screen and (max-width: 450px) {
+  #ordered-meal-text {
+    display: flex;
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 385px) {
+  .container {
+    width: 90%;
   }
 }
