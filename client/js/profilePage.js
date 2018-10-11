@@ -39,7 +39,7 @@ const noContent = () => {
   divTag.setAttribute('id', 'no-orders');
   divTag.innerHTML = `<h3>You have not created any orders yet</h3>
     <p>You can start taking your orders by creating one <a href='./availableOrders.html'>
-    Create Order</a></p>`;
+    Place Order</a></p>`;
   return fragment.appendChild(divTag);
 };
 
