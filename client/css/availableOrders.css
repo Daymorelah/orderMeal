@@ -177,6 +177,10 @@ button {
   background: #538f53;
   width: 80%;
 }
+.add-to-cart:disabled {
+  background: var(--primary);
+  color: var(--primary);
+}
 /* null menu */
 #no-menu {
   text-align: center;
@@ -230,46 +234,79 @@ button {
 }
 #modal-container {
   padding: 1em;
-  width: 335px;
-  height: 508px;
+  width: 30%;
   font-size: 1.3em;
-  overflow-y: auto;
   margin: auto;
   margin-top: 2em;
 }
 #modal-content {
   background: var(--primary-light);
   padding: 1em;
-  border-radius: 8px;
+  border-radius: 8px; 
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
 }
-#modal-content input {
-  width: 90%;
-  outline: none;
-  border: none;
-  padding: 8px;
-  margin: 0.8em auto;;
-  border-radius: 6px;
-  display: block;
-  text-transform: capitalize;
+.meal-ordered {
+  border: 1px solid var(--dark);
+  padding: 0.5em 1em;
+  margin-bottom: 0.5em;
 }
-#modal-content button {
-  width: 80%;
+.meal-quantity-container {
+  display: flex;
+  justify-content: flex-start;
+}
+.meal-quantity {
+  width: 70%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.remove-meal {
+  color: #914a4a;
+  align-self: flex-end;
+}
+.remove-meal, .add, .reduce {
+  cursor: pointer;
+}
+#no-meal-in-cart {
+  border: 1px solid #914a4a;
+  color: #914a4a;
+  text-align: center;
+  padding: 0.4em 0.3em;
+  display: none;
+}
+#contact-user {
+  width: 100%;
+  margin: auto;
+}
+#contact-user input{ 
+  width: 100%;
   margin: 0.8em auto;
   display: block;
+  outline: none;
+  border-radius: 4px;
+  padding: 0.3em 0;
+  border: none;
 }
-#cancel-meal{
+#contact-user p {
+  text-align: left; 
+  font-style: italic;
+  font-size: 0.7em;
+}   
+#meals-ordered-container button{
+  width: 80%;
+  margin: 0.8em auto;
+  display: block; 
+  text-transform: capitalize;
+  font-size: 0.8em;
+}
+
+#cancel-order{
   background: #914a4a;
   color: var(--primary-light);
 }
-#create-meal{
+#place-order{
   background: #538f53;
   color: var(--primary-light);
-}
-#close-container {
-  text-align: right;
-  font-size: 1.8em;
-  color: #914a4a;
-  cursor: pointer;
 }
 .error-response {
   border: 1px solid #914a4a;

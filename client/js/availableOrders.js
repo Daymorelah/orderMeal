@@ -1,34 +1,66 @@
-const closeModal = document.querySelector('#close-modal');
 const modalContainer = document.querySelector('#addOrder-modal-container');
-const cancelMeal = document.querySelector('#cancel-meal');
+const cancelOrder = document.querySelector('#cancel-order');
+const placeOrderButton = document.querySelector('#place-order');
 const addOrder = document.querySelector('#add-order');
-const createMeal = document.querySelector('#create-meal');
 const responseContainer = document.querySelector('#response-container');
 const responseContent = document.querySelector('#response-container p');
-const menuContent = document.querySelector('#menu-content');
+const mealsOrderedContainer = document.querySelector('#meals-ordered-container');
 const searchMeal = document.querySelector('#search-meal-icon');
 const filterBy = document.querySelector('#filter');
 
-const menuUrl = 'https://ordermymeal.herokuapp.com/api/v1/menu';
+// const menuUrl = 'https://ordermymeal.herokuapp.com/api/v1/menu';
+const menuUrl = 'http://localhost:2022/api/v1/menu';
 
 /**
- * Defines a method to hide the create-order modal
+ * Defines a method to hide the create-order modal. This method is called when the
+ * cancel meal button is clicked.
  */
 const closeModalView = () => {
   modalContainer.style.display = 'none';
+  document.querySelector('#meals-ordered').innerHTML = '';
+  const addToCartButtons = document.querySelectorAll('.add-to-cart');
+  addToCartButtons.forEach((addToCartButton) => {
+    addToCartButton.removeAttribute('disabled');
+  });
 };
 
 /**
- * Adds an event listener to the addOrder button
+ * Describes the method that removes a meal from the selected meals.
+ * @param {object} event - Object that references the event being fired 
+ */
+const removeMeal = (event) => {
+  const mealsOrder = event.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+  mealsOrder.removeChild(event.target.parentNode.parentNode.parentNode.parentNode);
+};
+
+/**
+ * Adds an event listener to the create Order button to show the
+ * meal selected summary modal.
  */
 addOrder.addEventListener('click', () => {
+  const mealsInCart = document.querySelector('#meals-ordered').innerHTML;
   modalContainer.style.display = 'block';
+  if (mealsInCart === '') {
+    document.querySelector('#no-meal-in-cart').style.display = 'block';
+    document.querySelector('#place-order').style.display = 'none';
+    document.querySelector('#contact-user').style.display = 'none';
+  } else {
+    document.querySelector('#address').value = '';
+    document.querySelector('#phone-number').value = '';
+    document.querySelector('#no-meal-in-cart').style.display = 'none';
+    document.querySelector('#place-order').style.display = 'block';
+    document.querySelector('#contact-user').style.display = 'block';
+    const removeSelectedMeal = document.querySelectorAll('.remove-meal');
+    removeSelectedMeal.forEach((meal) => {
+      meal.addEventListener('click', event => removeMeal(event));
+    });
+  }
 });
 
 /**
  * Adds a keypress event listener on the menu-form container 
  */
-menuContent.addEventListener('keypress', () => {
+mealsOrderedContainer.addEventListener('keypress', () => {
   responseContainer.style.display = 'none';
 });
 
@@ -52,11 +84,11 @@ const noContent = (menu) => {
  * @param {object} res - Response object 
  * @param {string} type - Type of response to show (error or success)
  */
-const showResponseMessage = (res, type) => {
-  responseContainer.style.display = 'block';
-  responseContainer.setAttribute('class', `${type}-response`);
-  responseContent.textContent = `${res.data.message}!`;
-};
+// const showResponseMessage = (res, type) => {
+//   responseContainer.style.display = 'block';
+//   responseContainer.setAttribute('class', `${type}-response`);
+//   responseContent.textContent = `${res.data.message}!`;
+// };
 
 /**
  * A method that defines the creation of a meal card
@@ -69,15 +101,15 @@ const createMealCard = (res) => {
   divTag.setAttribute('class', 'meal-cards');
   const menuHeader = document.createElement('div');
   menuHeader.setAttribute('class', 'card-heading');
-  menuHeader.insertAdjacentHTML('beforeend', `
-  <h2><span class="meal-property">type: </span>${res.meal_type}</h2>`);
+  menuHeader.insertAdjacentHTML(
+    'beforeend', `<h2><span class="meal-property"> type: </span>${res.meal_type}</h2>`);
   cardFragment.appendChild(menuHeader);
   const menuBody = document.createElement('div');
   menuBody.setAttribute('class', 'card-body');
-  menuBody.insertAdjacentHTML('beforeend', `
-  <p><span class="meal-property">Appetizer: </span>${res.meal}</p>`);
-  menuBody.insertAdjacentHTML('beforeend', `
-  <p><span class="meal-property">Prize: </span>&#8358; ${res.prize}</p>`);
+  menuBody.insertAdjacentHTML(
+    'beforeend', `<p><span class="meal-property">${res.meal_type}: </span>${res.meal} </p>`);
+  menuBody.insertAdjacentHTML(
+    'beforeend', `<p><span class="meal-property">Prize: </span>&#8358;${res.prize}</p>`);
   cardFragment.appendChild(menuBody);
   const menuFooter = document.createElement('div');
   menuFooter.setAttribute('class', 'card-footer');
@@ -88,42 +120,85 @@ const createMealCard = (res) => {
 };
 
 /**
- * Describes the the method used to add a menu to the list of menus 
- * @param {object} res - Response object 
+ * A method that creates the UI for a user to choose the 
+ * quantity of the meal to order for.
+ * @returns - A DIV that contains the UI that allows a user choose
+ * the quantity of meal to order
  */
-const addMenuToList = (res) => {
-  const mealCardContainer = document.querySelector('#meal-card-container');
-  mealCardContainer.appendChild(createMealCard(res.data.menuCreated[0]));
+const chooseMealQuantity = () => {
+  const quantityFragment = document.createDocumentFragment();
+  const divQuantityContainer = document.createElement('div');
+  divQuantityContainer.setAttribute('class', 'meal-quantity-container');
+  const divTagMealQuantity = document.createElement('div');
+  divTagMealQuantity.setAttribute('class', 'meal-quantity');
+  const pTagMealQuantity = document.createElement('p');
+  pTagMealQuantity.insertAdjacentText('beforeend', ' Quantity: ');
+  quantityFragment.appendChild(pTagMealQuantity);
+  divTagMealQuantity.insertAdjacentHTML('beforeend', `<span class="add"><i class="fas fa-plus fa-xs">
+  </i></span><span class="number">1</span><span class="reduce"><i class="fas fa-minus fa-xs"></i></span>
+  <span class="remove-meal"><i class="fas fa-times fa-xs"></i></span>`);
+  quantityFragment.appendChild(divTagMealQuantity);
+  divQuantityContainer.appendChild(quantityFragment);
+  return divQuantityContainer;
 };
 
-/* eslint-disable no-undef */
 /**
- * Defines the method used to create a menu item
+ * Describes the method used to show a modal summary of the meals
+ * that the user has selected to order for.
+ * @param {array} mealDetail - An array of details of the selected meal
  */
-const createMenuItem = () => {
-  const mealType = document.querySelector('#modal-meal-type').value;
-  const meal = document.querySelector('#modal-meal').value;
-  const prize = document.querySelector('#modal-prize').value;
-  const menuDetails = {
-    mealType, prize, meal,
-  };
-  fetch('http://localhost:2022/api/v1/menu', {
-    method: 'POST',
-    body: JSON.stringify(menuDetails),
-    headers: {
-      'Content-Type': 'application/json',
-      'x-access-token': `${localStorage.getItem('token')}`,
-    },
-  }).then(handleResponse).then((res) => {
-    showResponseMessage(res, 'success');
-    menuContent.reset();
-    addMenuToList(res);
-    setTimeout(() => {
-      responseContainer.style.display = 'none';
-      modalContainer.style.display = 'none';
-    }, 2000);
-  }).catch((error) => {
-    showResponseMessage(error, 'error');
+const showSelectedMeal = (mealDetail) => {
+  const fragment = document.createDocumentFragment();
+  const divTag = document.createElement('div');
+  divTag.setAttribute('class', 'meal-ordered');
+  const pTagMealType = document.createElement('p');
+  const pTagMealPrize = document.createElement('p');
+  const mealType = mealDetail.slice(undefined, -2).join(' ');
+  const mealPrize = mealDetail.slice(-2).join(' ');
+  pTagMealType.textContent = mealType;
+  fragment.appendChild(pTagMealType);
+  fragment.appendChild(chooseMealQuantity());
+  pTagMealPrize.textContent = mealPrize;
+  fragment.appendChild(pTagMealPrize);
+  divTag.appendChild(fragment);
+  document.querySelector('#meals-ordered').appendChild(divTag);
+};
+
+/**
+ * Describes the event handler method that handles the click event on
+ * the plus sign in the summary modal to increase the quantity of meal ordered.
+ * @param {object} event - The event object returned after firing an event
+ */
+const increaseQuantity = (event) => {
+  const plusSign = event.target;
+  const presentValue = plusSign.parentNode.nextElementSibling.innerText;
+  plusSign.parentNode.nextElementSibling.innerText = parseInt(presentValue, 10) + 1;
+};
+
+/**
+ * Describes the event handler method that handles the click event on
+ * the minus sign in the summary modal to reduce the quantity of meal ordered.
+ * @param {object} event - The event object returned after firing an event
+ */
+const reduceQuantity = (event) => {
+  const minusSign = event.target;
+  let presentValue = minusSign.parentNode.previousElementSibling.innerText;
+  presentValue = (parseInt(presentValue, 10) === 1) ? 1 : presentValue - 1;
+  minusSign.parentNode.previousElementSibling.innerText = presentValue;
+};
+
+/**
+ * A method that adds an event handler on each plus and minus sign in
+ * the order summary modal.
+ * @param {object} add - DOM object representing the clickable plus sign
+ * @param {object} reduce -  DOM object representing the clickable plus sign
+ */
+const addReduceQuantity = (add, reduce) => {
+  add.forEach((plusSign) => {
+    plusSign.addEventListener('click', increaseQuantity);
+  });
+  reduce.forEach((minusSign) => {
+    minusSign.addEventListener('click', reduceQuantity);
   });
 };
 
@@ -132,9 +207,17 @@ const createMenuItem = () => {
  * @param {object} event - The target event 
  */
 const addMenuToCart = (event) => {
-  const mealType = event.target.parentElement.parentElement.children.item(1).textContent.split(' ');
+  const addToCartButton = event.target;
+  addToCartButton.disabled = 'true';
+  const mealCardBody = addToCartButton.parentElement.parentElement.children.item(1);
+  const mealDetail = mealCardBody.textContent.split(' ');
+  showSelectedMeal(mealDetail);
+  const add = document.querySelectorAll('.add');
+  const reduce = document.querySelectorAll('.reduce');
+  addReduceQuantity(add, reduce);
 };
 
+/* eslint-disable no-undef */
 /**
  * Defines the method that loads the available menu in the DOM 
  */
@@ -185,6 +268,38 @@ const loadMenu = () => {
     }
   });
 };
+/**
+ * Defines a method that shows the error message from a fetch
+ * @param {object} res - Response object 
+ * @param {string} type - Type of message to show (error or success)
+ */
+const showErrorMessage = (res, type) => {
+  responseContainer.style.display = 'block';
+  responseContainer.setAttribute('class', `${type}-response`);
+  responseContent.textContent = `${res.data.message}!`;
+};
+const placeOrder = (orderDetails) => {
+  const Url = 'http://localhost:2022/api/v1/orders';
+  fetch(Url, {
+    method: 'POST',
+    headers: {
+      'x-access-token': `${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(orderDetails),
+  }).then(handleResponse).then(() => {
+  }).catch((error) => {
+    if (error.message === 'Failed to fetch') {
+      responseContainer.style.display = 'block';
+      responseContainer.setAttribute('class', 'error-response');
+      document.querySelector('#response-container').textContent = `
+      No internet connection. Check Your connection`;
+    } else {
+      showErrorMessage(error, 'error');
+    }
+  });
+};
+/* eslint-enable no-undef */
 
 /**
  * Defines the method used to filter the search for available menu
@@ -197,6 +312,7 @@ const filterMealSearch = () => {
 
 /**
  * Defines the method used to check if a user is registered
+ * Updates the top-right text content on the page.
  */
 const checkIfRegistered = () => {
   const logout = document.querySelector('#logout');
@@ -210,11 +326,60 @@ const checkIfRegistered = () => {
 };
 
 /**
+ * Defines the function that generates part the body used in the post
+ * request to place an order.
+ * @param {object} mealsSelected - HTMLCollection of the children of the 
+ * DIV container that houses the meals being selected by the user
+ * @returns {object} mealsOrdered - Part of te body used in the POST request
+ * to place an order.
+ */
+const generateMealDetails = (mealsSelected) => {
+  let total = 0; const mealsOrdered = {};
+  const drinkArray = []; const quantityArray = []; const mealArray = [];
+  [].forEach.call(mealsSelected, (mealSelected) => {
+    const mealAndQuantity = {};
+    const mealDetails = mealSelected.textContent.split(':');
+    const quantity = mealDetails[2].split('Prize')[0].trim();
+    let prize = parseInt(mealDetails[3].trim().split('₦').join(''), 10);
+    prize *= quantity; total += prize;
+    if (mealDetails[0] === 'Refreshment') {
+      const drink = mealDetails[1].split('Quantity')[0].trim();
+      mealAndQuantity[`${drink}`] = quantity;
+      quantityArray.push(mealAndQuantity);
+      drinkArray.push(drink);
+    } else {
+      const meal = mealDetails[1].split('Quantity')[0].trim();
+      mealAndQuantity[`'${meal}'`] = quantity;
+      quantityArray.push(mealAndQuantity);
+      mealArray.push(meal);
+    }
+  });
+  mealsOrdered.prize = total;
+  mealsOrdered.meal = mealArray.length ? mealArray : 'none';
+  mealsOrdered.drink = drinkArray.length ? drinkArray : 'none';
+  return mealsOrdered;
+};
+
+/**
+ * Defines the method used to create an order. This method is called
+ * when the user clicks on the place order button in the order summary modal
+ * @param {object} event - the event object that is being fired
+ */
+const startProcessingOrder = (event) => {
+  const mealsSelected = event.target.parentNode.children.item(0).children;
+  let mealsOrdered = generateMealDetails(mealsSelected);
+  const address = document.querySelector('#address').value;
+  const phoneNumber = document.querySelector('#phone-number').value;
+  const name = localStorage.getItem('username');
+  mealsOrdered = Object.assign({}, mealsOrdered, { address, phoneNumber, name });
+  placeOrder(mealsOrdered);
+};
+
+/**
  * Add event listeners to modal elements
  */
 searchMeal.addEventListener('click', filterMealSearch);
-closeModal.addEventListener('click', closeModalView);
-cancelMeal.addEventListener('click', closeModalView);
-createMeal.addEventListener('click', createMenuItem);
+cancelOrder.addEventListener('click', closeModalView);
+placeOrderButton.addEventListener('click', startProcessingOrder);
 
 window.onload = () => checkIfRegistered(); loadMenu();
