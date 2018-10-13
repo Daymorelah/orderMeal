@@ -2,7 +2,7 @@ const smallWidthNav = document.querySelector('#small-width-nav');
 const hamburger = document.querySelector('#hamburger');
 const profileName = document.querySelector('#user-identify-text h2');
 const greetUSer = document.querySelector('#user-identify-text p');
-const logUserOut = document.querySelector('#logout');
+const logUserOut = document.querySelectorAll('.logout');
 
 /**
  * Adds an event listener on the hamburger icon
@@ -16,8 +16,11 @@ hamburger.addEventListener('click', () => {
 /**
  * Adds an event listener on the logout button
  */
-logUserOut.addEventListener('click', () => {
-  localStorage.removeItem('token');
+logUserOut.forEach((logoutButton) => {
+  logoutButton.addEventListener('click', () => {
+    localStorage.removeItem('token');
+    window.location = './loginPage.html';
+  });
 });
 
 /**
