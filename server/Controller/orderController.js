@@ -34,6 +34,7 @@ class OrderController {
       }
     });
   }
+
   /**
    * Create An Order
    * Route: POST: /orders
@@ -43,10 +44,10 @@ class OrderController {
    * @memberof OrderController
    */
   static createOrder(req, res) {
-    const { address, name, quantity, prize, meal, drink } = req.body;
+    const { address, name, quantity, prize, meal, drink, phoneNumber } = req.body;
     const { userId } = req.decoded;
-    pool.query(queries.createOrder, [`${name}`, `${meal}`, `${drink}`, `${quantity}`,
-      `${prize}`, `${address}`, `${userId}`],
+    pool.query(queries.createOrder, [`${name}`, `{${meal}}`, `{${drink}}`, `{${quantity}}`,
+      `${prize}`, `${address}`, `${userId}`, `${phoneNumber}`],
     (error, response) => {
       if (error) {
         sendServerError(res);
@@ -61,6 +62,7 @@ class OrderController {
       }
     });
   }
+
   /**
    * Get A Particular Order
    * Route: GET: /orders/:orderId
@@ -89,6 +91,7 @@ class OrderController {
       }
     });
   }
+
   /**
    * Update The Status Of An Order
    * Route: PUT: /orders/:orderId
@@ -130,6 +133,7 @@ class OrderController {
       }
     });
   }
+
   /**
    * Get The Order History Of A User
    * Route: GET: /users/:userId/orders

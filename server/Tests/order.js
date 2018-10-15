@@ -70,10 +70,11 @@ describe('Integration test for the order controller', () => {
       const userDetails = {
         name: 'jane_Doe',
         meal: 'Eba',
-        quantity: '2',
+        quantity: 'Eba::3',
         drink: 'Hollandia 1ltr',
         prize: '3',
         address: 'Ajegunle, Lagos Nigeria',
+        phoneNumber: '34565445654',
       };
       chai.request(app).post('/api/v1/orders')
         .set('x-access-token', myToken)
