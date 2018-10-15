@@ -46,6 +46,10 @@ const routes = (app) => {
     Authenticate.checkAdminToken,
     Validate.validateAddMealTOMenu,
     MenuController.addMealToMenu);
+  app.put('/api/v1/menu/:menuId',
+    Authenticate.checkAdminToken,
+    Validate.validateEditMenuItem,
+    MenuController.editMenuItem);
 };
 
 export default routes;

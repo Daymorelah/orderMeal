@@ -142,4 +142,101 @@ describe('Integration test for the Menu controller', () => {
         });
     });
   });
+  describe('Test for editing a menu item', () => {
+    it('should edit a menu item when valid values are given', (done) => {
+      const mealDetails = {
+        meal: 'Vanilla Ice-cream',
+        mealType: 'Desert',
+        prize: '600',
+      };
+      chai.request(app).put('/api/v1/menu/1')
+        .set('x-access-token', myAdminToken)
+        .send(mealDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(200);
+          expect(res.body.status).to.deep.equal('success');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should send a failed request message when any required value is missing', (done) => {
+      const mealDetails = {
+        mealType: 'Desert',
+        prize: '600',
+      };
+      chai.request(app).put('/api/v1/menu/1')
+        .set('x-access-token', myAdminToken)
+        .send(mealDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should send a failed request message when prize contains an invalid value', (done) => {
+      const mealDetails = {
+        mealType: 'Desert',
+        prize: 'g600',
+        meal: 'Ice cream',
+      };
+      chai.request(app).put('/api/v1/menu/1')
+        .set('x-access-token', myAdminToken)
+        .send(mealDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should send a failed request message when menu ID contains an invalid value', (done) => {
+      const mealDetails = {
+        mealType: 'Desert',
+        prize: '600',
+        meal: 'Ice cream',
+      };
+      chai.request(app).put('/api/v1/menu/er1')
+        .set('x-access-token', myAdminToken)
+        .send(mealDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should send a failed request message when mealType contains an invalid value', (done) => {
+      const mealDetails = {
+        mealType: 'Desert<',
+        prize: '600',
+        meal: 'Ice cream',
+      };
+      chai.request(app).put('/api/v1/menu/1')
+        .set('x-access-token', myAdminToken)
+        .send(mealDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+    it('should send a failed request message when meal contains an invalid value', (done) => {
+      const mealDetails = {
+        mealType: 'Desert<',
+        prize: '600',
+        meal: '£Ice cream',
+      };
+      chai.request(app).put('/api/v1/menu/1')
+        .set('x-access-token', myAdminToken)
+        .send(mealDetails)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          done();
+        });
+    });
+  });
 });

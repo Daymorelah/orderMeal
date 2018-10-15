@@ -91,9 +91,24 @@ class Validate {
     const { name, prize, address, phoneNumber, meal, drink, quantity } = req.body;
     req.body = trimValues(req.body);
     if (name && meal && quantity && drink && prize && address && phoneNumber) {
-      if ((name.search(/[^\w\.\-]/g) === -1) && (name.search(/[^\w\.\-]/g) === -1)) {
+      if ((name.search(/[^\w\s\.\-]/g) === -1) && (address.search(/[^\w\s\.\-\,]/g) === -1)) {
         if (checkForInteger(prize) && checkForInteger(phoneNumber)) {
-          next();
+          if (!(phoneNumber.length > 15)) {
+            if (!(meal.search(/[^\w\s\.\-\,]/g) === -1)) {
+              stringFieldNotValid(res);
+            } else if (!(drink.search(/[^\w\s\.\-\,]/g) === -1)) {
+              stringFieldNotValid(res);
+            } else if (!(quantity.search(/[^\w\s\:\.\-\,]/g) === -1)) {
+              stringFieldNotValid(res);
+            } else {
+              next();
+            }
+          } else {
+            res.status(400).jsend.fail({
+              code: 400,
+              message: 'The phone number is too long.',
+            });
+          }
         } else {
           valueShouldBeInteger(res, 'Integer fields');
         }
@@ -257,6 +272,38 @@ class Validate {
           code: 400,
           message: 'Meal and mealType must contain letters and/or numbers.',
         });
+      }
+    } else {
+      allFieldsRequired(res);
+    }
+  }
+
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Response object when query is invalid
+   * @memberof Validate
+   */
+  static validateEditMenuItem(req, res, next) {
+    req.body = trimValues(req.body);
+    req.params = trimValues(req.params);
+    const { menuId } = req.params;
+    const { meal, prize, mealType } = req.body;
+    if (meal && prize && mealType && menuId) {
+      if (checkForInteger(menuId)) {
+        if (checkForInteger(prize)) {
+          if ((meal.search(/[^\w\s\.\-]/g) === -1) && (mealType.search(/[^\w\s\.\-]/g) === -1)) {
+            next();
+          } else {
+            stringFieldNotValid(res);
+          }
+        } else {
+          valueShouldBeInteger(res, 'prize');
+        }
+      } else {
+        valueShouldBeInteger(res, 'menu ID');
       }
     } else {
       allFieldsRequired(res);

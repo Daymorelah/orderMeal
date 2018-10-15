@@ -19,6 +19,8 @@ const queries = {
                   values($1,$2,$3,$4) RETURNING *`,
   isOrderValid: 'SELECT status FROM orders WHERE id=$1',
   updateOrderStatus: 'UPDATE orders SET status=$1 WHERE id=$2 RETURNING *',
+  editMenuItem: `UPDATE menu SET meal=$1, prize=$2, meal_type=$3
+                  WHERE id IN (SELECT id from menu WHERE id=$4)`,
 };
 
 export default queries;

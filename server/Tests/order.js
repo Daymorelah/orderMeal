@@ -69,7 +69,7 @@ describe('Integration test for the order controller', () => {
     it('should create an order', (done) => {
       const userDetails = {
         name: 'jane_Doe',
-        meal: 'Eba',
+        meal: 'Eba, Fufu',
         quantity: 'Eba::3',
         drink: 'Hollandia 1ltr',
         prize: '3',
