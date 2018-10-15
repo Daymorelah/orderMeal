@@ -81,6 +81,10 @@
               <p></p>
             </div>
           </div>
+          <div id="loader-container-modal">
+            <div id="loader-modal"></div>
+            <h3>loading...</h3>
+          </div>
           <div id="meals-ordered-container">
             <div id="meals-ordered"></div>
             <div id="no-meal-in-cart">
@@ -91,7 +95,7 @@
               <p>Where do you want your order sent to?</p>
               <input type="text" id="address">
               <p>Phone number</p>
-              <input type="number" id="phone-number">
+              <input type="number" id="phone-number" maxlength="13">
             </div>
             <button type="button" id='place-order'>Place Order</button>
             <button type="button" id='cancel-order'>Cancel Order</button>
@@ -106,6 +110,7 @@
     </div>
   </footer>
   <script src="./js/helper.js"></script>
+  <script src="./js/menuPageHelper.js"></script>
   <script src="./js/availableOrders.js"></script>
 </body>
 

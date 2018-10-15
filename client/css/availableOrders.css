@@ -308,6 +308,14 @@ button {
   background: #538f53;
   color: var(--primary-light);
 }
+#place-order:disabled {
+  background: var(--primary-light);
+  color: var(--dark);
+}
+#cancel-order:disabled {
+  background: var(--primary-light);
+  color: var(--primary-light);
+}
 .error-response {
   border: 1px solid #914a4a;
   color: #914a4a;
@@ -356,6 +364,28 @@ button {
   width: 50%;
   margin: 1em auto;
   display: none;
+}
+/* Spinner animation for modal*/
+#loader-container-modal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1.8em;
+}
+#loader-modal {
+  border: 16px solid var(--primary);
+  border-radius: 50%;
+  border-top: 16px solid var(--dark);
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+#loader-container-modal h3 {
+  margin: 0.5em;
+  font-size: 1.5em;
+  text-transform: capitalize;
 }
 /* For Safari browsers */
 @-webkit-keyframes spin {

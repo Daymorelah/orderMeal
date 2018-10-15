@@ -8,8 +8,7 @@ const mealsOrderedContainer = document.querySelector('#meals-ordered-container')
 const searchMeal = document.querySelector('#search-meal-icon');
 const filterBy = document.querySelector('#filter');
 
-// const menuUrl = 'https://ordermymeal.herokuapp.com/api/v1/menu';
-const menuUrl = 'http://localhost:2022/api/v1/menu';
+const menuUrl = 'https://ordermymeal.herokuapp.com/api/v1/menu';
 
 /**
  * Defines a method to hide the create-order modal. This method is called when the
@@ -33,29 +32,37 @@ const removeMeal = (event) => {
   mealsOrder.removeChild(event.target.parentNode.parentNode.parentNode.parentNode);
 };
 
+/* eslint-disable no-undef */
 /**
- * Adds an event listener to the create Order button to show the
+ * Adds an event listener to the place Order button to show the
  * meal selected summary modal.
  */
 addOrder.addEventListener('click', () => {
   const mealsInCart = document.querySelector('#meals-ordered').innerHTML;
   modalContainer.style.display = 'block';
   if (mealsInCart === '') {
+    document.querySelector('#response-container').style.display = 'none';
     document.querySelector('#no-meal-in-cart').style.display = 'block';
-    document.querySelector('#place-order').style.display = 'none';
+    placeOrderButton.style.display = 'none';
+    cancelOrder.textContent = 'Back to menu';
+    cancelOrder.disabled = false;
     document.querySelector('#contact-user').style.display = 'none';
   } else {
     document.querySelector('#address').value = '';
     document.querySelector('#phone-number').value = '';
     document.querySelector('#no-meal-in-cart').style.display = 'none';
-    document.querySelector('#place-order').style.display = 'block';
-    document.querySelector('#contact-user').style.display = 'block';
+    document.querySelector('#response-container').style.display = 'none';
+    placeOrderButton.style.display = 'block';
+    cancelOrder.disabled = false;
+    cancelOrder.textContent = 'Cancel Order';
+    modalReadyForPlaceOrderRequest();
     const removeSelectedMeal = document.querySelectorAll('.remove-meal');
     removeSelectedMeal.forEach((meal) => {
       meal.addEventListener('click', event => removeMeal(event));
     });
   }
 });
+/* eslint-enable no-undef */
 
 /**
  * Adds a keypress event listener on the menu-form container 
@@ -63,159 +70,6 @@ addOrder.addEventListener('click', () => {
 mealsOrderedContainer.addEventListener('keypress', () => {
   responseContainer.style.display = 'none';
 });
-
-/**
- * Defines the method used to show a response when a null value is returned
- * @param {string} menu - Meal selected to filter by
- * @returns {object} - Document fragment that contains a div that holds
- * the response message to be shown when no content is returned 
- */
-const noContent = (menu) => {
-  const fragment = document.createDocumentFragment();
-  const divTag = document.createElement('div');
-  divTag.setAttribute('id', 'no-menu');
-  divTag.innerHTML = `<h3>There are no ${menu} available yet.</h3>
-    <p>You can check back soon or go to your<a href='./userProfile.html'>Profile page</a></p>`;
-  return fragment.appendChild(divTag);
-};
-
-/**
- * Defines a method that shows the response gotten form the fetch method 
- * @param {object} res - Response object 
- * @param {string} type - Type of response to show (error or success)
- */
-// const showResponseMessage = (res, type) => {
-//   responseContainer.style.display = 'block';
-//   responseContainer.setAttribute('class', `${type}-response`);
-//   responseContent.textContent = `${res.data.message}!`;
-// };
-
-/**
- * A method that defines the creation of a meal card
- * @param {object} res - Response object
- * @returns {Object} - A div tag that defines a meal card
- */
-const createMealCard = (res) => {
-  const cardFragment = document.createDocumentFragment();
-  const divTag = document.createElement('div');
-  divTag.setAttribute('class', 'meal-cards');
-  const menuHeader = document.createElement('div');
-  menuHeader.setAttribute('class', 'card-heading');
-  menuHeader.insertAdjacentHTML(
-    'beforeend', `<h2><span class="meal-property"> type: </span>${res.meal_type}</h2>`);
-  cardFragment.appendChild(menuHeader);
-  const menuBody = document.createElement('div');
-  menuBody.setAttribute('class', 'card-body');
-  menuBody.insertAdjacentHTML(
-    'beforeend', `<p><span class="meal-property">${res.meal_type}: </span>${res.meal} </p>`);
-  menuBody.insertAdjacentHTML(
-    'beforeend', `<p><span class="meal-property">Prize: </span>&#8358;${res.prize}</p>`);
-  cardFragment.appendChild(menuBody);
-  const menuFooter = document.createElement('div');
-  menuFooter.setAttribute('class', 'card-footer');
-  menuFooter.insertAdjacentHTML('beforeend', '<button class="add-to-cart">Add to cart</button>');
-  cardFragment.appendChild(menuFooter);
-  divTag.appendChild(cardFragment);
-  return divTag;
-};
-
-/**
- * A method that creates the UI for a user to choose the 
- * quantity of the meal to order for.
- * @returns - A DIV that contains the UI that allows a user choose
- * the quantity of meal to order
- */
-const chooseMealQuantity = () => {
-  const quantityFragment = document.createDocumentFragment();
-  const divQuantityContainer = document.createElement('div');
-  divQuantityContainer.setAttribute('class', 'meal-quantity-container');
-  const divTagMealQuantity = document.createElement('div');
-  divTagMealQuantity.setAttribute('class', 'meal-quantity');
-  const pTagMealQuantity = document.createElement('p');
-  pTagMealQuantity.insertAdjacentText('beforeend', ' Quantity: ');
-  quantityFragment.appendChild(pTagMealQuantity);
-  divTagMealQuantity.insertAdjacentHTML('beforeend', `<span class="add"><i class="fas fa-plus fa-xs">
-  </i></span><span class="number">1</span><span class="reduce"><i class="fas fa-minus fa-xs"></i></span>
-  <span class="remove-meal"><i class="fas fa-times fa-xs"></i></span>`);
-  quantityFragment.appendChild(divTagMealQuantity);
-  divQuantityContainer.appendChild(quantityFragment);
-  return divQuantityContainer;
-};
-
-/**
- * Describes the method used to show a modal summary of the meals
- * that the user has selected to order for.
- * @param {array} mealDetail - An array of details of the selected meal
- */
-const showSelectedMeal = (mealDetail) => {
-  const fragment = document.createDocumentFragment();
-  const divTag = document.createElement('div');
-  divTag.setAttribute('class', 'meal-ordered');
-  const pTagMealType = document.createElement('p');
-  const pTagMealPrize = document.createElement('p');
-  const mealType = mealDetail.slice(undefined, -2).join(' ');
-  const mealPrize = mealDetail.slice(-2).join(' ');
-  pTagMealType.textContent = mealType;
-  fragment.appendChild(pTagMealType);
-  fragment.appendChild(chooseMealQuantity());
-  pTagMealPrize.textContent = mealPrize;
-  fragment.appendChild(pTagMealPrize);
-  divTag.appendChild(fragment);
-  document.querySelector('#meals-ordered').appendChild(divTag);
-};
-
-/**
- * Describes the event handler method that handles the click event on
- * the plus sign in the summary modal to increase the quantity of meal ordered.
- * @param {object} event - The event object returned after firing an event
- */
-const increaseQuantity = (event) => {
-  const plusSign = event.target;
-  const presentValue = plusSign.parentNode.nextElementSibling.innerText;
-  plusSign.parentNode.nextElementSibling.innerText = parseInt(presentValue, 10) + 1;
-};
-
-/**
- * Describes the event handler method that handles the click event on
- * the minus sign in the summary modal to reduce the quantity of meal ordered.
- * @param {object} event - The event object returned after firing an event
- */
-const reduceQuantity = (event) => {
-  const minusSign = event.target;
-  let presentValue = minusSign.parentNode.previousElementSibling.innerText;
-  presentValue = (parseInt(presentValue, 10) === 1) ? 1 : presentValue - 1;
-  minusSign.parentNode.previousElementSibling.innerText = presentValue;
-};
-
-/**
- * A method that adds an event handler on each plus and minus sign in
- * the order summary modal.
- * @param {object} add - DOM object representing the clickable plus sign
- * @param {object} reduce -  DOM object representing the clickable plus sign
- */
-const addReduceQuantity = (add, reduce) => {
-  add.forEach((plusSign) => {
-    plusSign.addEventListener('click', increaseQuantity);
-  });
-  reduce.forEach((minusSign) => {
-    minusSign.addEventListener('click', reduceQuantity);
-  });
-};
-
-/**
- * Defines the method used to add a menu to the cart
- * @param {object} event - The target event 
- */
-const addMenuToCart = (event) => {
-  const addToCartButton = event.target;
-  addToCartButton.disabled = 'true';
-  const mealCardBody = addToCartButton.parentElement.parentElement.children.item(1);
-  const mealDetail = mealCardBody.textContent.split(' ');
-  showSelectedMeal(mealDetail);
-  const add = document.querySelectorAll('.add');
-  const reduce = document.querySelectorAll('.reduce');
-  addReduceQuantity(add, reduce);
-};
 
 /* eslint-disable no-undef */
 /**
@@ -268,18 +122,15 @@ const loadMenu = () => {
     }
   });
 };
+
 /**
- * Defines a method that shows the error message from a fetch
- * @param {object} res - Response object 
- * @param {string} type - Type of message to show (error or success)
+ * Defines the method used to send a post request to place an order
+ * @param {object} orderDetails - Details of the order to send as the body
+ * of the post request
  */
-const showErrorMessage = (res, type) => {
-  responseContainer.style.display = 'block';
-  responseContainer.setAttribute('class', `${type}-response`);
-  responseContent.textContent = `${res.data.message}!`;
-};
 const placeOrder = (orderDetails) => {
-  const Url = 'http://localhost:2022/api/v1/orders';
+  const Url = 'https://ordermymeal.herokuapp.com/api/v1/orders';
+  requestToPlaceOrderInProgress();
   fetch(Url, {
     method: 'POST',
     headers: {
@@ -287,15 +138,21 @@ const placeOrder = (orderDetails) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(orderDetails),
-  }).then(handleResponse).then(() => {
+  }).then(handleResponse).then((res) => {
+    document.querySelector('#loader-container-modal').style.display = 'none';
+    showResponseMessage(res, 'success');
+    placeOrderButton.style.display = 'none';
+    setTimeout(() => closeModalView(), 2000);
   }).catch((error) => {
     if (error.message === 'Failed to fetch') {
       responseContainer.style.display = 'block';
       responseContainer.setAttribute('class', 'error-response');
-      document.querySelector('#response-container').textContent = `
-      No internet connection. Check Your connection`;
+      responseContent.textContent =
+        'No internet connection. Check Your connection to the internet';
+      modalReadyForPlaceOrderRequest();
     } else {
-      showErrorMessage(error, 'error');
+      showResponseMessage(error, 'error');
+      modalReadyForPlaceOrderRequest();
     }
   });
 };
@@ -311,21 +168,6 @@ const filterMealSearch = () => {
 };
 
 /**
- * Defines the method used to check if a user is registered
- * Updates the top-right text content on the page.
- */
-const checkIfRegistered = () => {
-  const logout = document.querySelector('#logout');
-  if (localStorage.getItem('token') === null) {
-    logout.textContent = 'Sign Up';
-    logout.setAttribute('href', './signupPage.html');
-  } else {
-    logout.textContent = 'View Profile';
-    logout.setAttribute('href', './userProfile.html');
-  }
-};
-
-/**
  * Defines the function that generates part the body used in the post
  * request to place an order.
  * @param {object} mealsSelected - HTMLCollection of the children of the 
@@ -337,24 +179,25 @@ const generateMealDetails = (mealsSelected) => {
   let total = 0; const mealsOrdered = {};
   const drinkArray = []; const quantityArray = []; const mealArray = [];
   [].forEach.call(mealsSelected, (mealSelected) => {
-    const mealAndQuantity = {};
+    let mealAndQuantity;
     const mealDetails = mealSelected.textContent.split(':');
     const quantity = mealDetails[2].split('Prize')[0].trim();
     let prize = parseInt(mealDetails[3].trim().split('₦').join(''), 10);
     prize *= quantity; total += prize;
     if (mealDetails[0] === 'Refreshment') {
       const drink = mealDetails[1].split('Quantity')[0].trim();
-      mealAndQuantity[`${drink}`] = quantity;
+      mealAndQuantity = `${drink}::${quantity}`;
       quantityArray.push(mealAndQuantity);
       drinkArray.push(drink);
     } else {
       const meal = mealDetails[1].split('Quantity')[0].trim();
-      mealAndQuantity[`'${meal}'`] = quantity;
+      mealAndQuantity = `${meal}::${quantity}`;
       quantityArray.push(mealAndQuantity);
       mealArray.push(meal);
     }
   });
   mealsOrdered.prize = total;
+  mealsOrdered.quantity = quantityArray;
   mealsOrdered.meal = mealArray.length ? mealArray : 'none';
   mealsOrdered.drink = drinkArray.length ? drinkArray : 'none';
   return mealsOrdered;
@@ -382,4 +225,6 @@ searchMeal.addEventListener('click', filterMealSearch);
 cancelOrder.addEventListener('click', closeModalView);
 placeOrderButton.addEventListener('click', startProcessingOrder);
 
+/* eslint-disable no-undef */
 window.onload = () => checkIfRegistered(); loadMenu();
+/* eslint-enable no-undef */

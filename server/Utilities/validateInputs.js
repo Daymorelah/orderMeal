@@ -2,7 +2,9 @@
 import {
   checkForInteger,
   valueShouldBeInteger,
-  allFieldsRequired } from './helper';
+  allFieldsRequired,
+  stringFieldNotValid } from './helper';
+
 /**
  * Trims input values from user
  * @param {object} objectWithValuesToTrim - request body to trim
@@ -44,6 +46,7 @@ class Validate {
       });
     }
   }
+
   /**
    * 
    * @param {object} req - Request object 
@@ -75,6 +78,7 @@ class Validate {
       allFieldsRequired(res);
     }
   }
+
   /**
    * 
    * @param {object} req - Request object 
@@ -84,26 +88,23 @@ class Validate {
    * @memberof Validate
    */
   static validateCreateOrder(req, res, next) {
+    const { name, prize, address, phoneNumber, meal, drink, quantity } = req.body;
     req.body = trimValues(req.body);
-    const { name, meal, drink, prize, quantity, address } = req.body;
-    if (name && meal && quantity && drink && prize && address) {
-      if (name.search(/[^\w\.\-]/g) === -1 && meal.search(/[^\w\s\.\-]/g) === -1 &&
-          drink.search(/[^\w\s\.\-]/g) === -1 && address.search(/[^\w\s\.,\-]/g) === -1) {
-        if (checkForInteger(quantity) && checkForInteger(prize)) {
+    if (name && meal && quantity && drink && prize && address && phoneNumber) {
+      if ((name.search(/[^\w\.\-]/g) === -1) && (name.search(/[^\w\.\-]/g) === -1)) {
+        if (checkForInteger(prize) && checkForInteger(phoneNumber)) {
           next();
         } else {
           valueShouldBeInteger(res, 'Integer fields');
         }
       } else {
-        res.status(400).jsend.fail({
-          code: 400,
-          message: 'Invalid request. String fields should contain letters, numbers, -, . or _.',
-        });
+        stringFieldNotValid(res);
       }
     } else {
       allFieldsRequired(res);
     }
   }
+
   /**
    * 
    * @param {object} req - Request object 
@@ -141,6 +142,7 @@ class Validate {
       allFieldsRequired(res);
     }
   }
+
   /**
    * 
    * @param {object} req - Request object 
@@ -162,6 +164,7 @@ class Validate {
       allFieldsRequired(res);
     }
   }
+
   /**
    * 
    * @param {object} req - Request object 
@@ -186,6 +189,7 @@ class Validate {
       allFieldsRequired(res);
     }
   }
+
   /**
    * 
    * @param {object} req - Request object 
@@ -206,6 +210,7 @@ class Validate {
       next();
     }
   }
+
   /**
    * @param {object} req - Request object 
    * @param {object} res - Response object

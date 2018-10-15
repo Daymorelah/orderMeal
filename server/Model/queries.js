@@ -11,8 +11,8 @@ const queries = {
   isUsernameValid: 'SELECT * FROM users WHERE username=$1',
   viewMenu: 'SELECT * FROM menu LIMIT 21',
   viewMenuFilter: 'SELECT * FROM menu WHERE meal_type=$1 LIMIT 12',
-  createOrder: `INSERT INTO orders (name, meal, refreshment, quantity, prize, address, userId)
-                VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+  createOrder: `INSERT INTO orders (name, meal, refreshment, quantity, prize, address, userId, phonenumber)
+                VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
   getAllOrders: 'SELECT * FROM orders LIMIT 6',
   getAnOrder: 'SELECT * FROM orders WHERE id=$1',
   addMealToMenu: `INSERT INTO menu (meal, prize, meal_type, userId)

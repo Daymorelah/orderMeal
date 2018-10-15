@@ -101,3 +101,69 @@ export const noValuesYet = (res, valueQueried) => {
   });
 };
 
+/* eslint-disable no-useless-escape, consistent-return*/
+/**
+ * Defines the method that validate an array of strings. It ensures that
+ * all element of the array is a string 
+ * @param {array} arrayToCheck - Array whose elements we want to validate
+ * @param {object} res - Response object
+ * @returns {boolean} - Determine if the array is valid or not
+ */
+export const validateArrayOfStrings = (res, arrayToCheck) => {
+  if (Array.isArray(arrayToCheck)) {
+    arrayToCheck.forEach((element) => {
+      if (element.search(/[^\w\s\.\-]/g) === -1) return true;
+      res.status(400).jsend.fail({
+        code: 400,
+        message: 'Invalid string elements in meal/drink array',
+      });
+    });
+  } else {
+    res.status(400).jsend.fail({
+      code: 400,
+      message: 'meal and drink fields should be an Array',
+    });
+  }
+};
+
+/**
+ * Defines the method that handles invalid string fields
+ * @param {object} res - Response object
+ * @returns {object} - Response object 
+ */
+export const stringFieldNotValid = (res) => {
+  res.status(400).jsend.fail({
+    code: 400,
+    message: 'Invalid request. String fields should contain letters, numbers, -, . or _.',
+  });
+};
+
+/* eslint-disable consistent-return, no-else-return */
+/**
+ * Defines the method that validate an array of objects. It ensures that
+ * all element of the array is an object whose key value is a valid string 
+ * @param {array} arrayToCheck - Array whose elements we want to validate
+ * @param {object} res - Response object
+ * @returns {boolean} - Determine if the array is valid or not
+ */
+export const validateArrayOfObjects = (res, arrayToCheck) => {
+  if (Array.isArray(arrayToCheck)) {
+    arrayToCheck.forEach((element) => {
+      if (typeof (element) === 'object') {
+        if (Object.keys(element)[0].search(/[^\w\s\.\-]/g) !== -1) return false;
+      } else {
+        res.status(400).jsend.fail({
+          code: 400,
+          message: 'Quantity field should be an Array of object(S)',
+        });
+      }
+    });
+    return true;
+  } else {
+    res.status(400).jsend.fail({
+      code: 400,
+      message: 'Quantity field should be an Array',
+    });
+  }
+};
+
