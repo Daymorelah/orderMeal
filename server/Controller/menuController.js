@@ -87,6 +87,26 @@ class MenuController {
         }
       });
   }
+
+  /**
+   * Update menu Item
+   * @param {object} req - request object 
+   * @param {object} res - response object
+   */
+  static editMenuItem(req, res) {
+    const { menuId } = req.params;
+    const { meal, prize, mealType } = req.body;
+    pool.query(`${queries.editMenuItem}`, [`${meal}`, `${prize}`, `${mealType}`, `${menuId}`],
+      (error, response) => {
+        if (error) {
+          sendServerError(res);
+        } else if (response) {
+          res.jsend.success({
+            message: 'Updated successfully',
+          });
+        }
+      });
+  }
 }
 
 export default MenuController;
