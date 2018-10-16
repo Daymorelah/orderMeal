@@ -25,7 +25,6 @@ const routes = (app) => {
     Validate.validateUpdateOrderStatus,
     OrderController.updateOrderStatus);
   app.post('/api/v1/auth/signup',
-    Validate.checkRoleForUser,
     Validate.validateSignup,
     UserController.userSignUp);
   app.get(
@@ -34,14 +33,13 @@ const routes = (app) => {
     Validate.validateOrderHistory,
     OrderController.getOrderHistory);
   app.post('/api/v1/auth/login',
-    Validate.checkRoleForUser,
     Validate.validateLogin,
     UserController.userLogin);
   app.get('/api/v1/menu',
     Validate.validateViewMenu,
     MenuController.getAllMenu);
-  app.post('/api/v1/auth/admin/signup', Validate.validateSignup, UserController.userSignUp);
-  app.post('/api/v1/auth/admin/login', Validate.validateLogin, UserController.userLogin);
+  // app.post('/api/v1/auth/admin/signup', Validate.validateSignup, UserController.userSignUp);
+  // app.post('/api/v1/auth/admin/login', Validate.validateLogin, UserController.userLogin);
   app.post('/api/v1/menu',
     Authenticate.checkAdminToken,
     Validate.validateAddMealTOMenu,

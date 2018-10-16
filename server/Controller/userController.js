@@ -40,7 +40,8 @@ class UserController {
    * @memberof USerController
    */
   static userSignUp(req, res) {
-    const { username, password, email, role } = req.body;
+    const { username, password, email } = req.body;
+    const role = username === process.env.ADMIN ? 'Admin' : undefined;
     let encryptedPassword;
     CryptData.encryptData(password).then((hash) => {
       encryptedPassword = hash;
@@ -57,7 +58,7 @@ class UserController {
               userId: result.id,
               username: result.username,
               email: result.email,
-            }, role === 'admin' ? adminSecret : secret, { expiresIn: '1 day' });
+            }, role ? adminSecret : secret, { expiresIn: '1 day' });
             res.status(201).jsend.success({
               message: `${role || 'User'} ${result.username} created successfully`,
               id: result.id,
@@ -82,7 +83,8 @@ class UserController {
    * @memberof USerController
    */
   static userLogin(req, res) {
-    const { username, password, role } = req.body;
+    const { username, password } = req.body;
+    const role = username === process.env.ADMIN ? 'Admin' : undefined;
     pool.query(`${queries.isUsernameValid}`, [`${username}`], (err, response) => {
       if (err) {
         sendServerError(res);
@@ -101,14 +103,16 @@ class UserController {
                   userId: userGottenFromDb.id,
                   username: userGottenFromDb.username,
                   email: userGottenFromDb.email,
-                }, role === 'admin' ? adminSecret : secret, { expiresIn: '1 day' });
-                res.jsend.success({
+                  verified: role ? true : undefined,
+                }, role ? adminSecret : secret, { expiresIn: '1 day' });
+                const sendUserDetails = {
                   message: `${role || 'User'} ${userGottenFromDb.username} logged in successfully`,
                   id: userGottenFromDb.id,
                   username: userGottenFromDb.username,
                   email: userGottenFromDb.email,
                   token,
-                });
+                };
+                res.jsend.success(sendUserDetails);
               } else {
                 res.status(400).jsend.fail({
                   code: 400,

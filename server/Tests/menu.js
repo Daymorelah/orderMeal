@@ -1,8 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import dotenv from 'dotenv';
 import app from '../app';
 /* eslint-enable import/no-extraneous-dependencies */
+
+dotenv.config();
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -23,14 +26,12 @@ describe('Integration test for the Menu controller', () => {
         done();
       });
   });
-  before('Create admin for testing in menu controller', (done) => {
+  before('Login admin for testing in menu controller', (done) => {
     const admin2 = {
-      username: 'admin2',
+      username: process.env.ADMIN,
       password: 'password',
-      email: 'admin2@wemail.com',
-      role: 'admin',
     };
-    chai.request(app).post('/api/v1/auth/admin/signup')
+    chai.request(app).post('/api/v1/auth/login')
       .send(admin2)
       .end((err, res) => {
         myAdminToken = res.body.data.token;
