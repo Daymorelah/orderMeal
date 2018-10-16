@@ -55,12 +55,14 @@ export const couldNotCreatTable = tableName =>
 export const somethingAwkwardHappened = () =>
   'Something awkward happened!!';
 
+/* eslint-disable no-useless-escape */
 /**
  * Defines the method to check for non-integer values in a string
  * @param {string} valueToCheck - String to check for non-integers
  * @returns {boolean} - Indicates if a non-integer value is found
  */
-export const checkForInteger = valueToCheck => valueToCheck.search(/\D/g) === -1;
+export const checkForInteger = valueToCheck => valueToCheck.search(/[^\d\+]/g) === -1;
+/* eslint-enable no-useless-escape */
 
 /**
  * Defines the failed message returned when a string contains non-integer values

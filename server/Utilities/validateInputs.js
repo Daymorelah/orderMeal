@@ -310,6 +310,28 @@ class Validate {
     }
   }
 
+  /**
+   * 
+   * @param {object} req - Request object 
+   * @param {object} res - Response object
+   * @param {callback} next - The callback that passes the request to the next handler
+   * @returns {object} res - Response object when query is invalid
+   * @memberof Validate
+   */
+  static validateDeleteMenuItem(req, res, next) {
+    req.params = trimValues(req.params);
+    const { menuId } = req.params;
+    if (menuId) {
+      if (checkForInteger(menuId)) {
+        next();
+      } else {
+        valueShouldBeInteger(res, 'menu ID');
+      }
+    } else {
+      allFieldsRequired(res);
+    }
+  }
+
   /* eslint-enable no-useless-escape */
   /**
    * @param {object} err - error object
