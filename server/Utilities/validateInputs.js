@@ -130,21 +130,16 @@ class Validate {
    */
   static validateSignup(req, res, next) {
     trimValues(req.body);
-    const { username, password, email, role } = req.body;
-    if (role && (role.toLowerCase() !== 'admin')) {
-      res.status(400).jsend.fail({
-        code: 400,
-        message: 'Invalid role. Role can only be admin',
-      });
-    } else if (username && password && email) {
+    const { username, password, email } = req.body;
+    if (username && password && email) {
       if (email.match(/\w+@\w+\.\w{2,6}/g) !== null) {
         if (username.search(/[^\w\.\-_]/g) === -1 && password.length < 20) {
           next();
         } else {
           res.status(400).jsend.fail({
             code: 400,
-            message: `Invalid username or password. It should contain only letters,
-                      numbers, -, . or _`,
+            message: `Invalid username or password. Username should contain only letters,
+                      numbers, -, . or _ and password should be less than 20 characters.`,
           });
         }
       } else {
@@ -202,27 +197,6 @@ class Validate {
       }
     } else {
       allFieldsRequired(res);
-    }
-  }
-
-  /**
-   * 
-   * @param {object} req - Request object 
-   * @param {object} res - Response object
-   * @param {callback} next - The callback that passes the request to the next handler
-   * @returns {object} res - Response object when query is invalid
-   * @memberof Validate
-   */
-  static checkRoleForUser(req, res, next) {
-    req.body = trimValues(req.body);
-    const { role } = req.body;
-    if (role) {
-      res.status(403).jsend.fail({
-        code: 403,
-        message: 'Forbidden parameter, (role), in request',
-      });
-    } else {
-      next();
     }
   }
 
