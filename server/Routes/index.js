@@ -50,6 +50,10 @@ const routes = (app) => {
     Authenticate.checkAdminToken,
     Validate.validateEditMenuItem,
     MenuController.editMenuItem);
+  app.delete('/api/v1/menu/:menuId',
+    Authenticate.checkAdminToken,
+    Validate.validateDeleteMenuItem,
+    MenuController.deleteMenuItem);
 };
 
 export default routes;

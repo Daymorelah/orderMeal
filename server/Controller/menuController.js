@@ -89,9 +89,12 @@ class MenuController {
   }
 
   /**
-   * Update menu Item
+   * Update Menu Item
+   * Route: PUT: /menu/:menuId
    * @param {object} req - request object 
    * @param {object} res - response object
+   * @returns {res} res - response object
+   * @memberof MenuController
    */
   static editMenuItem(req, res) {
     const { menuId } = req.params;
@@ -106,6 +109,27 @@ class MenuController {
           });
         }
       });
+  }
+
+  /**
+   * Delete Menu Item
+   * Route: DELETE: /menu/menuId
+   * @param {object} req - request object 
+   * @param {object} res - response object
+   * @returns {res} res - response object
+   * @memberof MenuController
+   */
+  static deleteMenuItem(req, res) {
+    const { menuId } = req.params;
+    pool.query(`DELETE FROM menu WHERE id=${menuId}`, (error) => {
+      if (error) {
+        sendServerError(res);
+      } else {
+        res.jsend.success({
+          message: 'Menu deleted successfully',
+        });
+      }
+    });
   }
 }
 

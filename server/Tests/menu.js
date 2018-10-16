@@ -239,4 +239,39 @@ describe('Integration test for the Menu controller', () => {
         });
     });
   });
+  describe('Test for deleting a menu item', () => {
+    it('should send a failed request message when meal ID contains an invalid value', (done) => {
+      chai.request(app).delete('/api/v1/menu/e1')
+        .set('x-access-token', myAdminToken)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          expect(res.body.data.message).to.deep.equal('The menu ID should be an integer.');
+          done();
+        });
+    });
+    it('should send a failed request message when meal ID is not given', (done) => {
+      chai.request(app).delete('/api/v1/menu/ /')
+        .set('x-access-token', myAdminToken)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(400);
+          expect(res.body.status).to.deep.equal('fail');
+          expect(res.body.data).to.have.property('message');
+          expect(res.body.data.message).to.deep.equal('Invalid request. All fields are required');
+          done();
+        });
+    });
+    it('should delete a menu item with the given menu ID', (done) => {
+      chai.request(app).delete('/api/v1/menu/1')
+        .set('x-access-token', myAdminToken)
+        .end((err, res) => {
+          expect(res.status).to.deep.equal(200);
+          expect(res.body.status).to.deep.equal('success');
+          expect(res.body.data).to.have.property('message');
+          expect(res.body.data.message).to.deep.equal('Menu deleted successfully');
+          done();
+        });
+    });
+  });
 });
