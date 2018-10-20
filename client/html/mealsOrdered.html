@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Order-Meal | Ordered Meals</title>
+  <script src="./js/checkAdminToken.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="./asset/mealsOrdered.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div id="logo">
+        <a href="./loginPage.html">O-Meal</a>
+      </div>
+      <div id="large-width-nav">
+        <a id="active" href="./mealsOrdered.html">Orders</a>
+        <a href="./availableOrders.html">Available Orders</a>
+      </div>
+      <div id="nav-menu">
+        <a id="logout" href="./loginPage.html">Logout</a>
+        <span id="hamburger">
+          <i class="fas fa-bars fa-2x"></i>
+        </span>
+      </div>
+    </nav>
+    <div id="small-width-nav">
+      <a href="./mealsOrdered.html">Orders</a>
+      <a href="./availableOrders.html">Available Orders</a>
+    </div>
+  </header>
+  <main id="page-container">
+    <section id="search-container">
+      <div class="container">
+        <div id="search-meal-container">
+          <input type="text" id="seach-meal" placeholder="Search meal ordered">
+          <span id="search-meal-icon"><i class="fas fa-search"></i></span>
+          <select id="filter">
+            <option value="today">30 mins</option>
+            <option value="today">Last Hour</option>
+            <option value="today">Last 6 Hours</option>
+            <option value="today">Today</option>
+            <option value="yesterday">Yesterday</option>
+          </select>
+        </div>
+      </div>
+    </section>
+    <section id="ordered-meals-container">
+      <div class="container">
+        <div id="ordered-meal-text">
+          <h3 id="order-number"></h3>
+        </div>
+        <div id="loading">
+          <div id="loader-container">
+            <div id="loader"></div>
+            <h3>loading...</h3>
+          </div>
+          <div id="no-internet">
+            <p>Could not connect to the server. Please check your internet connection</p>
+          </div>
+        </div>
+        <div id="meal-card-container">
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">Customer: </span>Jane Doe</h2>
+              <span class="card-heading-icon"><i class="fas fa-check"></i></span>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">Meal: </span>Burger</p>
+              <p><span class="meal-property">Quantity: </span>3 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Jollof Rice</p>
+              <p><span class="meal-property">Quantity: </span>2 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Spaghetti</p>
+              <p><span class="meal-property">Quantity: </span>4 Pieces </p>
+              <p><span class="meal-property">Drink: </span>Coca-Cola 50cl</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 1,300</p>
+            </div>
+            <div class="card-footer">
+              <button class="accept">accept</button>
+              <button class="decline">decline</button>
+            </div>
+          </div>
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">Customer: </span>Jane Doe</h2>
+              <span class="card-heading-icon"><i class="fas fa-check"></i></span>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">Meal: </span>Burger</p>
+              <p><span class="meal-property">Quantity: </span>3 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Jolllof Rice</p>
+              <p><span class="meal-property">Quantity: </span>2 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Spaghetti</p>
+              <p><span class="meal-property">Quantity: </span>4 Pieces </p>
+              <p><span class="meal-property">Drink: </span>Coca-Cola 50cl</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 1,300</p>
+            </div>
+            <div class="card-footer">
+              <button class="accept">accept</button>
+              <button class="decline">decline</button>
+            </div>
+          </div>
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">Customer: </span>Jane Doe</h2>
+              <span class="card-heading-icon"><i class="fas fa-check"></i></span>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">Meal: </span>Burger</p>
+              <p><span class="meal-property">Quantity: </span>3 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Jolllof Rice</p>
+              <p><span class="meal-property">Quantity: </span>2 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Spaghetti</p>
+              <p><span class="meal-property">Quantity: </span>4 Pieces </p>
+              <p><span class="meal-property">Drink: </span>Coca-Cola 50cl</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 1,300</p>
+            </div>
+            <div class="card-footer">
+              <button class="accept">accept</button>
+              <button class="decline">decline</button>
+            </div>
+          </div>
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">Customer: </span>Jane Doe</h2>
+              <span class="card-heading-icon"><i class="fas fa-check"></i></span>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">Meal: </span>Burger</p>
+              <p><span class="meal-property">Quantity: </span>3 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Jolllof Rice</p>
+              <p><span class="meal-property">Quantity: </span>2 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Spaghetti</p>
+              <p><span class="meal-property">Quantity: </span>4 Pieces </p>
+              <p><span class="meal-property">Drink: </span>Coca-Cola 50cl</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 1,300</p>
+            </div>
+            <div class="card-footer">
+              <button class="accept">accept</button>
+              <button class="decline">decline</button>
+            </div>
+          </div>
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">Customer: </span>Jane Doe</h2>
+              <span class="card-heading-icon"><i class="fas fa-check"></i></span>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">Meal: </span>Burger</p>
+              <p><span class="meal-property">Quantity: </span>3 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Jolllof Rice</p>
+              <p><span class="meal-property">Quantity: </span>2 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Spaghetti</p>
+              <p><span class="meal-property">Quantity: </span>4 Pieces </p>
+              <p><span class="meal-property">Drink: </span>Coca-Cola 50cl</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 1,300</p>
+            </div>
+            <div class="card-footer">
+              <button class="accept">accept</button>
+              <button class="decline">decline</button>
+            </div>
+          </div>
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">Customer: </span>Jane Doe</h2>
+              <span class="card-heading-icon"><i class="fas fa-check"></i></span>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">Meal: </span>Burger</p>
+              <p><span class="meal-property">Quantity: </span>3 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Jolllof Rice</p>
+              <p><span class="meal-property">Quantity: </span>2 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Spaghetti</p>
+              <p><span class="meal-property">Quantity: </span>4 Pieces </p>
+              <p><span class="meal-property">Drink: </span>Coca-Cola 50cl</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 1,300</p>
+            </div>
+            <div class="card-footer">
+              <button class="accept">accept</button>
+              <button class="decline">decline</button>
+            </div>
+          </div>
+          <div class="meal-cards">
+            <div class="card-heading">
+              <h2><span class="meal-property">Customer: </span>Jane Doe</h2>
+              <span class="card-heading-icon"><i class="fas fa-check"></i></span>
+            </div>
+            <div class="card-body">
+              <p><span class="meal-property">Meal: </span>Burger</p>
+              <p><span class="meal-property">Quantity: </span>3 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Jolllof Rice</p>
+              <p><span class="meal-property">Quantity: </span>2 Pieces </p>
+              <p><span class="meal-property">Meal: </span>Spaghetti</p>
+              <p><span class="meal-property">Quantity: </span>4 Pieces </p>
+              <p><span class="meal-property">Drink: </span>Coca-Cola 50cl</p>
+              <p><span class="meal-property">Prize: </span>&#8358; 1,300</p>
+            </div>
+            <div class="card-footer">
+              <button class="accept">accept</button>
+              <button class="decline">decline</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="paginate-container">
+      <div id="paginate">
+        <span class="page">1</span>
+        <span class="page">2</span>
+        <span class="page">3</span>
+        <span class="page">
+          <i class="fas fa-ellipsis-h"></i>
+        </span>
+        <span class="page">
+          <a href="#ordered-meal-text">
+            <i class="fas fa-chevron-up"></i>
+          </a>
+        </span>
+      </div>
+    </section>
+    <footer>
+      <div id="footer">
+        <p>Designed by Hussain A.I &copy; 2018</p>
+      </div>
+    </footer>
+  </main>
+  <script src="./js/helper.js"></script>
+  <script src="./js/mealsOrdered.js"></script>
+</body>
+
+</html>

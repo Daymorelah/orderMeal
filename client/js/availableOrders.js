@@ -213,7 +213,7 @@ const startProcessingOrder = (event) => {
   let mealsOrdered = generateMealDetails(mealsSelected);
   const address = document.querySelector('#address').value;
   const phoneNumber = document.querySelector('#phone-number').value;
-  const name = localStorage.getItem('username');
+  const name = JSON.parse(localStorage.getItem('decoded')).username;
   mealsOrdered = Object.assign({}, mealsOrdered, { address, phoneNumber, name });
   placeOrder(mealsOrdered);
 };
