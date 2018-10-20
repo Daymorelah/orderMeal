@@ -48,14 +48,15 @@ signupForm.addEventListener('submit', (event) => {
       },
     },
   ).then(handleResponse).then((res) => {
+    const decoded = jwt_decode(res.data.token);
+    localStorage.setItem('decoded', JSON.stringify(decoded));
     localStorage.setItem('token', `${res.data.token}`);
-    localStorage.setItem('userId', `${res.data.id}`);
-    localStorage.setItem('username', `${res.data.username}`);
     showErrorMessage(res, 'success');
     signupFormContainer.style.display = 'none';
     signupForm.reset();
+    homePage = decoded.verified ? './mealsOrdered.html' : './availableOrders.html';
     setTimeout(() => {
-      window.location = './availableOrders.html';
+      window.location = `${homePage}`;
     }, 2500);
   })
     .catch((error) => {

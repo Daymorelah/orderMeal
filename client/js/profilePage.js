@@ -81,13 +81,12 @@ const generateMealDetails = (order) => {
  */
 const loadOrderHistory = () => {
   document.querySelector('#loader-container').style.display = 'flex';
-  const username = localStorage.getItem('username');
-  const userId = localStorage.getItem('userId');
-  profileName.textContent = `Hello ${username}!`;
+  const decoded = JSON.parse(localStorage.getItem('decoded'));
+  profileName.textContent = `Hello ${decoded.username}!`;
   greetUSer.textContent = 'Our delicious meals are waiting for you!';
   const mealsContainer = document.querySelector('#meals-ordered');
   mealsContainer.innerHTML = '';
-  fetch(`https://ordermymeal.herokuapp.com/api/v1/users/${userId}/orders`,
+  fetch(`https://ordermymeal.herokuapp.com/api/v1/users/${decoded.userId}/orders`,
     {
       method: 'GET',
       headers: {

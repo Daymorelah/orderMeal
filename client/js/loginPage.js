@@ -47,14 +47,15 @@ loginForm.addEventListener('submit', (event) => {
       },
     },
   ).then(handleResponse).then((res) => {
+    const decoded = jwt_decode(res.data.token);
+    localStorage.setItem('decoded', JSON.stringify(decoded));
     localStorage.setItem('token', `${res.data.token}`);
-    localStorage.setItem('userId', `${res.data.id}`);
-    localStorage.setItem('username', `${res.data.username}`);
     showResponseMessage(res, 'success');
     loginFormContainer.style.display = 'none';
     loginForm.reset();
+    homePage = decoded.verified ? './mealsOrdered.html' : './availableOrders.html';
     setTimeout(() => {
-      window.location = './availableOrders.html';
+      window.location = `${homePage}`;
     }, 2500);
   }).catch((error) => {
     loginButton.disabled = false;
