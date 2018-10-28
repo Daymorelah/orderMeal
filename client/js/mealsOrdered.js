@@ -44,6 +44,8 @@ const generateCardBody = (order) => {
   const divTag = document.createElement('div');
   const quantityArray = [];
   divTag.setAttribute('class', 'card-body');
+  divTag.insertAdjacentHTML('beforeend',
+    `<p><span class="meal-property">Order Number: </span>${order.id}</p>`);
   order.quantity.forEach(element => quantityArray.push(element.split('::')));
   order.meal.forEach((meal) => {
     if (meal === 'none') {
@@ -76,7 +78,7 @@ const generateCardBody = (order) => {
   divTag.insertAdjacentHTML('beforeend',
     `<p><span class="meal-property">Phone Number: </span>${order.phonenumber}</p>`);
   divTag.insertAdjacentHTML('beforeend',
-    `<p><span class="meal-property">Status: </span>${order.status}</p>`);
+    `<p><span class="meal-property">Status: ${order.status}</span></p>`);
   fragment.appendChild(divTag);
   return fragment;
 };
@@ -85,39 +87,130 @@ const generateCardBody = (order) => {
  * Defines the method used to generate the card  heading for a meal
  * being ordered by a user.
  */
-const generateCardFooter = () => {
+const generateCardFooter = (status) => {
+  let orderStatus = '';
+  orderStatus = status === 'new' ? 'accept' : status;
   const fragment = document.createDocumentFragment();
   const divTag = document.createElement('div');
   divTag.setAttribute('class', 'card-footer');
-  divTag.insertAdjacentHTML('beforeend',
-    '<button class="accept">accept</button>');
-  divTag.insertAdjacentHTML('beforeend',
-    '<button class="decline">decline</button>');
+  if (orderStatus === 'completed' || orderStatus === 'cancelled') {
+    return fragment;
+  }
+  if (orderStatus === 'processing') {
+    divTag.insertAdjacentHTML('beforeend',
+      '<button class="accept">completed</button>');
+  } else {
+    divTag.insertAdjacentHTML('beforeend',
+      `<button class="accept">${orderStatus}</button>`);
+  }
+  if (status === 'new') {
+    divTag.insertAdjacentHTML('beforeend',
+      '<button class="decline">decline</button>');
+  }
   fragment.appendChild(divTag);
   return fragment;
 };
 
+/* eslint-disable no-undef */
+/**
+ * Describes the method that updates the status of an order
+ * @param {object} event - The event object being handled 
+ */
 const updateOrderStatus = (event) => {
   const acceptButton = event.target;
+  if (acceptButton.parentNode.parentNode.childElementCount === 4) {
+    acceptButton.parentNode.parentNode.children.item(3).style.display = 'none';
+  }
   const status = acceptButton.textContent;
+  let orderStatus = '';
   switch (status) {
     case 'accept':
-      acceptButton.textContent = 'processing';
+      orderStatus = 'processing';
       break;
-    case 'processing':
-      acceptButton.textContent = 'complete';
+    case 'completed':
+      orderStatus = 'completed';
       break;
     default:
-      acceptButton.textContent = 'accept';
+      orderStatus = 'accept';
   }
+  let orderId = acceptButton.parentNode.previousElementSibling.children.item(0).textContent;
+  orderId = orderId.split(':');
+  orderId = parseInt(orderId[1].trim(), 10);
+  acceptButton.textContent = 'Updating status...';
+  if (status === 'new') acceptButton.nextElementSibling.style.display = 'none';
+  acceptButton.disabled = 'true';
+  fetch(`https://ordermymeal.herokuapp.com/api/v1/orders/${orderId}`,
+    {
+      headers: {
+        'x-access-token': localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: `${orderStatus}` }),
+      method: 'PUT',
+    },
+  ).then(handleResponse).then((res) => {
+    if (res.data.code === 200) {
+      acceptButton.textContent = orderStatus === 'processing' ? 'completed' : '';
+      const statusPosition = acceptButton.parentNode.previousElementSibling.childElementCount - 1;
+      const statusTag = acceptButton.parentNode.previousElementSibling.children;
+      statusTag.item(statusPosition).innerHTML = '';
+      statusTag.item(statusPosition).insertAdjacentHTML('beforeend',
+        `<p><span class="meal-property">Status: ${orderStatus}</span></p>`);
+      acceptButton.disabled = 'false';
+    }
+  }).catch((error) => {
+    if (error.message === 'Failed to fetch') {
+      acceptButton.parentNode.parentNode.insertAdjacentHTML('beforeend',
+        '<p class="update-failed">Could not connect to the internet.</p>',
+      );
+    }
+    acceptButton.textContent = status;
+  });
 };
 
-/* eslint-disable no-undef */
+/**
+ * Describes the method that declines an order.
+ * @param {object} event - The event object being handled
+ */
+const declineOrder = (event) => {
+  const declineButton = event.target;
+  const acceptButton = declineButton.previousElementSibling;
+  acceptButton.style.display = 'none';
+  declineButton.textContent = 'Updating order ...';
+  let orderId = acceptButton.parentNode.previousElementSibling.children.item(0).textContent;
+  orderId = orderId.split(':');
+  orderId = parseInt(orderId[1].trim(), 10);
+  fetch(`https://ordermymeal.herokuapp.com/api/v1/orders/${orderId}`,
+    {
+      headers: {
+        'x-access-token': localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: 'cancelled' }),
+      method: 'PUT',
+    },
+  ).then(handleResponse).then((res) => {
+    if (res.data.code === 200) {
+      declineButton.textContent = 'declined';
+      const statusPosition = declineButton.parentNode.previousElementSibling.childElementCount - 1;
+      const statusTag = declineButton.parentNode.previousElementSibling.children;
+      statusTag.item(statusPosition).innerHTML = '';
+      statusTag.item(statusPosition).insertAdjacentHTML('beforeend',
+        '<p><span class="meal-property">Status: Declined </p>');
+    }
+  });
+};
+
+/**
+ * Describes the method that displays meals ordered by users of the app.
+ * This method is called when the page loads.
+ */
 const getMealsOrdered = () => {
   document.querySelector('#loader-container').style.display = 'flex';
   const ordersContainer = document.querySelector('#meal-card-container');
   ordersContainer.innerHTML = '';
-  fetch('https://ordermymeal.herokuapp.com/api/v1/orders',
+  fetch(
+    'https://ordermymeal.herokuapp.com/api/v1/orders',
     {
       headers: {
         'x-access-token': localStorage.getItem('token'),
@@ -137,7 +230,7 @@ const getMealsOrdered = () => {
         orderCard.setAttribute('class', 'meal-cards');
         orderCard.appendChild(generateCardHeader(order.name));
         orderCard.appendChild(generateCardBody(order));
-        orderCard.appendChild(generateCardFooter());
+        orderCard.appendChild(generateCardFooter(order.status));
         fragment.appendChild(orderCard);
       });
       document.querySelector('#loader-container').style.display = 'none';
@@ -146,8 +239,8 @@ const getMealsOrdered = () => {
     document.querySelectorAll('.accept').forEach((acceptButton) => {
       acceptButton.addEventListener('click', event => updateOrderStatus(event));
     });
-    document.querySelectorAll('.accept').forEach((declineButton) => {
-      declineButton.addEventListener('click', () => declineOrder);
+    document.querySelectorAll('.decline').forEach((declineButton) => {
+      declineButton.addEventListener('click', event => declineOrder(event));
     });
   })
     .catch((err) => {
