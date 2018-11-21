@@ -49,7 +49,7 @@ const noContent = () => {
 /**
  * Defines the method that generates the details of a meal
  * @param {object} order - An object containing details of an order
- * @returns {object} - A div tag that contains details of a meal  
+ * @returns {object} - A div tag that contains details of a meal
  */
 const generateMealDetails = (order) => {
   const fragment = document.createDocumentFragment();
@@ -63,10 +63,10 @@ const generateMealDetails = (order) => {
   meal.insertAdjacentHTML('beforeend', `<span>${order.meal}</span>`);
   fragment.appendChild(meal);
   drink.insertAdjacentHTML('beforeend', '<span class="meal-property">Drink: </span>');
-  drink.insertAdjacentHTML('beforeend', `<span>${order.drink}</span>`);
+  drink.insertAdjacentHTML('beforeend', `<span>${order.refreshment[0]}`);
   fragment.appendChild(drink);
   quantity.insertAdjacentHTML('beforeend', '<span class="meal-property">Quantity: </span>');
-  quantity.insertAdjacentHTML('beforeend', `<span>${order.quantity}</span>`);
+  quantity.insertAdjacentHTML('beforeend', `<span>${order.quantity[0]}</span>`);
   fragment.appendChild(quantity);
   prize.insertAdjacentHTML('beforeend', '<span class="meal-property">Prize: </span>');
   prize.insertAdjacentHTML('beforeend', `<span>&#8358; ${order.prize}</span>`);
@@ -86,7 +86,8 @@ const loadOrderHistory = () => {
   greetUSer.textContent = 'Our delicious meals are waiting for you!';
   const mealsContainer = document.querySelector('#meals-ordered');
   mealsContainer.innerHTML = '';
-  fetch(`https://ordermymeal.herokuapp.com/api/v1/users/${decoded.userId}/orders`,
+  fetch(
+    `https://ordermymeal.herokuapp.com/api/v1/users/${decoded.userId}/orders`,
     {
       method: 'GET',
       headers: {

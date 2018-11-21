@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies*/
+/* eslint-disable import/no-extraneous-dependencies */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import dotenv from 'dotenv';
@@ -37,7 +37,7 @@ describe('Integration test for the users controller', () => {
         });
     });
   });
-  describe('Test to signup a user', () => {
+  describe('Test to signUp a user', () => {
     it('should create a user and send a message that the user has ben created', (done) => {
       const userDetails = {
         username: 'Thomas',
