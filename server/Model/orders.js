@@ -3,7 +3,8 @@ import {
   tableCreated,
   couldNotCreatTable,
   couldNotDropTable,
-  somethingAwkwardHappened } from '../Utilities/helper';
+  somethingAwkwardHappened,
+} from '../Utilities/helper';
 
 const queryToCreateTable = `CREATE TYPE order_status AS ENUM 
   ('new', 'processing', 'cancelled', 'completed');

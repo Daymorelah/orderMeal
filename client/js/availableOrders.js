@@ -25,7 +25,7 @@ const closeModalView = () => {
 
 /**
  * Describes the method that removes a meal from the selected meals.
- * @param {object} event - Object that references the event being fired 
+ * @param {object} event - Object that references the event being fired
  */
 const removeMeal = (event) => {
   const mealsOrder = event.target.parentNode.parentNode.parentNode.parentNode.parentNode;
@@ -65,7 +65,7 @@ addOrder.addEventListener('click', () => {
 /* eslint-enable no-undef */
 
 /**
- * Adds a keypress event listener on the menu-form container 
+ * Adds a keypress event listener on the menu-form container
  */
 mealsOrderedContainer.addEventListener('keypress', () => {
   responseContainer.style.display = 'none';
@@ -73,7 +73,7 @@ mealsOrderedContainer.addEventListener('keypress', () => {
 
 /* eslint-disable no-undef */
 /**
- * Defines the method that loads the available menu in the DOM 
+ * Defines the method that loads the available menu in the DOM
  */
 const loadMenu = () => {
   let URL;
@@ -87,8 +87,7 @@ const loadMenu = () => {
   fetch(`${URL}`,
     {
       method: 'GET',
-    },
-  ).then(handleResponse).then((res) => {
+    }).then(handleResponse).then((res) => {
     const mealCardContainer = document.querySelector('#meal-card-container');
     const numberOfMenu = document.querySelector('#ordered-meal-text h3');
     const fragment = document.createDocumentFragment();
@@ -147,8 +146,7 @@ const placeOrder = (orderDetails) => {
     if (error.message === 'Failed to fetch') {
       responseContainer.style.display = 'block';
       responseContainer.setAttribute('class', 'error-response');
-      responseContent.textContent =
-        'No internet connection. Check Your connection to the internet';
+      responseContent.textContent = 'No internet connection. Check Your connection to the internet';
       modalReadyForPlaceOrderRequest();
     } else {
       showResponseMessage(error, 'error');
@@ -170,7 +168,7 @@ const filterMealSearch = () => {
 /**
  * Defines the function that generates part the body used in the post
  * request to place an order.
- * @param {object} mealsSelected - HTMLCollection of the children of the 
+ * @param {object} mealsSelected - HTMLCollection of the children of the
  * DIV container that houses the meals being selected by the user
  * @returns {object} mealsOrdered - Part of te body used in the POST request
  * to place an order.

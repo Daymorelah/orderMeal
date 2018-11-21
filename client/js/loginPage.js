@@ -14,7 +14,7 @@ loginForm.addEventListener('keypress', () => {
 /**
  * Defines the method that shows the response message returned form the fetch method
  * @param {object} res - Response object
- * @param {String} type - Type of message to show (error or success) 
+ * @param {String} type - Type of message to show (error or success)
  */
 const showResponseMessage = (res, type) => {
   responseContainer.style.display = 'block';
@@ -24,7 +24,7 @@ const showResponseMessage = (res, type) => {
 
 /* eslint-disable no-undef */
 /**
- * Adds an event listener for a submit event on the login form 
+ * Adds an event listener for a submit event on the login form
  */
 loginForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -71,4 +71,3 @@ loginForm.addEventListener('submit', (event) => {
   });
 });
 /* eslint-enable no-undef */
-

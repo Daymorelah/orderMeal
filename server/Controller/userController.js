@@ -67,8 +67,7 @@ class UserController {
               token,
             });
           }
-        },
-      );
+        });
     }).catch(() => {
       sendServerError(res);
     });
