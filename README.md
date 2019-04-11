@@ -45,6 +45,8 @@ To run tests for the server side
 ## PS:
 The UI (_static_) templates for this App is hosted on [GitHub Pages](https://pages.github.com/) and the UI templates can be viewd [Here](https://daymorelah.github.io/orderMeal/UI/html/landingPage.html)
 
+### The app can be viewed [here](https://ordermymeal.herokuapp.com/public/loginPage.html)
+
 ### Author
 * Ademola Hussain
 ### Licence
