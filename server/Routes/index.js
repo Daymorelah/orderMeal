@@ -5,7 +5,7 @@ import { Validate, Authenticate } from '../Utilities';
 
 /**
  * Handles request
- * @param {object} app - An instance of the express module 
+ * @param {object} app - An instance of the express module
  */
 const routes = (app) => {
   app.get('/api/v1', UserController.welcomeUSer);
@@ -31,7 +31,8 @@ const routes = (app) => {
     '/api/v1/users/:userId/orders',
     Authenticate.checkToken,
     Validate.validateOrderHistory,
-    OrderController.getOrderHistory);
+    OrderController.getOrderHistory,
+  );
   app.post('/api/v1/auth/login',
     Validate.validateLogin,
     UserController.userLogin);

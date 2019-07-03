@@ -9,15 +9,15 @@ import createMenuTable from './menu';
  */
 const createTables = () => {
   createUsersTable().then((usersTableResult) => {
-    console.log(usersTableResult);
+    console.log(usersTableResult); //eslint-disable-line
     createOrdersTable().then((ordersTableResult) => {
-      console.log(ordersTableResult);
+      console.log(ordersTableResult); //eslint-disable-line
       createMenuTable().then((menuTableResult) => {
-        console.log(menuTableResult);
+        console.log(menuTableResult); //eslint-disable-line
         process.exit();
-      }).catch(error => console.log(error));
-    }).catch(error => console.log(error));
-  }).catch(error => console.log(error));
+      }).catch(error => console.log(error)); //eslint-disable-line
+    }).catch(error => console.log(error)); //eslint-disable-line
+  }).catch(error => console.log(error)); //eslint-disable-line
 };
 
 createTables();

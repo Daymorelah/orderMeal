@@ -30,7 +30,7 @@ const modalReadyForPlaceOrderRequest = () => {
 
 /**
  * Defines a method that shows the error message from a fetch
- * @param {object} res - Response object 
+ * @param {object} res - Response object
  * @param {string} type - Type of message to show (error or success)
  */
 const showResponseMessage = (res, type) => {
@@ -44,7 +44,7 @@ const showResponseMessage = (res, type) => {
  * Defines the method used to show a response when a null value is returned
  * @param {string} menu - Meal selected to filter by
  * @returns {object} - Document fragment that contains a div that holds
- * the response message to be shown when no content is returned 
+ * the response message to be shown when no content is returned
  */
 const noContent = (menu) => {
   const fragment = document.createDocumentFragment();
@@ -67,14 +67,17 @@ const createMealCard = (res) => {
   const menuHeader = document.createElement('div');
   menuHeader.setAttribute('class', 'card-heading');
   menuHeader.insertAdjacentHTML(
-    'beforeend', `<h2><span class="meal-property"> type: </span>${res.meal_type}</h2>`);
+    'beforeend', `<h2><span class="meal-property"> type: </span>${res.meal_type}</h2>`,
+  );
   cardFragment.appendChild(menuHeader);
   const menuBody = document.createElement('div');
   menuBody.setAttribute('class', 'card-body');
   menuBody.insertAdjacentHTML(
-    'beforeend', `<p><span class="meal-property">${res.meal_type}: </span>${res.meal} </p>`);
+    'beforeend', `<p><span class="meal-property">${res.meal_type}: </span>${res.meal} </p>`,
+  );
   menuBody.insertAdjacentHTML(
-    'beforeend', `<p><span class="meal-property">Prize: </span>&#8358;${res.prize}</p>`);
+    'beforeend', `<p><span class="meal-property">Prize: </span>&#8358;${res.prize}</p>`,
+  );
   cardFragment.appendChild(menuBody);
   const menuFooter = document.createElement('div');
   menuFooter.setAttribute('class', 'card-footer');
@@ -85,7 +88,7 @@ const createMealCard = (res) => {
 };
 
 /**
- * A method that creates the UI for a user to choose the 
+ * A method that creates the UI for a user to choose the
  * quantity of the meal to order for.
  * @returns - A DIV that contains the UI that allows a user choose
  * the quantity of meal to order
@@ -169,7 +172,7 @@ const addOrReduceQuantity = (add, reduce) => {
 
 /**
  * Defines the method used to add a menu to the cart
- * @param {object} event - The target event 
+ * @param {object} event - The target event
  */
 const addMenuToCart = (event) => {
   const addToCartButton = event.target;
