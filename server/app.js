@@ -39,9 +39,9 @@ app.use(expressError.checkExpressErrors);
 
 app.listen(PORT, (error) => {
   if (error) {
-    console.log(`An error occurred try to start the sever. Error is ${error}`);
+    console.log(`An error occurred try to start the sever. Error is ${error}`); //eslint-disable-line
   } else {
-    console.log(`Server is up and running on port ${PORT} ...`);
+    console.log(`Server is up and running on port ${PORT} ...`); //eslint-disable-line
   }
 });
 

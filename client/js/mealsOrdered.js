@@ -139,7 +139,8 @@ const updateOrderStatus = (event) => {
   acceptButton.textContent = 'Updating status...';
   if (status === 'new') acceptButton.nextElementSibling.style.display = 'none';
   acceptButton.disabled = 'true';
-  fetch(`https://ordermymeal.herokuapp.com/api/v1/orders/${orderId}`,
+  // fetch(`https://ordermymeal.herokuapp.com/api/v1/orders/${orderId}`,
+  fetch(`https://localhost:2022/api/v1/orders/${orderId}`,
     {
       headers: {
         'x-access-token': localStorage.getItem('token'),

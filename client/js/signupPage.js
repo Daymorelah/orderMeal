@@ -12,7 +12,7 @@ signupForm.addEventListener('keypress', () => {
 
 /**
  * Defines a method that shows the error message from a fetch
- * @param {object} res - Response object 
+ * @param {object} res - Response object
  * @param {string} type - Type of message to show (error or success)
  */
 const showErrorMessage = (res, type) => {

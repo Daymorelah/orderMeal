@@ -1,8 +1,8 @@
 
 /**
- * Defines the response when an internal server error occurs 
+ * Defines the response when an internal server error occurs
  * @param {object} res - Response object
- * @return {res} - Response object 
+ * @return {res} - Response object
  */
 export const sendServerError = (res) => {
   res.status(500).jsend.error({
@@ -15,7 +15,7 @@ export const sendServerError = (res) => {
  * Defines the response returned when an unauthorized user
  * tries to access a protected/restricted route
  * @param {object} res - Response object
- * @returns {res} - Response object 
+ * @returns {res} - Response object
  */
 export const userNotAuthorized = (res) => {
   res.status(401).jsend.fail({
@@ -27,33 +27,29 @@ export const userNotAuthorized = (res) => {
 /**
  * Defines the error message returned when a database table could not be dropped
  * @param {string} tableName - Name of the database table to operate on
- * @returns {object} - A new error object 
+ * @returns {object} - A new error object
  */
-export const couldNotDropTable = tableName =>
-  Error(`An error occurred trying to drop table ${tableName}.`);
+export const couldNotDropTable = tableName => Error(`An error occurred trying to drop table ${tableName}.`);
 
 /**
  * Defines the message returned when a query crates a table successfully
  * @param {string} tableName - Name of the database table to create
- * @returns {string} - Message signifying query completed successfully 
+ * @returns {string} - Message signifying query completed successfully
  */
-export const tableCreated = tableName =>
-  `Table ${tableName} has been Created successfully`;
+export const tableCreated = tableName => `Table ${tableName} has been Created successfully`;
 
 /**
  * Defines the message returned when an error occurred while trying to create a table
  * @param {string} tableName - Name of the database table to operate on
  * @returns {string} - Returned message.
  */
-export const couldNotCreatTable = tableName =>
-  `An error occurred trying to create table ${tableName}`;
+export const couldNotCreatTable = tableName => `An error occurred trying to create table ${tableName}`;
 
-  /**
+/**
  * Defines the error message when an unforseen error occurs
  * @returns {string} - Message returned
  */
-export const somethingAwkwardHappened = () =>
-  'Something awkward happened!!';
+export const somethingAwkwardHappened = () => 'Something awkward happened!!';
 
 /* eslint-disable no-useless-escape */
 /**
@@ -66,7 +62,7 @@ export const checkForInteger = valueToCheck => valueToCheck.search(/[^\d\+]/g) =
 
 /**
  * Defines the failed message returned when a string contains non-integer values
- * @param {object} res - Response object 
+ * @param {object} res - Response object
  * @param {string} value - String to check for non-integer values
  * @returns {res} - Response object
  */
@@ -80,7 +76,7 @@ export const valueShouldBeInteger = (res, value) => {
 /**
  * Defines the failed message returned when required fields are missing.
  * @param {object} res - Response object
- * @returns {res} - Response object 
+ * @returns {res} - Response object
  */
 export const allFieldsRequired = (res) => {
   res.status(400).jsend.fail({
@@ -90,7 +86,7 @@ export const allFieldsRequired = (res) => {
 };
 
 /**
- * Defines the response returned when value queried for is null 
+ * Defines the response returned when value queried for is null
  * @param {object} res - Response object
  * @param {string} valueQueried - Value being queried for
  * @returns {res} - Response object
@@ -106,7 +102,7 @@ export const noValuesYet = (res, valueQueried) => {
 /**
  * Defines the method that handles invalid string fields
  * @param {object} res - Response object
- * @returns {object} - Response object 
+ * @returns {object} - Response object
  */
 export const stringFieldNotValid = (res) => {
   res.status(400).jsend.fail({
@@ -114,4 +110,3 @@ export const stringFieldNotValid = (res) => {
     message: 'Invalid request. String fields should contain letters, numbers, -, . or _.',
   });
 };
-

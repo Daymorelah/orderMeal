@@ -38,7 +38,8 @@ loginForm.addEventListener('submit', (event) => {
   loginButton.disabled = 'true';
   loginButton.textContent = 'Logging in ...';
   fetch(
-    'https://ordermymeal.herokuapp.com/api/v1/auth/login',
+    // 'https://ordermymeal.herokuapp.com/api/v1/auth/login',
+    'http://localhost:2022/api/v1/auth/login',
     {
       method: 'POST',
       body: JSON.stringify(userDetails),

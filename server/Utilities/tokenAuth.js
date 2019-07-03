@@ -11,8 +11,8 @@ const adminSecret = process.env.ADMIN_SECRET;
  */
 class Authenticate {
   /**
-   * 
-   * @param {object} req - Request object 
+   *
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    */
@@ -36,8 +36,8 @@ class Authenticate {
   }
 
   /**
-   * 
-   * @param {object} req - Request object 
+   *
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    */

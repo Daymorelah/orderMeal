@@ -3,7 +3,8 @@ import {
   checkForInteger,
   valueShouldBeInteger,
   allFieldsRequired,
-  stringFieldNotValid } from './helper';
+  stringFieldNotValid,
+} from './helper';
 
 /**
  * Trims input values from user
@@ -18,13 +19,14 @@ const trimValues = (objectWithValuesToTrim) => {
   return trimmedValues;
 };
 
-/** class representing an handler's validation 
+/**
+ * class representing an handler's validation
  * @class Validate
  * @description Validation for user inputs in all requests
 */
 class Validate {
-  /** 
-  * @param {object} req - Request object 
+  /**
+  * @param {object} req - Request object
   * @param {object} res - Response object
   * @param {callback} next - The callback that passes the request to the next handler
   * @returns {object} res - Response object when query is invalid
@@ -48,8 +50,8 @@ class Validate {
   }
 
   /**
-   * 
-   * @param {object} req - Request object 
+   *
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    * @returns {object} res - Response object when query is invalid
@@ -80,15 +82,17 @@ class Validate {
   }
 
   /**
-   * 
-   * @param {object} req - Request object 
+   *
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    * @returns {object} res - Response object when query is invalid
    * @memberof Validate
    */
   static validateCreateOrder(req, res, next) {
-    const { name, prize, address, phoneNumber, meal, drink, quantity } = req.body;
+    const {
+      name, prize, address, phoneNumber, meal, drink, quantity,
+    } = req.body;
     req.body = trimValues(req.body);
     if (name && meal && quantity && drink && prize && address && phoneNumber) {
       if ((name.search(/[^\w\s\.\-]/g) === -1) && (address.search(/[^\w\s\.\-\,]/g) === -1)) {
@@ -121,8 +125,8 @@ class Validate {
   }
 
   /**
-   * 
-   * @param {object} req - Request object 
+   *
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    * @returns {object} res - Response object when query is invalid
@@ -154,8 +158,8 @@ class Validate {
   }
 
   /**
-   * 
-   * @param {object} req - Request object 
+   *
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    * @returns {object} res - Response object when query is invalid
@@ -176,8 +180,8 @@ class Validate {
   }
 
   /**
-   * 
-   * @param {object} req - Request object 
+   *
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    * @returns {object} res - Response object when query is invalid
@@ -201,7 +205,7 @@ class Validate {
   }
 
   /**
-   * @param {object} req - Request object 
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    * @returns {object} res - Response object when query is invalid
@@ -225,7 +229,7 @@ class Validate {
   }
 
   /**
-   * @param {object} req - Request object 
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    * @returns {object} res - Response object when query is invalid
@@ -253,8 +257,8 @@ class Validate {
   }
 
   /**
-   * 
-   * @param {object} req - Request object 
+   *
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    * @returns {object} res - Response object when query is invalid
@@ -285,8 +289,8 @@ class Validate {
   }
 
   /**
-   * 
-   * @param {object} req - Request object 
+   *
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    * @returns {object} res - Response object when query is invalid
@@ -309,7 +313,7 @@ class Validate {
   /* eslint-enable no-useless-escape */
   /**
    * @param {object} err - error object
-   * @param {object} req - Request object 
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @param {callback} next - The callback that passes the request to the next handler
    * @returns {object} res - Response object when query is invalid

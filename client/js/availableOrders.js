@@ -8,7 +8,9 @@ const mealsOrderedContainer = document.querySelector('#meals-ordered-container')
 const searchMeal = document.querySelector('#search-meal-icon');
 const filterBy = document.querySelector('#filter');
 
-const menuUrl = 'https://ordermymeal.herokuapp.com/api/v1/menu';
+// const menuUrl = 'https://ordermymeal.herokuapp.com/api/v1/menu';
+
+const menuUrl = 'http://localhost:2022/api/v1/menu';
 
 /**
  * Defines a method to hide the create-order modal. This method is called when the
