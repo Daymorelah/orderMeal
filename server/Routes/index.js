@@ -1,6 +1,8 @@
 
-
-import { OrderController, UserController, MenuController } from '../Controller';
+import passport from 'passport';
+import {
+  OrderController, UserController, MenuController, SocialAuthController,
+} from '../Controller';
 import { Validate, Authenticate } from '../Utilities';
 
 /**
@@ -8,7 +10,7 @@ import { Validate, Authenticate } from '../Utilities';
  * @param {object} app - An instance of the express module
  */
 const routes = (app) => {
-  app.get('/api/v1', UserController.welcomeUSer);
+  app.get('/api/v1', UserController.welcomeUser);
   app.get('/api/v1/orders',
     Authenticate.checkAdminToken,
     OrderController.getAllOrders);
@@ -51,6 +53,14 @@ const routes = (app) => {
     Authenticate.checkAdminToken,
     Validate.validateDeleteMenuItem,
     MenuController.deleteMenuItem);
+  app.get('/api/v1/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] }));
+  app.get('/api/v1/auth/callback',
+    passport.authenticate('google', { session: false, failureRedirect: '/api/v1/auth/failed' }),
+    SocialAuthController.googleAuth);
+  app.get('/api/v1/auth/failed', (req, res) => {
+    res.send({ message: 'Social authentication failed. You can try again.' });
+  });
 };
 
 export default routes;

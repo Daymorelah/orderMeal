@@ -6,7 +6,7 @@
  * @type {object}
  */
 const queries = {
-  signup: 'INSERT INTO users (username, password, email) VALUES($1,$2,$3) RETURNING *',
+  signup: 'INSERT INTO users (username, password, email, photo, is_email_verified, used_social_auth) VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
   orderHistory: 'SELECT * FROM orders WHERE userId=$1',
   isUsernameValid: 'SELECT * FROM users WHERE username=$1',
   viewMenu: 'SELECT * FROM menu LIMIT 21',

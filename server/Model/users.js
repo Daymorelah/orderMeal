@@ -10,7 +10,10 @@ const queryToCreateTable = `CREATE TABLE users(
   id SERIAL PRIMARY KEY,
   username VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL UNIQUE
+  email VARCHAR(255) NOT NULL UNIQUE,
+  is_email_verified bool DEFAULT false,
+  used_social_auth bool DEFAULT false,
+  photo VARCHAR(255)
   )`;
 
 /**
