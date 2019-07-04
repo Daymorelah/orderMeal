@@ -24,7 +24,7 @@ describe('Integration test for the order controller', () => {
       .send(user1)
       .end((err, res) => {
         myToken = res.body.data.token;
-        user1Id = res.body.data.id;
+        user1Id = 4;
         done();
       });
   });

@@ -24,7 +24,7 @@ class UserController {
    * @return {res} - Response object
    * @memberof USerController
    */
-  static welcomeUSer(req, res) {
+  static welcomeUser(req, res) {
     res.jsend.success({
       code: 200,
       message: 'Welcome to the Order-Meal API',
@@ -45,32 +45,34 @@ class UserController {
     let encryptedPassword;
     CryptData.encryptData(password).then((hash) => {
       encryptedPassword = hash;
-      pool.query(queries.signup, [username, encryptedPassword, email],
-        (error, response) => {
-          if (error) {
-            res.status(409).jsend.fail({
-              code: 409,
-              message: 'User details already exist. Signup was not successful',
-            });
-          } else {
-            const result = response.rows[0];
-            const token = jwt.sign({
-              userId: result.id,
-              username: result.username,
-              email: result.email,
-            }, role ? adminSecret : secret, { expiresIn: '1 day' });
-            res.status(201).jsend.success({
-              message: `${role || 'User'} ${result.username} created successfully`,
-              id: result.id,
-              username: result.username,
-              email: result.email,
-              token,
-            });
-          }
-        });
-    }).catch(() => {
-      sendServerError(res);
-    });
+      pool.query(queries.signup, [
+        username,
+        encryptedPassword,
+        email,
+        null,
+        false,
+        false,
+      ],
+      (error, response) => {
+        if (error) {
+          res.status(409).jsend.fail({
+            code: 409,
+            message: 'User details already exist. Signup was not successful',
+          });
+        } else {
+          const result = response.rows[0];
+          const token = jwt.sign({
+            userId: result.id,
+            username: result.username,
+          }, role ? adminSecret : secret, { expiresIn: '1 day' });
+          res.status(201).jsend.success({
+            message: `${role || 'User'} ${result.username} created successfully`,
+            created: true,
+            token,
+          });
+        }
+      });
+    }).catch(() => sendServerError(res));
   }
 
   /**
