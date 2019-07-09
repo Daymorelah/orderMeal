@@ -140,15 +140,15 @@ class Validate {
         if (username.search(/[^\w\.\-_]/g) === -1 && password.length < 20) {
           next();
         } else {
-          res.status(400).jsend.fail({
-            code: 400,
+          res.status(400).json({
+            success: false,
             message: `Invalid username or password. Username should contain only letters,
                       numbers, -, . or _ and password should be less than 20 characters.`,
           });
         }
       } else {
-        res.status(400).jsend.fail({
-          code: 400,
+        res.status(400).json({
+          success: false,
           message: 'Please enter a valid email address',
         });
       }
@@ -320,7 +320,6 @@ class Validate {
    * @memberof Validate
    */
   static checkExpressErrors(err, req, res, next) {
-    console.log('error is ==> ', err);
     res.status(500).jsend.error({
       code: 500,
       message: 'Something failed',

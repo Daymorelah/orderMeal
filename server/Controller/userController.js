@@ -5,6 +5,7 @@ import { CryptData } from '../Utilities';
 import pool from '../Model/db/connectToDb';
 import queries from '../Model/queries';
 import { sendServerError } from '../Utilities/helper';
+import SendEmail from '../Utilities/sendEmail';
 
 dotenv.config();
 const secret = process.env.SECRET;
@@ -19,14 +20,14 @@ class UserController {
   /**
    * Welcomes user to the API
    * Route: GET: /
-   * @param {object} req -Request object
+   * @param {object} req - Request object
    * @param {object} res - Response object
    * @return {res} - Response object
    * @memberof USerController
    */
   static welcomeUser(req, res) {
-    res.jsend.success({
-      code: 200,
+    res.json({
+      success: true,
       message: 'Welcome to the Order-Meal API',
     });
   }
@@ -39,40 +40,107 @@ class UserController {
    * @return {res} res - Response object
    * @memberof USerController
    */
-  static userSignUp(req, res) {
+  static async userSignUp(req, res) {
     const { username, password, email } = req.body;
-    const role = username === process.env.ADMIN ? 'Admin' : undefined;
-    let encryptedPassword;
-    CryptData.encryptData(password).then((hash) => {
-      encryptedPassword = hash;
-      pool.query(queries.signup, [
-        username,
-        encryptedPassword,
-        email,
-        null,
-        false,
-        false,
-      ],
-      (error, response) => {
-        if (error) {
-          res.status(409).jsend.fail({
-            code: 409,
-            message: 'User details already exist. Signup was not successful',
-          });
-        } else {
-          const result = response.rows[0];
-          const token = jwt.sign({
-            userId: result.id,
-            username: result.username,
-          }, role ? adminSecret : secret, { expiresIn: '1 day' });
-          res.status(201).jsend.success({
-            message: `${role || 'User'} ${result.username} created successfully`,
-            created: true,
-            token,
+    try {
+      const queryResult = await pool.query(queries.doesEmailExist, [email]);
+      if (queryResult.rows.length) {
+        if (!queryResult.rows[0].is_email_verified) {
+          const isEmailSent = await SendEmail.createTokenAndSendEmail(queryResult.rows[0]);
+          if (isEmailSent) {
+            return res.status(200).json({
+              success: true,
+              message: 'You had started the registration '
+              + 'process earlier. '
+              + 'An email has been sent to your email address. '
+              + 'Please check your email to complete your registration.',
+            });
+          }
+          return res.status(500).json({
+            success: false,
+            message: 'Your registration could not be completed.'
+            + ' Please try again',
           });
         }
+        return res.status(200).json({
+          success: true,
+          message: 'You are a registered user on '
+          + 'this platform. Please proceed to login',
+        });
+        // res.redirect(process.env.CLIENT_REDIRECT_URL).status(200).json({
+        //   success: true,
+        //   message: 'You are a registered user on '
+        //   + 'this platform. Please proceed to login',
+        // });
+      }
+      return CryptData.encryptData(password).then((hash) => {
+        pool.query(queries.signup, [
+          username,
+          hash,
+          email,
+          null,
+          false,
+          false,
+        ],
+        async (error, response) => {
+          if (error) {
+            return res.status(409).json({
+              success: false,
+              message: 'User details already exist. Signup was not successful',
+            });
+          }
+          const isEmailSent = await SendEmail.createTokenAndSendEmail(response.rows[0]);
+          if (isEmailSent) {
+            return res.status(200).json({
+              success: true,
+              message: 'Your initial signup process was successful. '
+              + 'An email has been sent to your email address. Please check your email to complete your registration',
+            });
+          }
+          return res.status(400).json({
+            success: false,
+            message: 'Could not complete the initial signup process. '
+            + 'Please try again.',
+          });
+        });
       });
-    }).catch(() => sendServerError(res));
+    } catch (err) {
+      return sendServerError(res);
+    }
+  }
+
+  static async verifyUserEmail(req, res) {
+    const { username } = req.decoded;
+    pool.query(queries.verifyUserEmail, [true, username],
+      async (error, response) => {
+        try {
+          if (error) {
+            return res.status(500).json({
+              success: false,
+              message: 'Could not verify your email address at this time. Please try again',
+            });
+          }
+          if (response.rowCount === 1) {
+            const isEmailSent = await SendEmail.confirmRegistrationComplete(response.rows[0].email);
+            if (isEmailSent) {
+              return res.status(200).json({
+                success: true,
+                message: 'Your email has been verified. Please, check your email to proceed to login.',
+              });
+            }
+            return res.status(200).json({
+              success: true,
+              message: 'Your email has been verified but our servers could not send you a confirmation email. You can proceed to login',
+            });
+          }
+          return res.status(400).json({
+            success: false,
+            message: 'Your request is not valid. It may have been tampered with.',
+          });
+        } catch (err) {
+          return sendServerError(res);
+        }
+      });
   }
 
   /**
