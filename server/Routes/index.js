@@ -1,9 +1,11 @@
-
+import dotenv from 'dotenv';
 import passport from 'passport';
 import {
   OrderController, UserController, MenuController, SocialAuthController,
 } from '../Controller';
 import { Validate, Authenticate } from '../Utilities';
+
+dotenv.config();
 
 /**
  * Handles request
@@ -56,11 +58,17 @@ const routes = (app) => {
   app.get('/api/v1/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
   app.get('/api/v1/auth/callback',
-    passport.authenticate('google', { session: false, failureRedirect: '/api/v1/auth/failed' }),
+    passport.authenticate('google', {
+      session: false,
+      failureRedirect: '/api/v1/auth/failed',
+    }),
     SocialAuthController.googleAuth);
   app.get('/api/v1/auth/failed', (req, res) => {
     res.send({ message: 'Social authentication failed. You can try again.' });
   });
+  app.get('/api/v1/signup/verify',
+    Authenticate.checkToken,
+    UserController.verifyUserEmail);
 };
 
 export default routes;

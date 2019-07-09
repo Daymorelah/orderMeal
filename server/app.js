@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(jsend.middleware);
 app.use(cors({
-  origin: true,
+  origin: 'http://localhost:3000',
   methods: 'GET,HEAD,PUT,POST,DELETE',
   credentials: true,
   exposedHeaders: ['x-access-token'],

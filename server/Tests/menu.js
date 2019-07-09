@@ -22,7 +22,7 @@ describe('Integration test for the Menu controller', () => {
     chai.request(app).post('/api/v1/auth/signup')
       .send(user1)
       .end((err, res) => {
-        myToken = res.body.data.token;
+        myToken = res.body.token || 'wertrewgfdertytredfgfdertr';
         done();
       });
   });
@@ -34,7 +34,7 @@ describe('Integration test for the Menu controller', () => {
     chai.request(app).post('/api/v1/auth/login')
       .send(admin2)
       .end((err, res) => {
-        myAdminToken = res.body.data.token;
+        myAdminToken = res.body.token || 'ertrewwertrewertrewertre';
         done();
       });
   });
