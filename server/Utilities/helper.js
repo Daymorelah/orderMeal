@@ -1,15 +1,12 @@
-
 /**
  * Defines the response when an internal server error occurs
  * @param {object} res - Response object
  * @return {res} - Response object
  */
-export const sendServerError = (res) => {
-  res.status(500).jsend.error({
-    code: 500,
-    message: 'Internal server error.',
-  });
-};
+export const sendServerError = res => (res.status(500).json({
+  success: false,
+  message: 'Internal server error.',
+}));
 
 /**
  * Defines the response returned when an unauthorized user
@@ -18,7 +15,7 @@ export const sendServerError = (res) => {
  * @returns {res} - Response object
  */
 export const userNotAuthorized = (res) => {
-  res.status(401).jsend.fail({
+  res.status(401).json({
     code: 401,
     message: 'User not authorized',
   });
@@ -67,7 +64,7 @@ export const checkForInteger = valueToCheck => valueToCheck.search(/[^\d\+]/g) =
  * @returns {res} - Response object
  */
 export const valueShouldBeInteger = (res, value) => {
-  res.status(400).jsend.fail({
+  res.status(400).json({
     code: 400,
     message: `The ${value} should be an integer.`,
   });
@@ -79,9 +76,9 @@ export const valueShouldBeInteger = (res, value) => {
  * @returns {res} - Response object
  */
 export const allFieldsRequired = (res) => {
-  res.status(400).jsend.fail({
+  res.status(400).json({
     code: 400,
-    message: 'Invalid request. All fields are required',
+    message: 'All fields are required',
   });
 };
 
@@ -92,8 +89,8 @@ export const allFieldsRequired = (res) => {
  * @returns {res} - Response object
  */
 export const noValuesYet = (res, valueQueried) => {
-  res.jsend.success({
-    code: 200,
+  res.status(200).json({
+    success: true,
     message: `There are no ${valueQueried} yet`,
     orders: null,
   });
@@ -105,7 +102,7 @@ export const noValuesYet = (res, valueQueried) => {
  * @returns {object} - Response object
  */
 export const stringFieldNotValid = (res) => {
-  res.status(400).jsend.fail({
+  res.status(400).json({
     code: 400,
     message: 'Invalid request. String fields should contain letters, numbers, -, . or _.',
   });
