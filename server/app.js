@@ -26,10 +26,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(jsend.middleware);
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.CORS_ORIGIN,
   methods: 'GET,HEAD,PUT,POST,DELETE',
   credentials: true,
-  exposedHeaders: ['x-access-token'],
+  exposedHeaders: 'x-access-token',
 }));
 
 app.use('/docs', express.static(path.resolve(`${__dirname}`, '../apiDocs')));
