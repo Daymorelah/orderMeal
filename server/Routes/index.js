@@ -12,7 +12,7 @@ dotenv.config();
  * @param {object} app - An instance of the express module
  */
 const routes = (app) => {
-  app.get('/', UserController.welcomeUser);
+  app.get('/', (req, res) => res.redirect('/api/v1'));
   app.get('/api/v1', UserController.welcomeUser);
   app.get('/api/v1/orders',
     Authenticate.checkAdminToken,
