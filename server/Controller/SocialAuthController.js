@@ -29,7 +29,7 @@ class SocialAuthController {
               + 'An email has been sent to your email address. '
               + 'Please check your email to complete your registration.',
             }, 50);
-            return redirectUser(res, token);
+            return redirectUser(res, token, 'signup');
           }
           const token = Authenticate.generateSocialAuthToken({
             success: false,
@@ -43,7 +43,7 @@ class SocialAuthController {
           message: 'You are a registered user on '
           + 'this platform. Please proceed to login',
         }, 50);
-        return redirectUser(res, token);
+        return redirectUser(res, token, 'signup');
       }
       const {
         name, given_name, picture, email, email_verified,
@@ -65,21 +65,22 @@ class SocialAuthController {
                 message: 'Your initial signup process was successful. '
                 + 'An email has been sent to your email address. Please check your email to complete your registration',
               }, 50);
-              return redirectUser(res, token);
+              return redirectUser(res, token, 'signup');
             }
             const token = Authenticate.generateSocialAuthToken({
               success: false,
               message: 'Could not complete the initial signup process. '
               + 'Please try again.',
             }, 50);
-            return redirectUser(res, token);
+            return redirectUser(res, token, 'signup');
           }
           const token = Authenticate.generateSocialAuthToken({
+            id: response.rows[0].id,
+            username: response.rows[0].username,
             success: true,
-            message: 'Your signup process was successful. '
-            + 'Please log in',
+            message: 'Your signup process was successful.',
           }, 50);
-          return redirectUser(res, token);
+          return redirectUser(res, token, 'menu');
         });
       });
     } catch (err) {

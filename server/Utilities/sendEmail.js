@@ -52,9 +52,8 @@ class SendEmail {
       emailBody: `<p>Thank you for signing up with O-meal.</p>
         <p>Next step is to verify this email
         address by clicking the link below.</p>
-        <br/><p>
-        <a href=${baseUrl}/signup/verify?token=${token}>
-        Complete your registration </a><<< </p>`,
+        <p><a href=${baseUrl}/signup/verify?token=${token}>
+        Complete your registration</a></p>`,
     };
     return SendEmail.emailSender(details);
   }
@@ -70,10 +69,9 @@ class SendEmail {
       email,
       subject: 'Registration Complete - O-Meal',
       emailBody: `<p>Your registration has been completed<p>
-      <p>Thank you for registering with Authors Haven.</p>
-      <p> >>>
-      <a href=${process.env.CLIENT_REDIRECT_URL}/home target=_blank>
-      Go to your profile </a> <<< </p>`,
+      <p>Thank you for registering with O-Meal.</p>
+      <p><a href=${process.env.CLIENT_REDIRECT_URL}/menu target=_blank>
+      Go to your profile</a></p>`,
     };
     return SendEmail.emailSender(details);
   }

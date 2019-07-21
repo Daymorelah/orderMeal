@@ -126,7 +126,7 @@ class UserController {
                 username: response.rows[0].username,
                 message: 'Your email has been verified.',
               }, '7d');
-              redirectUser(res, token);
+              redirectUser(res, token, 'menu');
             }
             return res.status(200).json({
               success: true,

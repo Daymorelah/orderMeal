@@ -115,7 +115,8 @@ export const stringFieldNotValid = (res) => {
  * @param {Object} res - HTTP response object
  * @param {string} token - JWT token that encodes the response message we want to
  * send back to the client.
+ * @param {string} path - path name we want to redirect to
  */
-export const redirectUser = (res, token) => res.redirect(
-  `${process.env.CLIENT_REDIRECT_URL}/signup?stat=${token}`,
+export const redirectUser = (res, token, path) => res.redirect(
+  `${process.env.CLIENT_REDIRECT_URL}/${path}?stat=${token}`,
 );
