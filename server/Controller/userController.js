@@ -4,8 +4,9 @@ import jwt from 'jsonwebtoken';
 import { CryptData } from '../Utilities';
 import pool from '../Model/db/connectToDb';
 import queries from '../Model/queries';
-import { sendServerError } from '../Utilities/helper';
+import { sendServerError, redirectUser } from '../Utilities/helper';
 import SendEmail from '../Utilities/sendEmail';
+import Authenticate from '../Utilities/tokenAuth';
 
 dotenv.config();
 const secret = process.env.SECRET;
@@ -67,11 +68,6 @@ class UserController {
           message: 'You are a registered user on '
           + 'this platform. Please proceed to login',
         });
-        // res.redirect(process.env.CLIENT_REDIRECT_URL).status(200).json({
-        //   success: true,
-        //   message: 'You are a registered user on '
-        //   + 'this platform. Please proceed to login',
-        // });
       }
       return CryptData.encryptData(password).then((hash) => {
         pool.query(queries.signup, [
@@ -121,12 +117,16 @@ class UserController {
             });
           }
           if (response.rowCount === 1) {
-            const isEmailSent = await SendEmail.confirmRegistrationComplete(response.rows[0].email);
+            const { id, email } = response.rows[0];
+            const isEmailSent = await SendEmail.confirmRegistrationComplete(email);
             if (isEmailSent) {
-              return res.status(200).json({
+              const token = Authenticate.generateToken({
                 success: true,
-                message: 'Your email has been verified. Please, check your email to proceed to login.',
-              });
+                id,
+                username: response.rows[0].username,
+                message: 'Your email has been verified.',
+              }, '7d');
+              redirectUser(res, token);
             }
             return res.status(200).json({
               success: true,

@@ -22,7 +22,7 @@ const queries = {
   editMenuItem: `UPDATE menu SET meal=$1, prize=$2, meal_type=$3
                   WHERE id IN (SELECT id from menu WHERE id=$4)`,
   doesEmailExist: 'SELECT email, username, id, is_email_verified FROM users WHERE email=$1',
-  verifyUserEmail: 'UPDATE users SET is_email_verified=$1 WHERE username=$2 RETURNING email',
+  verifyUserEmail: 'UPDATE users SET is_email_verified=$1 WHERE username=$2 RETURNING email, id, username',
 };
 
 export default queries;
