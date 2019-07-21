@@ -29,7 +29,7 @@ app.use(cors({
   origin: process.env.CORS_ORIGIN,
   methods: 'GET,HEAD,PUT,POST,DELETE',
   credentials: true,
-  exposedHeaders: 'x-access-token',
+  exposedHeaders: process.env.CORS_EXPOSED_HEADERS,
 }));
 
 app.use('/docs', express.static(path.resolve(`${__dirname}`, '../apiDocs')));
