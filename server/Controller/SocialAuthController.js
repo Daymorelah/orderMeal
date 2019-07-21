@@ -2,22 +2,11 @@ import dotenv from 'dotenv';
 import { CryptData } from '../Utilities';
 import pool from '../Model/db/connectToDb';
 import queries from '../Model/queries';
-import { sendServerError } from '../Utilities/helper';
+import { sendServerError, redirectUser } from '../Utilities/helper';
 import SendEmail from '../Utilities/sendEmail';
 import Authenticate from '../Utilities/tokenAuth';
 
 dotenv.config();
-
-/**
- * This method redirects the user after the authentication process is complete.
- *
- * @param {Object} res - HTTP response object
- * @param {string} token - JWT token that encodes the response message we want to
- * send back to the client.
- */
-const redirectUser = (res, token) => res.redirect(
-  `${process.env.CLIENT_REDIRECT_URL}?stat=${token}`,
-);
 
 /**
  * Class representing the user controller

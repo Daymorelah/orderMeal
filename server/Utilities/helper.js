@@ -107,3 +107,15 @@ export const stringFieldNotValid = (res) => {
     message: 'Invalid request. String fields should contain letters, numbers, -, . or _.',
   });
 };
+
+/**
+ * This method redirects the user and embeds a message in a token
+ * via the URL params
+ *
+ * @param {Object} res - HTTP response object
+ * @param {string} token - JWT token that encodes the response message we want to
+ * send back to the client.
+ */
+export const redirectUser = (res, token) => res.redirect(
+  `${process.env.CLIENT_REDIRECT_URL}/signup?stat=${token}`,
+);
