@@ -12,7 +12,7 @@ class MenuController {
   /**
    * Get Available Menu
    * Route: Get: /menu
-   * @param {object} req - request object 
+   * @param {object} req - request object
    * @param {object} res - response object
    * @returns {object} res - response object
    * @memberof MenuController
@@ -24,14 +24,12 @@ class MenuController {
           sendServerError(res);
         } else if (response) {
           if (response.rowCount) {
-            res.jsend.success({
-              code: 200,
+            res.status(200).json({
               message: 'Request completed successfully',
               menu: response.rows,
             });
           } else {
-            res.jsend.success({
-              code: 200,
+            res.status(200).json({
               message: `Request completed successfully. No ${req.query.filter} available yet.`,
               menu: null,
             });
@@ -44,14 +42,12 @@ class MenuController {
           sendServerError(res);
         } else if (response) {
           if (response.rowCount) {
-            res.jsend.success({
-              code: 200,
+            res.status(200).json({
               message: 'Request completed successfully',
               menu: response.rows,
             });
           } else {
-            res.jsend.success({
-              code: 200,
+            res.status(200).json({
               message: 'Request completed successfully. No menu available yet.',
               menu: null,
             });
@@ -64,7 +60,7 @@ class MenuController {
   /**
    * Add Meal To Menu
    * Route: POST: /menu
-   * @param {object} req - request object 
+   * @param {object} req - request object
    * @param {object} res - response object
    * @returns {res} res - response object
    * @memberof MenuController
@@ -78,9 +74,8 @@ class MenuController {
           sendServerError(res);
         } else if (response) {
           if (response.rowCount) {
-            res.status(201).jsend.success({
-              code: 201,
-              message: 'Request completed successfully',
+            res.status(201).json({
+              message: 'Meal added successfully',
               menuCreated: response.rows,
             });
           }
@@ -91,7 +86,7 @@ class MenuController {
   /**
    * Update Menu Item
    * Route: PUT: /menu/:menuId
-   * @param {object} req - request object 
+   * @param {object} req - request object
    * @param {object} res - response object
    * @returns {res} res - response object
    * @memberof MenuController
@@ -104,7 +99,7 @@ class MenuController {
         if (error) {
           sendServerError(res);
         } else if (response) {
-          res.jsend.success({
+          res.status(204).json({
             message: 'Updated successfully',
           });
         }
@@ -114,7 +109,7 @@ class MenuController {
   /**
    * Delete Menu Item
    * Route: DELETE: /menu/menuId
-   * @param {object} req - request object 
+   * @param {object} req - request object
    * @param {object} res - response object
    * @returns {res} res - response object
    * @memberof MenuController
@@ -125,7 +120,7 @@ class MenuController {
       if (error) {
         sendServerError(res);
       } else {
-        res.jsend.success({
+        res.status(204).json({
           message: 'Menu deleted successfully',
         });
       }
