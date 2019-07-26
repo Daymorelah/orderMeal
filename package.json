@@ -7,9 +7,9 @@
     "start": "nodemon server/app.js --exec babel-node",
     "build": "babel server/ -d dist",
     "host-on-heroku": "npm run build && node dist/app.js",
-    "test": "export NODE_ENV=test&& npm run models-for-testing && mocha --exit --require @babel/register --require @babel/polyfill server/Tests/index.js",
-    "test-coverage": "export NODE_ENV=test&& npm run models-for-testing && nyc mocha --exit --require @babel/register --require @babel/polyfill server/Tests/index.js",
-    "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | coveralls",
+    "test": "export NODE_ENV=test&& yarn models-for-testing && mocha --exit --require @babel/register --require @babel/polyfill server/Tests/index.js",
+    "test-coverage": "export NODE_ENV=test&& yarn models-for-testing && nyc mocha --exit --require @babel/register --require @babel/polyfill server/Tests/index.js",
+    "coveralls": "yarn test-coverage && cat ./coverage/lcov.info | coveralls",
     "models": "babel-node server/Model",
     "models-for-testing": "export NODE_ENV=test&& babel-node server/Model"
   },

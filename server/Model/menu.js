@@ -3,7 +3,8 @@ import {
   tableCreated,
   couldNotCreatTable,
   couldNotDropTable,
-  somethingAwkwardHappened } from '../Utilities/helper';
+  somethingAwkwardHappened,
+} from '../Utilities/helper';
 
 const queryToCreateTable = `CREATE TABLE menu(
   id SERIAL PRIMARY KEY,
