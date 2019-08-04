@@ -35,7 +35,7 @@ To run tests for the server side
 
 ## Contributing
 * Fork this repository
-* Clone to your local environment: https://github.com/Daymorelah/RideMyWay.git
+* Clone to your local environment: https://github.com/Daymorelah/orderMeal.git
 * Create your feature branch: git checkout -b ft-my-new-feature
 * Commit your changes: git commit -am 'Add some feature'
 * Write test for the new features
