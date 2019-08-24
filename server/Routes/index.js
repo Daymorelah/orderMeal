@@ -1,12 +1,13 @@
 import dotenv from 'dotenv';
 import passport from 'passport';
+import multer from 'multer';
 import {
   OrderController, UserController, MenuController, SocialAuthController,
 } from '../Controller';
 import { Validate, Authenticate } from '../Utilities';
 
 dotenv.config();
-
+const upload = multer({ storage: multer.memoryStorage() });
 /**
  * Handles request
  * @param {object} app - An instance of the express module
@@ -14,6 +15,7 @@ dotenv.config();
 const routes = (app) => {
   app.get('/', (req, res) => res.redirect('/api/v1'));
   app.get('/api/v1', UserController.welcomeUser);
+  app.post('/api/v1/upload', upload.single('imageToGive'), MenuController.uploadImage);
   app.get('/api/v1/orders',
     Authenticate.checkAdminToken,
     OrderController.getAllOrders);

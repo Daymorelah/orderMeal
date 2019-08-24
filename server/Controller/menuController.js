@@ -1,7 +1,7 @@
-
 import pool from '../Model/db/connectToDb';
 import queries from '../Model/queries';
 import { sendServerError } from '../Utilities/helper';
+import cloud from '../Config/cloudinaryConfig';
 
 /**
  * Class representing the menu controller
@@ -125,6 +125,14 @@ class MenuController {
         });
       }
     });
+  }
+
+  static uploadImage(req, res) {
+    cloud.uploader.upload_stream((result) => {
+      if (result) {
+        res.status(200).json({ message: 'cool man!', result });
+      }
+    }, { public_id: 'sampler_1', folder: 'sama/' }).end(req.file.buffer);
   }
 }
 
