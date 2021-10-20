@@ -100,7 +100,7 @@ class MenuController {
           sendServerError(res);
         } else if (response) {
           res.status(204).json({
-            message: 'Updated successfully',
+            message: 'Updated menu item successfully',
           });
         }
       });
@@ -121,7 +121,7 @@ class MenuController {
         sendServerError(res);
       } else {
         res.status(204).json({
-          message: 'Menu deleted successfully',
+          message: 'Menu item deleted successfully',
         });
       }
     });
