@@ -13,7 +13,7 @@ const { expect } = chai;
 describe('Integration test for the Menu controller', () => {
   let myToken;
   let myAdminToken;
-  before('Create user for testing in menu controller', (done) => {
+  before('Create user for testing in menu controller only', (done) => {
     const user1 = {
       username: 'Donnie2',
       password: 'password',
@@ -26,7 +26,7 @@ describe('Integration test for the Menu controller', () => {
         done();
       });
   });
-  before('Login admin for testing in menu controller', (done) => {
+  before('Login admin for testing in menu controller only', (done) => {
     const admin2 = {
       username: process.env.ADMIN,
       password: 'password',
@@ -39,7 +39,7 @@ describe('Integration test for the Menu controller', () => {
       });
   });
   describe('Test for viewing available menu', () => {
-    it('should return null if no menu is available yet', (done) => {
+    it('should return null if no menu is readily available yet', (done) => {
       chai.request(app).get('/api/v1/menu')
         .set('x-access-token', myToken)
         .end((error, res) => {
