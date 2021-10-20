@@ -10,11 +10,11 @@ dotenv.config();
 chai.use(chaiHttp);
 const { expect } = chai;
 
-describe('Integration test for the order controller', () => {
+describe('Integration test for the order controller only', () => {
   let myToken;
   let user1Id;
   let myAdminToken;
-  before('Create user for testing in order controller', (done) => {
+  before('Create user for testing in order controller only', (done) => {
     const user1 = {
       username: 'Donnie1',
       password: 'password',
@@ -28,7 +28,7 @@ describe('Integration test for the order controller', () => {
         done();
       });
   });
-  before('login admin for testing in order controller', (done) => {
+  before('login admin for testing in order controller only', (done) => {
     const admin1 = {
       username: process.env.ADMIN,
       password: 'password',
@@ -54,7 +54,7 @@ describe('Integration test for the order controller', () => {
     });
   });
   describe('Test to get all orders', () => {
-    it('should return all orders', (done) => {
+    it('should return all orders only', (done) => {
       chai.request(app).get('/api/v1/orders')
         .set('x-access-token', myAdminToken)
         .end((err, res) => {
