@@ -14,7 +14,7 @@ const { expect } = chai;
 
 describe('Integration test for the users controller', () => {
   describe('Test general error handling and welcome message', () => {
-    it('should send an error when there is an unforseen error', (done) => {
+    it('should send an error when there is an unforeseen error', (done) => {
       const userDetails = {
         username: 'Thomas?',
         password: 'tomnjerry',

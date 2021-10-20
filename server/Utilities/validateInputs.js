@@ -320,7 +320,6 @@ class Validate {
    * @memberof Validate
    */
   static checkExpressErrors(err, req, res, next) {
-    console.log('error in express error is ==> ', err);
     res.status(500).jsend.error({
       code: 500,
       message: 'Something failed',
