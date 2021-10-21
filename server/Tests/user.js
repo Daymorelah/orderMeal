@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 
-describe('Integration test for the users controller', () => {
+describe('Integration test for the users controller only', () => {
   describe('Test general error handling and welcome message', () => {
     it('should send an error when there is an unforeseen error', (done) => {
       const userDetails = {
@@ -28,7 +28,7 @@ describe('Integration test for the users controller', () => {
           done();
         });
     });
-    it('should welcome the user to the API', (done) => {
+    it('should welcome the user to the API only', (done) => {
       chai.request(app).get('/api/v1')
         .end((err, res) => {
           expect(res.status).to.deep.equal(200);
@@ -65,7 +65,7 @@ describe('Integration test for the users controller', () => {
       expect(res.body).to.not.have.property('token');
       expect(res.body.code).to.deep.equal(400);
     });
-    it('should return an error if email is invalid', async () => {
+    it('should return an error if email is invalid only', async () => {
       const userDetails = {
         username: 'Thomas',
         password: 'password',
