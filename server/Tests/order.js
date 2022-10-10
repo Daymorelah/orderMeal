@@ -195,6 +195,7 @@ describe('Integration test for the order controller only', () => {
         .end((err, res) => {
           expect(res.body.data).to.have.property('message');
           expect(res.status).to.deep.equal(400);
+          expect(res.status).to.not.deep.equal(200);
           expect(res.body.status).to.deep.equal('fail');
           expect(res.body.data.code).to.deep.equal(400);
           done();
