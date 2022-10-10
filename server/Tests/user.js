@@ -76,6 +76,7 @@ describe('Integration test for the users controller only', () => {
       expect(res.status).to.deep.equal(400);
       expect(res.body).to.be.an('object');
       expect(res.body).to.not.have.property('token');
+      expect(res.body).to.not.have.property('tokenization');
       expect(res.body.success).to.deep.equal(false);
     });
     it('should return an error if username or password is invalid', async () => {
