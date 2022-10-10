@@ -67,6 +67,7 @@ describe('Integration test for the Menu controller', () => {
           expect(res.body.data.code).to.deep.equal(201);
           expect(res.body.status).to.deep.equal('success');
           expect(res.body.data).to.have.property('menuCreated');
+          expect(res.body.data).to.not.have.property('butterfly');
           done();
         });
     });
