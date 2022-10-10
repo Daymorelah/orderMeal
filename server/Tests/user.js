@@ -117,6 +117,7 @@ describe('Integration test for the users controller only', () => {
         .end((err, res) => {
           expect(res.status).to.deep.equal(200);
           expect(res.body.data).to.have.property('message');
+          expect(res.body.data).to.not.have.property('pasenger');
           expect(res.body.data).to.have.property('token');
           expect(res.body.status).to.deep.equal('success');
           done();
