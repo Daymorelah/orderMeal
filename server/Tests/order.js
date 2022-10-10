@@ -62,6 +62,7 @@ describe('Integration test for the order controller only', () => {
           expect(res.body.data).to.have.property('message');
           expect(res.body.status).to.deep.equal('success');
           expect(res.body.data).to.have.property('orders');
+          expect(res.body.data).to.not.have.property('orders');
           done();
         });
     });
