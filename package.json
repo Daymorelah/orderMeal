@@ -43,7 +43,7 @@
     "passport-twitter": "^1.0.4",
     "pg": "^7.4.3",
     "swagger-ui-dist": "^3.19.1",
-    "validator": "^10.7.1"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/cli": "7.2.3",
